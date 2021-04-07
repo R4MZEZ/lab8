@@ -1,0 +1,2 @@
+info
+execute_script C:\Users\User\IdeaProjects\lab5_maven\src\main\java\inputData\script.txt

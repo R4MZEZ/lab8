@@ -1,0 +1,4 @@
+info
+shuffle
+remove_by_id 1
+execute_script C:\Users\User\IdeaProjects\lab5_maven\src\main\java\inputData\nextscript.txt
