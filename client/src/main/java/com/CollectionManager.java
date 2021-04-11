@@ -1,6 +1,8 @@
-package Server;
+package com;
 
-import content.*;
+import content.Flat;
+import content.House;
+import content.View;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -186,6 +188,10 @@ public class CollectionManager {
     public void shuffle() {
         Collections.shuffle(flats);
         connector.send("Элементы коллекции успешно перемешаны.");
+    }
+
+    public void ready(){
+        connector.send("Подключение установлено.");
     }
 
     /**

@@ -1,6 +1,6 @@
 package Commands;
 
-import Server.CollectionManager;
+import com.CollectionManager;
 
 import java.util.Scanner;
 
@@ -22,7 +22,8 @@ public class CommandSave implements Command{
 
     @Override
     public void execute() {
-            manager.save(manager);
+        manager.save(manager);
+
     }
 
     @Override

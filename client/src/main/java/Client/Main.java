@@ -1,5 +1,7 @@
 package Client;
 
+import Commands.CommandReady;
+
 import java.util.Scanner;
 
 public class Main {
@@ -7,8 +9,9 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         Commander commander;
-        String filepath = "null";
+        CommandReady commandReady = new CommandReady();
         int count = 0;
+
         int PORT;
         try {
             System.out.print("Введите порт для подключения: ");
@@ -18,14 +21,7 @@ public class Main {
             PORT = 1216;
         }
 
-
-        try {
-            filepath = args[0];
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Ошибка. Отсутствует аргумент входного файла.");
-        }
-
-        commander = new Commander(filepath,PORT);
+        commander = new Commander(commandReady,PORT);
         System.out.println("Ожидание ответа сервера(10 секунд)...");
         while (!connected & count++<10) {
             Thread.sleep(1000);

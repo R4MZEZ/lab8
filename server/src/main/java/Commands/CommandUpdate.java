@@ -1,6 +1,6 @@
 package Commands;
 
-import Server.CollectionManager;
+import com.CollectionManager;
 import content.Flat;
 import tools.Checker;
 

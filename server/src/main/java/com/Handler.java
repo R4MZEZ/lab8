@@ -1,4 +1,4 @@
-package Server;
+package com;
 
 import Commands.*;
 import content.*;
@@ -15,38 +15,40 @@ public class Handler implements Serializable, Runnable {
     Connector connector;
     CollectionManager manager;
     protected boolean isExit = false;
+    Thread thread;
 
     BufferedInputStream stream;
     JAXBContext context;
     Unmarshaller unmarshaller;
 
-    public Handler(String filePath, Connector connector){
+    public Handler(Connector connector){
         manager = new CollectionManager();
         this.connector = connector;
-        connector.send("Подключение установлено");
-        try {
-            context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
-            unmarshaller = context.createUnmarshaller();
-            stream = new BufferedInputStream(new FileInputStream(filePath));
-            manager = (CollectionManager) unmarshaller.unmarshal(stream);
-            Iterator<Flat> iterator = manager.getFlats().listIterator();
-            while (iterator.hasNext()) {
-                if (iterator.next().isEmpty()) {
-                    connector.send("Ошибка! Одна из квартир не была добавлена в коллекцию, т.к. одно или несколько полей не были указаны, либо выходят за допустимый диапазон.");
-                    iterator.remove();
-                }
-            }
-        } catch (NumberFormatException e) {
-            connector.send("Ошибка! Невозможно считать коллекцию из файла, т.к. одно или несколько полей указаны в некорректном формате (например, на месте числа - строка).");
-        } catch (FileNotFoundException e) {
-            connector.send("Ошибка! Файл с входными данными не найден, проверьте путь и права доступа к файлу.");
-        } catch (JAXBException e) {
-            connector.send("Ошибка при десериализации документа. Проверьте правильность разметки.");
-        }finally {
-            manager.setConnector(connector);
-            manager.setHandler(this);
-        }
+        manager.setConnector(connector);
+        manager.setHandler(this);
 
+//        try {
+//            context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
+//            unmarshaller = context.createUnmarshaller();
+//            stream = new BufferedInputStream(new FileInputStream(filePath));
+//            manager = (CollectionManager) unmarshaller.unmarshal(stream);
+//            Iterator<Flat> iterator = manager.getFlats().listIterator();
+//            while (iterator.hasNext()) {
+//                if (iterator.next().isEmpty()) {
+//                    connector.send("Ошибка! Одна из квартир не была добавлена в коллекцию, т.к. одно или несколько полей не были указаны, либо выходят за допустимый диапазон.");
+//                    iterator.remove();
+//                }
+//            }
+//        } catch (NumberFormatException e) {
+//            connector.send("Ошибка! Невозможно считать коллекцию из файла, т.к. одно или несколько полей указаны в некорректном формате (например, на месте числа - строка).");
+//        } catch (FileNotFoundException e) {
+//            connector.send("Ошибка! Файл с входными данными не найден, проверьте путь и права доступа к файлу.");
+//        } catch (JAXBException e) {
+//            connector.send("Ошибка при десериализации документа. Проверьте правильность разметки.");
+//        }finally {
+//            manager.setConnector(connector);
+//            manager.setHandler(this);
+//        }
         invoker.register("help", new CommandHelp(manager));
         invoker.register("info", new CommandInfo(manager));
         invoker.register("show", new CommandShow(manager));
@@ -67,6 +69,10 @@ public class Handler implements Serializable, Runnable {
 
     public BufferedInputStream getStream() {
         return stream;
+    }
+
+    public void setThread(Thread thread) {
+        this.thread = thread;
     }
 
     public void interactiveMod(InputStream stream) {
@@ -94,11 +100,20 @@ public class Handler implements Serializable, Runnable {
     @Override
     public void run() {
         while (!isExit){
-            Command command = (Command) connector.receive();
+            try {
+                synchronized (thread) {
+                    System.out.println("Хэндлер ожидает" + Thread.currentThread().toString() + " " + thread.toString());
+                    thread.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Выполнение в Хэндлере");
+            Command command = connector.command;
             command.setManager(manager);
             invoker.execute(command);
         }
-        System.out.println("Соединение с пользователем " + connector.userAddress + ":" + connector.userPort + " разорвано.");
+        System.out.println("Соединение с пользователем " + connector.userSocketAddress.toString() + " разорвано.");
     }
 }
 

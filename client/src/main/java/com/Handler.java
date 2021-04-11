@@ -1,4 +1,4 @@
-package Server;
+package com;
 
 import Commands.*;
 import content.Flat;
@@ -24,6 +24,7 @@ public class Handler implements Serializable, Runnable {
     public Handler(String filePath, Connector connector){
         manager = new CollectionManager();
         this.connector = connector;
+        connector.send("Подключение установлено");
         try {
             context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
             unmarshaller = context.createUnmarshaller();

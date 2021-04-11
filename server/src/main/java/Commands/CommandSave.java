@@ -1,11 +1,7 @@
 package Commands;
 
-import Server.CollectionManager;
+import com.CollectionManager;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.MarshalException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class CommandSave implements Command{

@@ -1,4 +1,4 @@
-package Server;
+package com;
 
 import java.io.*;
 import java.net.DatagramPacket;

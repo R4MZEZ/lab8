@@ -1,7 +1,6 @@
 package Commands;
 
-
-import Server.CollectionManager;
+import com.CollectionManager;
 
 import java.io.Serializable;
 import java.util.Scanner;

@@ -15,11 +15,11 @@ public class Commander {
     Connector connector;
     static Thread connectorThread;
 
-    public Commander(String filePath, int PORT){
+    public Commander(CommandReady commandReady, int PORT){
         connector = new Connector(PORT);
         connectorThread = new Thread(connector);
         connectorThread.start();
-        connector.send(filePath);
+        connector.send(commandReady);
 
         invoker.register("help", new CommandHelp());
         invoker.register("info", new CommandInfo());

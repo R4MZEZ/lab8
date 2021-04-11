@@ -1,6 +1,6 @@
 package Commands;
 
-import Server.CollectionManager;
+import com.CollectionManager;
 import content.View;
 
 import java.io.Serializable;

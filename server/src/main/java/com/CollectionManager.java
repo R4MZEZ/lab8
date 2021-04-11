@@ -1,8 +1,6 @@
-package Server;
+package com;
 
-import content.Flat;
-import content.House;
-import content.View;
+import content.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -24,7 +22,7 @@ import java.util.*;
 @XmlRootElement
 public class CollectionManager {
     @XmlElementWrapper(name = "collection")
-    private final LinkedList<Flat> flats = new LinkedList<>();
+    private static final LinkedList<Flat> flats = new LinkedList<>();
     private final static LocalDateTime initDate = LocalDateTime.now();
     private Handler handler;
     private static final Set<String> pathList = new HashSet<>();
@@ -190,6 +188,10 @@ public class CollectionManager {
         connector.send("Элементы коллекции успешно перемешаны.");
     }
 
+    public void ready(){
+        connector.send("Подключение установлено.");
+    }
+
     /**
      * Вывести среднее значение поля livingSpace для всех элементов коллекции
      */
@@ -225,6 +227,14 @@ public class CollectionManager {
      */
     public void execute_script(String path) throws FileNotFoundException {
         InputStream stream;
+        try {
+            if (path.substring(0, 4).equals("/dev")) {
+                connector.send("Файл для извлечения скрипта не найден. Проверьте путь и права доступа к файлу.");
+                return;
+            }
+        }catch (StringIndexOutOfBoundsException ignored){
+
+        }
         try{
             stream = new BufferedInputStream(new FileInputStream(path));
         }catch (FileNotFoundException e){
@@ -234,13 +244,12 @@ public class CollectionManager {
         if (handler.getStream().equals(System.in)) {
             pathList.clear();
         } else {
-            System.out.println(pathList.toString());
-            System.out.println(path);
             if (pathList.contains(path)) {
                 connector.send("#############################################\nОшибка! Один или несколько скриптов зациклены.\n#############################################");
                 return;
             }
-        }  //Проверка на зацикленность
+        }
+        //Проверка на зацикленность
         pathList.add(path);
         connector.send("====  Начало выполнения скрипта по адресу " + path + "  ====");
         handler.interactiveMod(stream);
