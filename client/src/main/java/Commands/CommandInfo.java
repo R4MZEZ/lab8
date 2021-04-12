@@ -6,23 +6,13 @@ import java.util.Scanner;
 
 public class CommandInfo implements Command {
 
-    CollectionManager manager;
-
+    private static final long serialVersionUID = -4386179675728560206L;
     public CommandInfo() {
-    }
-
-    public CommandInfo(CollectionManager manager) {
-        this.manager = manager;
-    }
-
-    @Override
-    public void setManager(CollectionManager manager) {
-        this.manager = manager;
     }
 
     @Override
     public void execute() {
-        manager.info();
+
     }
 
     @Override

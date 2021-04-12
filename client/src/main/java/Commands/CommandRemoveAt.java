@@ -17,7 +17,6 @@ public class CommandRemoveAt implements Command{
     public CommandRemoveAt() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

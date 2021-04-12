@@ -16,7 +16,6 @@ public class CommandExit implements Command, Serializable {
     public CommandExit() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

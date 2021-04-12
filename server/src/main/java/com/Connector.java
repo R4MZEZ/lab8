@@ -21,7 +21,7 @@ public class Connector{
 
     DatagramSocket datagramSocket;
 
-    final Handler handler;
+    Handler handler;
 
     public Connector(InetSocketAddress address, DatagramSocket socket, byte[] buffer) {
         handler = new Handler(this);
@@ -73,12 +73,15 @@ public class Connector{
 //                while(thread.getState() != Thread.State.WAITING) thread.notifyAll();
                 if (thread.getState() != Thread.State.WAITING){
                     thread.interrupt();
+                    handler = new Handler(this);
                     thread = new Thread(handler);
+                    handler.setThread(thread);
                     thread.start();
                     System.out.println("ВСЕ В ГОВНЕ");
-                    synchronized (thread){thread.notifyAll();}
+                    synchronized (thread){thread.notify();}
+                    return;
                 }
-                thread.notifyAll();
+                thread.notify();
                 System.out.println();
             }
         } catch (IOException | ClassNotFoundException | IllegalMonitorStateException e) {

@@ -19,7 +19,6 @@ public class CommandUpdate implements Command{
     public CommandUpdate() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

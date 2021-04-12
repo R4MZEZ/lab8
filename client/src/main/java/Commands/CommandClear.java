@@ -16,7 +16,6 @@ public class CommandClear implements Command, Serializable {
     public CommandClear() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

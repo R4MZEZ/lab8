@@ -36,7 +36,6 @@ public class CommandFilter implements Command, Serializable {
         }
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

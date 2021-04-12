@@ -18,7 +18,6 @@ public class CommandExecuteScript implements Command, Serializable {
     public CommandExecuteScript() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

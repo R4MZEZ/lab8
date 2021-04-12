@@ -16,7 +16,6 @@ public class CommandRemoveById implements Command{
     public CommandRemoveById() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

@@ -15,7 +15,6 @@ public class CommandMaxByHouse implements Command{
     public CommandMaxByHouse() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

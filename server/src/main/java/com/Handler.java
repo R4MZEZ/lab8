@@ -105,9 +105,7 @@ public class Handler implements Serializable, Runnable {
                     System.out.println("Хэндлер ожидает" + Thread.currentThread().toString() + " " + thread.toString());
                     thread.wait();
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            } catch (InterruptedException ignored) {}
             System.out.println("Выполнение в Хэндлере");
             Command command = connector.command;
             command.setManager(manager);

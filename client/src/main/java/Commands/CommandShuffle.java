@@ -15,7 +15,6 @@ public class CommandShuffle implements Command{
     public CommandShuffle() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

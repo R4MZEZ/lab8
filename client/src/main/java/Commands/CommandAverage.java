@@ -16,7 +16,6 @@ public class CommandAverage implements Command, Serializable {
     public CommandAverage() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

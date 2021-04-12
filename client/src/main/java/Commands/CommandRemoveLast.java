@@ -15,7 +15,6 @@ public class CommandRemoveLast implements Command{
     public CommandRemoveLast() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

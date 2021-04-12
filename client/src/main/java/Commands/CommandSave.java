@@ -15,7 +15,6 @@ public class CommandSave implements Command{
     public CommandSave() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

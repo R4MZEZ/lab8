@@ -16,7 +16,6 @@ public class CommandHelp implements Command, Serializable {
     public CommandHelp() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

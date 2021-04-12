@@ -15,7 +15,6 @@ public class CommandShow implements Command {
     public CommandShow() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

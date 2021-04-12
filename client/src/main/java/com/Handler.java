@@ -49,7 +49,7 @@ public class Handler implements Serializable, Runnable {
         }
 
         invoker.register("help", new CommandHelp(manager));
-        invoker.register("info", new CommandInfo(manager));
+        invoker.register("info", new CommandInfo());
         invoker.register("show", new CommandShow(manager));
         invoker.register("remove_by_id", new CommandRemoveById(manager));
         invoker.register("add", new CommandAdd(manager));
@@ -96,7 +96,7 @@ public class Handler implements Serializable, Runnable {
     public void run() {
         while (!isExit){
             Command command = (Command) connector.receive();
-            command.setManager(manager);
+//            command.setManager(manager);
             invoker.execute(command);
         }
         System.out.println("Соединение с пользователем " + connector.userAddress + ":" + connector.userPort + " разорвано.");

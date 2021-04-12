@@ -20,7 +20,6 @@ public class CommandAdd implements Command, Serializable {
     public CommandAdd() {
     }
 
-    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }
