@@ -4,15 +4,15 @@ import Main.CollectionManager;
 
 import java.util.Scanner;
 
-public class CommandShuffle implements Command{
+public class CommandReady  implements Command {
 
     CollectionManager manager;
 
-    public CommandShuffle(CollectionManager manager) {
-        this.manager = manager;
+    public CommandReady() {
     }
 
-    public CommandShuffle() {
+    public CommandReady(CollectionManager manager) {
+        this.manager = manager;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class CommandShuffle implements Command{
 
     @Override
     public void execute() {
-        manager.shuffle();
+        manager.ready();
     }
 
     @Override

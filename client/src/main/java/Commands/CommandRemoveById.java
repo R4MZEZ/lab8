@@ -1,29 +1,12 @@
 package Commands;
 
-import com.CollectionManager;
 import tools.Checker;
 
 import java.util.Scanner;
 
 public class CommandRemoveById implements Command{
-    CollectionManager manager;
+    private static final long serialVersionUID = 4540012222739611587L;
     String argument;
-
-    public CommandRemoveById(CollectionManager manager) {
-        this.manager = manager;
-    }
-
-    public CommandRemoveById() {
-    }
-
-    public void setManager(CollectionManager manager) {
-        this.manager = manager;
-    }
-
-    @Override
-    public void execute() {
-        manager.remove_by_id(argument);
-    }
 
     @Override
     public boolean validate(String argument, Scanner reader) {

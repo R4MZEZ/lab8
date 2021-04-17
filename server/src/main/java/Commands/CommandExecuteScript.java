@@ -1,6 +1,6 @@
 package Commands;
 
-import com.CollectionManager;
+import Main.CollectionManager;
 
 import java.io.FileNotFoundException;
 import java.io.Serializable;

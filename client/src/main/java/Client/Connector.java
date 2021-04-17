@@ -1,6 +1,8 @@
 package Client;
 
 
+import tools.ClientLogger;
+
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -27,7 +29,7 @@ public class Connector implements Runnable {
             client.bind(null);
             outputStream = new ObjectOutputStream(b1);
         } catch (IOException e) {
-            e.printStackTrace();
+            ClientLogger.logger.error("Ошибка в конструкторе Коннектора", e);
         }
     }
 
@@ -42,7 +44,7 @@ public class Connector implements Runnable {
             client.send(byteBuffer, serverAddress);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            ClientLogger.logger.error("Ошибка при отправке данных", e);
         }
     }
 
@@ -58,7 +60,7 @@ public class Connector implements Runnable {
             return "";
         }
         catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            ClientLogger.logger.error("Ошибка при принятии данных", e);
             return "Ошибка";
         }
 

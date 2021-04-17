@@ -1,29 +1,11 @@
 package Commands;
 
-import com.CollectionManager;
 
 import java.io.Serializable;
 import java.util.Scanner;
 
 public class CommandHelp implements Command, Serializable {
-
-    CollectionManager manager;
-
-    public CommandHelp(CollectionManager manager) {
-        this.manager = manager;
-    }
-
-    public CommandHelp() {
-    }
-
-    public void setManager(CollectionManager manager) {
-        this.manager = manager;
-    }
-
-    @Override
-    public void execute() {
-        manager.help();
-    }
+    private static final long serialVersionUID = -4848347544087315082L;
 
     @Override
     public boolean validate(String argument, Scanner reader) {

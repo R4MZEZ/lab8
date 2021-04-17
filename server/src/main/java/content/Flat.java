@@ -94,7 +94,7 @@ public class Flat implements Comparable<Flat>, Serializable {
         return this.name.length() - flat.getName().length();
     }
 
-    public String NiceToString() {
+    public String niceToString() {
         return "\t\t\t\t\t\tКВАРТUРА " + id + "\n" +
                 "Номер квартиры: " + id +
                 ", имя собственника: " + name  +

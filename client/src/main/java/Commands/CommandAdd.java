@@ -1,6 +1,5 @@
 package Commands;
 
-import com.CollectionManager;
 import content.*;
 import tools.Checker;
 
@@ -9,27 +8,10 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class CommandAdd implements Command, Serializable {
+    private static final long serialVersionUID = 312956475280869092L;
 
-    CollectionManager manager;
     Flat argument;
 
-    public CommandAdd(CollectionManager manager) {
-        this.manager = manager;
-    }
-
-    public CommandAdd() {
-    }
-
-    public void setManager(CollectionManager manager) {
-        this.manager = manager;
-    }
-
-    @Override
-    public void execute() {
-        argument.setId(Flat.getNewId());
-        manager.getFlats().add(argument);
-        manager.add();
-    }
 
     @Override
     public boolean validate(String argument, Scanner commandReader) {

@@ -1,28 +1,9 @@
 package Commands;
 
-import com.CollectionManager;
-
 import java.util.Scanner;
 
 public class CommandShow implements Command {
-
-    CollectionManager manager;
-
-    public CommandShow(CollectionManager manager) {
-        this.manager = manager;
-    }
-
-    public CommandShow() {
-    }
-
-    public void setManager(CollectionManager manager) {
-        this.manager = manager;
-    }
-
-    @Override
-    public void execute() {
-        manager.show();
-    }
+    private static final long serialVersionUID = -6736089393672297269L;
 
     @Override
     public boolean validate(String argument, Scanner reader) {

@@ -1,7 +1,8 @@
-package com;
+package Main;
 
 import content.Flat;
 import content.House;
+import tools.ServerLogger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -25,6 +26,18 @@ public class ServerStart {
     static CollectionManager manager;
 
     public static void main(String[] args) throws IOException{
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                Thread.sleep(200);
+                System.out.println("Выключение сервера ...");
+                ServerLogger.logger.info("Выключение сервера");
+                manager.save(manager);
+
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                ServerLogger.logger.error("",e);
+            }
+        }));
         byte[] buffer;
 
         if (args.length > 0) filepath = args[0];
@@ -37,10 +50,11 @@ public class ServerStart {
         }catch (Exception e){
             System.out.println("Ошибка чтения порта, используется значение по умолчанию - 1025.");
             PORT = 1025;
-        }
+        } //Чтение порта
 
         try {
             DatagramSocket datagramSocket = new DatagramSocket(PORT);
+            ServerLogger.logger.info("Запуск сервера на порту {}", PORT);
             System.out.println("Ожидание подключения...");
 
             while (true) {
@@ -49,6 +63,7 @@ public class ServerStart {
                 datagramSocket.receive(packet);
                 if (!users.containsKey(new InetSocketAddress(packet.getAddress(),packet.getPort()))) {
                     System.out.println("Соединение с пользователем " + packet.getAddress() + ":" + packet.getPort() + " установлено.");
+                    ServerLogger.logger.info("Соединение с пользователем " + packet.getAddress() + ":" + packet.getPort() + " установлено.");
                     InetSocketAddress address = new InetSocketAddress(packet.getAddress(),packet.getPort());
                     Connector connector = new Connector(address,datagramSocket,buffer);
                     users.put(address,connector);
@@ -62,6 +77,10 @@ public class ServerStart {
 
     }
 
+    /**
+     * Заполнить коллекцию из файла
+     * @param filePath путь до файла
+     */
     private static void fillCollection(String filePath){
         JAXBContext context;
         Unmarshaller unmarshaller;
@@ -80,10 +99,16 @@ public class ServerStart {
             }
         } catch (NumberFormatException e) {
             System.out.println("Ошибка! Невозможно считать коллекцию из файла, т.к. одно или несколько полей указаны в некорректном формате (например, на месте числа - строка).");
+            ServerLogger.logger.error("Ошибка! Невозможно считать коллекцию из файла, т.к. одно или несколько полей указаны в некорректном формате (например, на месте числа - строка).");
+
         } catch (FileNotFoundException e) {
             System.out.println("Ошибка! Файл с входными данными не найден, проверьте путь и права доступа к файлу.");
+            ServerLogger.logger.error("Ошибка! Файл с входными данными не найден, проверьте путь и права доступа к файлу.");
+
         } catch (JAXBException e) {
             System.out.println("Ошибка при десериализации документа. Проверьте правильность разметки.");
+            ServerLogger.logger.error("Ошибка при десериализации документа. Проверьте правильность разметки.");
+
         }
     }
 }

@@ -6,14 +6,14 @@ C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandClear.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandHelp.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandMaxByHouse.java
 C:\Users\User\Desktop\lab6\server\src\main\java\content\View.java
-C:\Users\User\Desktop\lab6\server\src\main\java\com\Handler.java
+C:\Users\User\Desktop\lab6\server\src\main\java\Main\Handler.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandAdd.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandUpdate.java
+C:\Users\User\Desktop\lab6\server\src\main\java\Main\CollectionManager.java
 C:\Users\User\Desktop\lab6\server\src\main\java\content\House.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandAverage.java
 C:\Users\User\Desktop\lab6\server\src\main\java\content\Transport.java
-C:\Users\User\Desktop\lab6\server\src\main\java\com\CollectionManager.java
-C:\Users\User\Desktop\lab6\server\src\main\java\com\Connector.java
+C:\Users\User\Desktop\lab6\server\src\main\java\Main\Connector.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandInfo.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandSave.java
 C:\Users\User\Desktop\lab6\server\src\main\java\content\Flat.java
@@ -24,8 +24,8 @@ C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandRemoveById.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandRemoveLast.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandShow.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandExecuteScript.java
+C:\Users\User\Desktop\lab6\server\src\main\java\Main\ServerStart.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandShuffle.java
-C:\Users\User\Desktop\lab6\server\src\main\java\com\ServerStart.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\CommandRemoveAt.java
 C:\Users\User\Desktop\lab6\server\src\main\java\tools\Checker.java
 C:\Users\User\Desktop\lab6\server\src\main\java\Commands\Invoker.java

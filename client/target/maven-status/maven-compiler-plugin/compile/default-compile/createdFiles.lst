@@ -5,14 +5,11 @@ content\Flat.class
 tools\CoordinatesAdapter.class
 tools\LocalDateTimeAdapter.class
 content\House.class
-com\CollectionManager.class
 Commands\CommandAdd.class
 Commands\CommandExecuteScript.class
 Commands\CommandMaxByHouse.class
 Commands\CommandSave.class
 Commands\CommandShuffle.class
-com\Connector.class
-com\Handler.class
 Client\Connector.class
 Client\Main.class
 Commands\CommandInfo.class
@@ -23,7 +20,6 @@ Commands\CommandFilter.class
 Commands\CommandClear.class
 Commands\CommandShow.class
 Commands\Invoker.class
-com\ServerStart.class
 Commands\CommandHelp.class
 Commands\CommandRemoveAt.class
 content\Coordinates.class

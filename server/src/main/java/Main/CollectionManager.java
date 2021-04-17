@@ -1,8 +1,6 @@
-package com;
+package Main;
 
-import content.Flat;
-import content.House;
-import content.View;
+import content.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -24,7 +22,7 @@ import java.util.*;
 @XmlRootElement
 public class CollectionManager {
     @XmlElementWrapper(name = "collection")
-    private final LinkedList<Flat> flats = new LinkedList<>();
+    private static final LinkedList<Flat> flats = new LinkedList<>();
     private final static LocalDateTime initDate = LocalDateTime.now();
     private Handler handler;
     private static final Set<String> pathList = new HashSet<>();
@@ -82,7 +80,7 @@ public class CollectionManager {
      * Показать элементы коллекции
      */
     public void show() {
-        flats.forEach(flat -> connector.send(flat.NiceToString()));
+        flats.forEach(flat -> connector.send(flat.niceToString()));
     }
 
     /**
@@ -99,10 +97,8 @@ public class CollectionManager {
     public void update(String id, Flat argument) {
         for (Flat flat : flats) {
             if (flat.getId() == Long.parseLong(id)) {
-                flats.add(argument);
-                flats.getLast().setId(flat.getId());
-                flats.set(flats.indexOf(flat), flats.getLast());
-                remove_last();
+                flats.set(flats.indexOf(flat),argument);
+                flats.get(flats.indexOf(flat)).setId(flat.getId());
                 connector.send("===================================\nЭлемент успешно обновлён.");
                 return;
             }
@@ -110,10 +106,13 @@ public class CollectionManager {
         connector.send("Элемент с указанным id не найден.");
     }
 
-
+    /**
+     * Отключение пользователя
+     */
     public void exit(){
         handler.isExit = true;
     }
+
     /**
      * Удалить элемент коллекции по его id
      *
@@ -145,13 +144,13 @@ public class CollectionManager {
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(manager, writer);
-            connector.send("Коллекция успешно сохранена.");
+            System.out.println("Коллекция успешно сохранена.");
         }catch (FileNotFoundException e) {
-            connector.send("Ошибка. Файл для сохранения не найден, проверьте путь и доступ к файлу.");
+            System.out.println("Ошибка. Файл для сохранения не найден, проверьте путь и доступ к файлу.");
         } catch (IOException e) {
-            connector.send("Ошибка сохранения.");
+            System.out.println("Ошибка сохранения.");
         } catch (MarshalException e) {
-            connector.send("Ошибка сериализации коллекции в XML.");
+            System.out.println("Ошибка сериализации коллекции в XML.");
         } catch (JAXBException e) {
             e.printStackTrace();
         }
@@ -176,6 +175,7 @@ public class CollectionManager {
     public void remove_last() {
         try {
             flats.removeLast();
+            connector.send("Последний элемент коллекции успешно удален.");
         } catch (NoSuchElementException ex) {
             connector.send("Ошибка. Невозможно удалить последний элемент коллекции, т.к. она пуста.");
         }
@@ -190,6 +190,9 @@ public class CollectionManager {
         connector.send("Элементы коллекции успешно перемешаны.");
     }
 
+    /**
+     * Команда-маркер подключения к серверу
+     */
     public void ready(){
         connector.send("Подключение установлено.");
     }
@@ -208,7 +211,7 @@ public class CollectionManager {
      */
     public void max_by_house() {
         if (flats.stream().findAny().isPresent())
-            connector.send(flats.stream().max(Comparator.comparing(Flat::getHouse)).get().NiceToString());
+            connector.send(flats.stream().max(Comparator.comparing(Flat::getHouse)).get().niceToString());
         else connector.send("Ошибка. Коллекция пуста.");
     }
 
@@ -218,7 +221,7 @@ public class CollectionManager {
      */
     public void filter_less_than_view(String view) {
         if (flats.stream().anyMatch(flat -> flat.getView().compareTo(View.valueOf(view)) < 0))
-            flats.stream().filter(flat -> flat.getView().compareTo(View.valueOf(view)) < 0).forEach(flat -> connector.send(flat.NiceToString()));
+            flats.stream().filter(flat -> flat.getView().compareTo(View.valueOf(view)) < 0).forEach(flat -> connector.send(flat.niceToString()));
         else connector.send("Не найдено элементов со значением поля view меньше заданного.");
     }
 
@@ -229,9 +232,13 @@ public class CollectionManager {
      */
     public void execute_script(String path) throws FileNotFoundException {
         InputStream stream;
-        if (path.substring(0,4).equals("/dev")){
-            connector.send("Файл для извлечения скрипта не найден. Проверьте путь и права доступа к файлу.");
-            return;
+        try {
+            if (path.startsWith("/dev")) {
+                connector.send("Файл для извлечения скрипта не найден. Проверьте путь и права доступа к файлу.");
+                return;
+            }
+        }catch (StringIndexOutOfBoundsException ignored){
+
         }
         try{
             stream = new BufferedInputStream(new FileInputStream(path));

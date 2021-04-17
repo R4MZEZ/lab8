@@ -1,28 +1,9 @@
 package Commands;
 
-import com.CollectionManager;
-
 import java.util.Scanner;
 
 public class CommandRemoveLast implements Command{
-
-    CollectionManager manager;
-
-    public CommandRemoveLast(CollectionManager manager) {
-        this.manager = manager;
-    }
-
-    public CommandRemoveLast() {
-    }
-
-    public void setManager(CollectionManager manager) {
-        this.manager = manager;
-    }
-
-    @Override
-    public void execute() {
-        manager.remove_last();
-    }
+    private static final long serialVersionUID = 2519342000003981654L;
 
     @Override
     public boolean validate(String argument, Scanner reader) {

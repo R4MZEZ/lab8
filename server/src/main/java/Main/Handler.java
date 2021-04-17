@@ -1,54 +1,25 @@
-package com;
+package Main;
 
 import Commands.*;
-import content.*;
+import tools.ServerLogger;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import java.io.*;
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class Handler implements Serializable, Runnable {
     Invoker invoker = new Invoker();
     Connector connector;
-    CollectionManager manager;
+    CollectionManager manager = new CollectionManager();
     protected boolean isExit = false;
     Thread thread;
 
     BufferedInputStream stream;
-    JAXBContext context;
-    Unmarshaller unmarshaller;
 
     public Handler(Connector connector){
-        manager = new CollectionManager();
         this.connector = connector;
         manager.setConnector(connector);
         manager.setHandler(this);
 
-//        try {
-//            context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
-//            unmarshaller = context.createUnmarshaller();
-//            stream = new BufferedInputStream(new FileInputStream(filePath));
-//            manager = (CollectionManager) unmarshaller.unmarshal(stream);
-//            Iterator<Flat> iterator = manager.getFlats().listIterator();
-//            while (iterator.hasNext()) {
-//                if (iterator.next().isEmpty()) {
-//                    connector.send("Ошибка! Одна из квартир не была добавлена в коллекцию, т.к. одно или несколько полей не были указаны, либо выходят за допустимый диапазон.");
-//                    iterator.remove();
-//                }
-//            }
-//        } catch (NumberFormatException e) {
-//            connector.send("Ошибка! Невозможно считать коллекцию из файла, т.к. одно или несколько полей указаны в некорректном формате (например, на месте числа - строка).");
-//        } catch (FileNotFoundException e) {
-//            connector.send("Ошибка! Файл с входными данными не найден, проверьте путь и права доступа к файлу.");
-//        } catch (JAXBException e) {
-//            connector.send("Ошибка при десериализации документа. Проверьте правильность разметки.");
-//        }finally {
-//            manager.setConnector(connector);
-//            manager.setHandler(this);
-//        }
         invoker.register("help", new CommandHelp(manager));
         invoker.register("info", new CommandInfo(manager));
         invoker.register("show", new CommandShow(manager));
@@ -75,6 +46,10 @@ public class Handler implements Serializable, Runnable {
         this.thread = thread;
     }
 
+    /**
+     * Эмуляция интерактивного режима для выполнения скрипта
+     * @param stream - поток ввода из скрипта
+     */
     public void interactiveMod(InputStream stream) {
         String fullUserCommand = "";
         try (Scanner commandReader = new Scanner(stream)) {
@@ -91,27 +66,32 @@ public class Handler implements Serializable, Runnable {
                             invoker.execute(invoker.getCommandMap().get(command[0]));
                         }
                     }
-                } else System.out.println("Неопознанная команда! Введите 'help' для просмотра доступных команд.");
+                }
 
             }
         }
     }
 
+    /**
+     * Поток засыпает и ждет, пока появится команда для выполнения и разбудит его
+     * - он выполняет команду и вновь засыпает
+     */
     @Override
     public void run() {
         while (!isExit){
             try {
                 synchronized (thread) {
-                    System.out.println("Хэндлер ожидает" + Thread.currentThread().toString() + " " + thread.toString());
                     thread.wait();
                 }
-            } catch (InterruptedException ignored) {}
-            System.out.println("Выполнение в Хэндлере");
+            } catch (InterruptedException e) {
+                ServerLogger.logger.error("notify() произошел раньше, чем wait(): Перезапуск спящего потока");
+            }
             Command command = connector.command;
             command.setManager(manager);
             invoker.execute(command);
         }
         System.out.println("Соединение с пользователем " + connector.userSocketAddress.toString() + " разорвано.");
+        ServerLogger.logger.info("Соединение с пользователем " + connector.userSocketAddress.toString() + " разорвано.");
     }
 }
 

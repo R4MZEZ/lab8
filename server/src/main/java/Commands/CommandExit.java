@@ -1,6 +1,6 @@
 package Commands;
 
-import com.CollectionManager;
+import Main.CollectionManager;
 
 import java.io.Serializable;
 import java.util.Scanner;
@@ -13,9 +13,6 @@ public class CommandExit implements Command, Serializable {
         this.manager = manager;
     }
 
-    public CommandExit() {
-    }
-
     @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
@@ -23,7 +20,7 @@ public class CommandExit implements Command, Serializable {
 
     @Override
     public void execute() {
-        new CommandSave(manager).execute();
+//        new CommandSave(manager).execute();
         manager.exit();
     }
 
