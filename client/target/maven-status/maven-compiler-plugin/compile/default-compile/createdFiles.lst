@@ -5,6 +5,7 @@ content\Flat.class
 tools\CoordinatesAdapter.class
 tools\LocalDateTimeAdapter.class
 content\House.class
+tools\ClientLogger.class
 Commands\CommandAdd.class
 Commands\CommandExecuteScript.class
 Commands\CommandMaxByHouse.class

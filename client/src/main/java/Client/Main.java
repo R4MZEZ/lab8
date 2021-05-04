@@ -12,11 +12,11 @@ public class Main {
         Commander commander;
         CommandReady commandReady = new CommandReady();
         int count = 0;
-
         int PORT;
         try {
             System.out.print("Введите порт для подключения: ");
             PORT = Integer.parseInt(new Scanner(System.in).next());
+            if (PORT < 0 || PORT >65535) throw new Exception();
         }catch (Exception e){
             System.out.println("Ошибка чтения порта, используется значение по умолчанию.");
             PORT = 1216;
@@ -31,6 +31,8 @@ public class Main {
         if (count != 11) {
             ClientLogger.logger.info("Подключено к серверу с портом {}", PORT);
             commander.interactiveMod(System.in);
+            Connector.isExit = true;
+            Commander.connectorThread.interrupt();
         }
         else {
             ClientLogger.logger.error("Неудачная попытка соединения: сервер с портом {} не отвечает", PORT);

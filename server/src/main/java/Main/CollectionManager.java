@@ -110,6 +110,7 @@ public class CollectionManager {
      * Отключение пользователя
      */
     public void exit(){
+        connector.send("---Сервер выключен---");
         handler.isExit = true;
     }
 

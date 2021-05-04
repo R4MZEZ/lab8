@@ -32,12 +32,17 @@ public class ServerStart {
                 System.out.println("Выключение сервера ...");
                 ServerLogger.logger.info("Выключение сервера");
                 manager.save(manager);
+                for (Connector connector : users.values()) {
+//                    connector.handler.manager.exit();
+                    connector.send("--------------------------------\n---Сервер временно недоступен---\n--------------------------------");
+                }
 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 ServerLogger.logger.error("",e);
             }
         }));
+
         byte[] buffer;
 
         if (args.length > 0) filepath = args[0];
@@ -47,6 +52,7 @@ public class ServerStart {
         try {
             System.out.print("Введите порт для подключения: ");
             PORT = Integer.parseInt(new Scanner(System.in).next());
+            if (PORT < 0 || PORT >65535) throw new Exception();
         }catch (Exception e){
             System.out.println("Ошибка чтения порта, используется значение по умолчанию - 1025.");
             PORT = 1025;
@@ -56,6 +62,10 @@ public class ServerStart {
             DatagramSocket datagramSocket = new DatagramSocket(PORT);
             ServerLogger.logger.info("Запуск сервера на порту {}", PORT);
             System.out.println("Ожидание подключения...");
+
+            for (Connector connector : users.values()) {
+                connector.send("--------------------------------\n---Сервер снова доступен---\n--------------------------------");
+            }
 
             while (true) {
                 buffer = new byte[1024];
@@ -86,6 +96,7 @@ public class ServerStart {
         Unmarshaller unmarshaller;
         BufferedInputStream stream;
         try {
+            manager = new CollectionManager();
             context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
             unmarshaller = context.createUnmarshaller();
             stream = new BufferedInputStream(new FileInputStream(filePath));

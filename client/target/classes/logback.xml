@@ -3,15 +3,15 @@
 
     <appender name="FILE"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>C:\Users\User\Desktop\lab6\client\target\client.log</file>
+        <file>client.log</file>
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
             <fileNamePattern>client.%d{yyyy-MM-dd}.log</fileNamePattern>
 
-            <maxHistory>10</maxHistory>
+            <maxHistory>1</maxHistory>
 
-            <totalSizeCap>10MB</totalSizeCap>
+            <totalSizeCap>1MB</totalSizeCap>
 
         </rollingPolicy>
         <encoder>

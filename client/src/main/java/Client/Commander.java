@@ -70,6 +70,7 @@ public class Commander {
             }while (!fullUserCommand.equals("exit") && commandReader.hasNext());
         }catch (NoSuchElementException e){ClientLogger.logger.error("Ошибка в интерактивном режиме", e);}
         System.out.println("***\tВыход из интерактивного режима\t***");
+        connector.send(invoker.getCommandMap().get("exit"));
         Connector.isExit = true;
         ClientLogger.logger.info("Отключение от сервера");
     }
