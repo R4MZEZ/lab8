@@ -32,6 +32,19 @@ public class Flat implements Comparable<Flat>, Serializable {
         this.house = house;
     }
 
+    public Flat(long id, String name, Coordinates coordinates, LocalDateTime creationDate, Long area, Integer numberOfRooms, long livingSpace, View view, Transport transport, House house) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
+        this.area = area;
+        this.numberOfRooms = numberOfRooms;
+        this.livingSpace = livingSpace;
+        this.view = view;
+        this.transport = transport;
+        this.house = house;
+    }
+
     public Flat() {
         this.id = getNewId();
         this.creationDate = LocalDateTime.now();
