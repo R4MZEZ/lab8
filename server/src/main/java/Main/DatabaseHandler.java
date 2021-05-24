@@ -22,7 +22,7 @@ public class DatabaseHandler {
         this.password = password;
     }
 
-    public void con8nectToDatabase() {
+    public void connectToDatabase() {
         try {
             connection = DriverManager.getConnection(URL, username, password);
             System.out.println("Подключение к базе данных успешно.");
@@ -33,7 +33,7 @@ public class DatabaseHandler {
     }
 
     public boolean registerUser(String username, String password) throws SQLException {
-        if (!userExists(username)) return false;
+        if (userExists(username)) return false;
         PreparedStatement addstatement = connection.prepareStatement(ADD_USER_REQUEST);
         addstatement.setString(1,username);
         addstatement.setString(2,password);
