@@ -25,7 +25,9 @@ public class ServerStart {
     static String filepath;
     static CollectionManager manager;
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        Class.forName("org.postgresql.Driver");
+
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 Thread.sleep(200);
@@ -109,6 +111,8 @@ public class ServerStart {
                 }
             }
         } catch (NumberFormatException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             System.out.println("Ошибка! Невозможно считать коллекцию из файла, т.к. одно или несколько полей указаны в некорректном формате (например, на месте числа - строка).");
             ServerLogger.logger.error("Ошибка! Невозможно считать коллекцию из файла, т.к. одно или несколько полей указаны в некорректном формате (например, на месте числа - строка).");
 

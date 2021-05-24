@@ -59,6 +59,7 @@ public class Commander {
                     try {
                         if (invoker.validate(command[0], command[1], commandReader)) {
                             connector.send(invoker.getCommandMap().get(command[0]));
+
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
                         if (invoker.validate(command[0], "null", commandReader)) {

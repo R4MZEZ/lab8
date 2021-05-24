@@ -17,6 +17,8 @@ import java.time.format.DateTimeFormatter;
 @XmlType(name = "flat")
 public class Flat implements Comparable<Flat>, Serializable {
     private static long static_id = 0;
+    private static final long serialVersionUID = -4288824612268147150L;
+
 
     public Flat(String name, Coordinates coordinates, Long area, Integer numberOfRooms, long livingSpace, View view, Transport transport, House house) {
         this.id = getNewId();

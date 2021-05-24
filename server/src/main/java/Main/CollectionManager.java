@@ -140,7 +140,7 @@ public class CollectionManager {
      */
     public void save(CollectionManager manager){
         try {
-            FileWriter writer = new FileWriter("C:\\Users\\User\\IdeaProjects\\lab5_maven\\src\\main\\java\\inputData\\output.xml");
+            FileWriter writer = new FileWriter("output.xml");
             JAXBContext context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -203,7 +203,7 @@ public class CollectionManager {
      */
     public void average_of_living_space() {
         if (flats.size() > 0) {
-            connector.send("Cреднее значение поля livingSpace равно " + flats.stream().mapToLong(Flat::getLivingSpace).average());
+            connector.send("Cреднее значение поля livingSpace равно " + flats.stream().mapToLong(Flat::getLivingSpace).average().getAsDouble());
         } else connector.send("Ошибка. Коллекция пуста.");
     }
 
