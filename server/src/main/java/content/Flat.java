@@ -1,13 +1,5 @@
 package content;
 
-import tools.CoordinatesAdapter;
-import tools.LocalDateTimeAdapter;
-
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 /**
  * Класс, объекты которого будут храниться в коллекции
  */
-@XmlType(name = "flat")
 public class Flat implements Comparable<Flat>, Serializable {
     private static long static_id = 0;
 
@@ -45,39 +36,24 @@ public class Flat implements Comparable<Flat>, Serializable {
         this.house = house;
     }
 
-    public Flat() {
-        this.id = getNewId();
-        this.creationDate = LocalDateTime.now();
-    }
-    @XmlAttribute(name = "id")
+
     private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    @XmlAttribute(name = "name")
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    @XmlJavaTypeAdapter(CoordinatesAdapter.class)
-    @XmlAttribute
-    private Coordinates coordinates; //Поле не может быть null
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-    @XmlAttribute
+    private final String name; //Поле не может быть null, Строка не может быть пустой
+    private final Coordinates coordinates; //Поле не может быть null
     private final LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-    @XmlAttribute(name = "area")
-    private Long area; //Поле не может быть null, Значение поля должно быть больше 0
-    @XmlAttribute(name = "numberOfRooms")
-    private Integer numberOfRooms; //Значение поля должно быть больше 0
-    @XmlAttribute(name = "livingSpace")
-    private long livingSpace; //Значение поля должно быть больше 0
-    @XmlAttribute(name = "view")
-    private View view; //Поле не может быть null
-    @XmlAttribute(name = "transport")
-    private Transport transport; //Поле может быть null
-    @XmlElement(name="house")
-    private House house; //Поле может быть null
+    private final Long area; //Поле не может быть null, Значение поля должно быть больше 0
+    private final Integer numberOfRooms; //Значение поля должно быть больше 0
+    private final long livingSpace; //Значение поля должно быть больше 0
+    private final View view; //Поле не может быть null
+    private final Transport transport; //Поле может быть null
+    private final House house; //Поле может быть null
+    private final String user;
 
     public static long getNewId() {
         static_id += 1;
         return static_id;
     }
 
-    @XmlTransient
     public long getId(){
         return id;
     }
@@ -100,6 +76,30 @@ public class Flat implements Comparable<Flat>, Serializable {
 
     public House getHouse() {
         return house;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public Long getArea() {
+        return area;
+    }
+
+    public Integer getNumberOfRooms() {
+        return numberOfRooms;
+    }
+
+    public Transport getTransport() {
+        return transport;
+    }
+
+    public String getUser() {
+        return user;
     }
 
     @Override

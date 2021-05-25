@@ -27,7 +27,7 @@ public class ServerStart {
                 Thread.sleep(200);
                 System.out.println("Выключение сервера ...");
                 ServerLogger.logger.info("Выключение сервера");
-                manager.save(manager);
+                manager.save();
                 for (Connector connector : users.values()) {
 //                    connector.handler.manager.exit();
                     connector.send("--------------------------------\n---Сервер временно недоступен---\n--------------------------------");

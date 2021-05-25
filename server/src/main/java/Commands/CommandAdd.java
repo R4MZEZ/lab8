@@ -27,9 +27,7 @@ public class CommandAdd implements Command, Serializable {
 
     @Override
     public void execute() {
-        argument.setId(Flat.getNewId());
-        manager.getFlats().add(argument);
-        manager.add();
+        manager.add(argument);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class CommandSave implements Command{
 
     @Override
     public void execute() {
-        manager.save(manager);
+        manager.save();
 
     }
 

@@ -7,13 +7,15 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 
 public class DatabaseHandler {
-    private String URL;
-    private String username;
-    private String password;
+    private final String URL;
+    private final String username;
+    private final String password;
     private Connection connection;
     private static final String ADD_USER_REQUEST = "INSERT INTO USERS (username, password) VALUES (?, ?)";
+    private static final String ADD_OLD_FLAT_REQUEST = "INSERT INTO FLATS (id, name, coordX, coordY, creationDate, area, numberOfRooms, livingSpace, view, transport, house_name, house_year, house_numberOfFlatsOnFloor, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String ADD_NEW_FLAT_REQUEST = "INSERT INTO FLATS (name, coordX, coordY, creationDate, area, numberOfRooms, livingSpace, view, transport, house_name, house_year, house_numberOfFlatsOnFloor, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String CHECK_USER_REQUEST = "SELECT * FROM USERS WHERE username = ?";
-    private static final String JOIN_FLATS_HOUSES_REQUEST = "SELECT * FROM FLATS INNER JOIN HOUSES ON FLATS.house_id = HOUSES.id";
+    private static final String FLATS_REQUEST = "SELECT * FROM FLATS";
     private static final String LOGIN_USER_REQUEST = "SELECT * FROM USERS WHERE username = ? AND password = ?";
 
 
@@ -34,13 +36,12 @@ public class DatabaseHandler {
         }
     }
 
-    public boolean registerUser(String username, String password) throws SQLException {
+    public void registerUser(String username, String password) throws SQLException {
         PreparedStatement addstatement = connection.prepareStatement(ADD_USER_REQUEST);
         addstatement.setString(1,username);
         addstatement.setString(2,password);
         addstatement.executeUpdate();
         addstatement.close();
-        return true;
     }
 
     public boolean loginUser(String username, String password) throws SQLException {
@@ -51,7 +52,7 @@ public class DatabaseHandler {
         if (result.next()) {
             loginstatement.close();
             return true;
-        };
+        }
         loginstatement.close();
         return false;
     }
@@ -64,7 +65,7 @@ public class DatabaseHandler {
         if (result.next()) {
             checkstatement.close();
             return true;
-        };
+        }
         checkstatement.close();
         return false;
 
@@ -73,7 +74,7 @@ public class DatabaseHandler {
     public LinkedList<Flat> loadCollectionFromDB(){
         LinkedList<Flat> collection = new LinkedList<>();
         try {
-            PreparedStatement joinStatement = connection.prepareStatement(JOIN_FLATS_HOUSES_REQUEST);
+            PreparedStatement joinStatement = connection.prepareStatement(FLATS_REQUEST);
             ResultSet result = joinStatement.executeQuery();
 
             while (result.next()){
@@ -89,6 +90,52 @@ public class DatabaseHandler {
             System.exit(-1);
         }
         return collection;
+    }
+
+    public void saveCollectionToDB(LinkedList<Flat> collection){
+        collection.forEach(flat -> addFlatToDB(flat,false));
+    }
+
+    public void addFlatToDB(Flat flat, boolean isNew){
+        try {
+            PreparedStatement saveStatement;
+            if (!isNew) {
+                saveStatement = connection.prepareStatement(ADD_OLD_FLAT_REQUEST);
+                saveStatement.setLong(1, flat.getId());
+                saveStatement.setString(2, flat.getName());
+                saveStatement.setFloat(3, flat.getCoordinates().getX());
+                saveStatement.setLong(4, flat.getCoordinates().getY());
+                saveStatement.setDate(5, Date.valueOf(flat.getCreationDate().toLocalDate()));
+                saveStatement.setLong(6, flat.getArea());
+                saveStatement.setInt(7, flat.getNumberOfRooms());
+                saveStatement.setLong(8, flat.getLivingSpace());
+                saveStatement.setString(9, flat.getView().toString());
+                saveStatement.setString(10, flat.getTransport().toString());
+                saveStatement.setString(11, flat.getHouse().getName());
+                saveStatement.setInt(12, flat.getHouse().getYear());
+                saveStatement.setInt(13, flat.getHouse().getNumberOfFlatsOnFloor());
+                saveStatement.setString(14, flat.getUser());
+            }else {
+                saveStatement = connection.prepareStatement(ADD_NEW_FLAT_REQUEST);
+                saveStatement.setString(1, flat.getName());
+                saveStatement.setFloat(2, flat.getCoordinates().getX());
+                saveStatement.setLong(3, flat.getCoordinates().getY());
+                saveStatement.setDate(4, Date.valueOf(flat.getCreationDate().toLocalDate()));
+                saveStatement.setLong(5, flat.getArea());
+                saveStatement.setInt(6, flat.getNumberOfRooms());
+                saveStatement.setLong(7, flat.getLivingSpace());
+                saveStatement.setString(8, flat.getView().toString());
+                saveStatement.setString(9, flat.getTransport().toString());
+                saveStatement.setString(10, flat.getHouse().getName());
+                saveStatement.setInt(11, flat.getHouse().getYear());
+                saveStatement.setInt(12, flat.getHouse().getNumberOfFlatsOnFloor());
+                saveStatement.setString(13, flat.getUser());
+            }
+            saveStatement.executeUpdate();
+            saveStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public Flat extractFlatFromResult(ResultSet result) throws SQLException {

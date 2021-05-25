@@ -2,13 +2,7 @@ package Main;
 
 import content.*;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.MarshalException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+
 import java.io.*;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -19,11 +13,8 @@ import java.util.*;
  * Класс, обеспечивающий доступ к коллекции
  */
 
-@XmlType(name = "root")
-@XmlRootElement
 public class CollectionManager {
-    @XmlElementWrapper(name = "collection")
-    private static final LinkedList<Flat> flats = new LinkedList<>();
+    private static LinkedList<Flat> flats = new LinkedList<>();
     private final static LocalDateTime initDate = LocalDateTime.now();
     private Handler handler;
     private static final Set<String> pathList = new HashSet<>();
@@ -38,9 +29,6 @@ public class CollectionManager {
         this.databaseHandler = databaseHandler;
     }
 
-    public DatabaseHandler getDatabaseHandler() {
-        return databaseHandler;
-    }
 
     public void setConnector(Connector connector) {
         this.connector = connector;
@@ -81,6 +69,7 @@ public class CollectionManager {
      * Получить информацию о коллекции
      */
     public void info() {
+        flats = databaseHandler.loadCollectionFromDB();
         String info = "Тип - " + flats.getClass().getName() +
                 "\nДата инициализации - " + getInitDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm:ss")) +
                 "\nКоличество элементов - " + flats.size();
@@ -91,13 +80,15 @@ public class CollectionManager {
      * Показать элементы коллекции
      */
     public void show() {
+        flats = databaseHandler.loadCollectionFromDB();
         flats.forEach(flat -> connector.send(flat.niceToString()));
     }
 
     /**
      * Добавить элемент коллекции
      */
-    public void add(){
+    public void add(Flat flat){
+        databaseHandler.addFlatToDB(flat,true);
         connector.send("===================================\nЭлемент успешно добавлен.");
     }
 
@@ -147,25 +138,9 @@ public class CollectionManager {
 
     /**
      * Сохранить коллекцию в файл
-     * @param manager : объект для доступа к коллекции
      */
-    public void save(CollectionManager manager){
-        try {
-            FileWriter writer = new FileWriter("output.xml");
-            JAXBContext context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marshaller.marshal(manager, writer);
-            System.out.println("Коллекция успешно сохранена.");
-        }catch (FileNotFoundException e) {
-            System.out.println("Ошибка. Файл для сохранения не найден, проверьте путь и доступ к файлу.");
-        } catch (IOException e) {
-            System.out.println("Ошибка сохранения.");
-        } catch (MarshalException e) {
-            System.out.println("Ошибка сериализации коллекции в XML.");
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
+    public void save(){
+        //TODO
     }
 
     /**
