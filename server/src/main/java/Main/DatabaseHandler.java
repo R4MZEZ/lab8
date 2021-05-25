@@ -12,11 +12,14 @@ public class DatabaseHandler {
     private final String password;
     private Connection connection;
     private static final String ADD_USER_REQUEST = "INSERT INTO USERS (username, password) VALUES (?, ?)";
-    private static final String ADD_OLD_FLAT_REQUEST = "INSERT INTO FLATS (id, name, coordX, coordY, creationDate, area, numberOfRooms, livingSpace, view, transport, house_name, house_year, house_numberOfFlatsOnFloor, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE_FLAT_REQUEST = "UPDATE FLATS SET name = ?, coordX = ?, coordY = ?, creationDate = ?, area = ?, numberOfRooms = ?, livingSpace = ?, view = ?, transport = ?, house_name = ?, house_year = ?, house_numberOfFlatsOnFloor = ? WHERE id = ?";
     private static final String ADD_NEW_FLAT_REQUEST = "INSERT INTO FLATS (name, coordX, coordY, creationDate, area, numberOfRooms, livingSpace, view, transport, house_name, house_year, house_numberOfFlatsOnFloor, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String CHECK_USER_REQUEST = "SELECT * FROM USERS WHERE username = ?";
     private static final String FLATS_REQUEST = "SELECT * FROM FLATS";
-    private static final String LOGIN_USER_REQUEST = "SELECT * FROM USERS WHERE username = ? AND password = ?";
+    private static final String USER_BY_ID_REQUEST = "SELECT username FROM FLATS WHERE id = ?";
+    private static final String LOGIN_USER_REQUEST = "SELECT * FROM FLATS WHERE username = ? AND password = ?";
+
+
 
 
 
@@ -93,49 +96,68 @@ public class DatabaseHandler {
     }
 
     public void saveCollectionToDB(LinkedList<Flat> collection){
-        collection.forEach(flat -> addFlatToDB(flat,false));
+        collection.forEach(this::addFlatToDB);
     }
 
-    public void addFlatToDB(Flat flat, boolean isNew){
+    public void addFlatToDB(Flat flat) {
         try {
-            PreparedStatement saveStatement;
-            if (!isNew) {
-                saveStatement = connection.prepareStatement(ADD_OLD_FLAT_REQUEST);
-                saveStatement.setLong(1, flat.getId());
-                saveStatement.setString(2, flat.getName());
-                saveStatement.setFloat(3, flat.getCoordinates().getX());
-                saveStatement.setLong(4, flat.getCoordinates().getY());
-                saveStatement.setDate(5, Date.valueOf(flat.getCreationDate().toLocalDate()));
-                saveStatement.setLong(6, flat.getArea());
-                saveStatement.setInt(7, flat.getNumberOfRooms());
-                saveStatement.setLong(8, flat.getLivingSpace());
-                saveStatement.setString(9, flat.getView().toString());
-                saveStatement.setString(10, flat.getTransport().toString());
-                saveStatement.setString(11, flat.getHouse().getName());
-                saveStatement.setInt(12, flat.getHouse().getYear());
-                saveStatement.setInt(13, flat.getHouse().getNumberOfFlatsOnFloor());
-                saveStatement.setString(14, flat.getUser());
-            }else {
-                saveStatement = connection.prepareStatement(ADD_NEW_FLAT_REQUEST);
-                saveStatement.setString(1, flat.getName());
-                saveStatement.setFloat(2, flat.getCoordinates().getX());
-                saveStatement.setLong(3, flat.getCoordinates().getY());
-                saveStatement.setDate(4, Date.valueOf(flat.getCreationDate().toLocalDate()));
-                saveStatement.setLong(5, flat.getArea());
-                saveStatement.setInt(6, flat.getNumberOfRooms());
-                saveStatement.setLong(7, flat.getLivingSpace());
-                saveStatement.setString(8, flat.getView().toString());
-                saveStatement.setString(9, flat.getTransport().toString());
-                saveStatement.setString(10, flat.getHouse().getName());
-                saveStatement.setInt(11, flat.getHouse().getYear());
-                saveStatement.setInt(12, flat.getHouse().getNumberOfFlatsOnFloor());
-                saveStatement.setString(13, flat.getUser());
-            }
+            PreparedStatement saveStatement = connection.prepareStatement(ADD_NEW_FLAT_REQUEST);
+            saveStatement.setString(1, flat.getName());
+            saveStatement.setFloat(2, flat.getCoordinates().getX());
+            saveStatement.setLong(3, flat.getCoordinates().getY());
+            saveStatement.setDate(4, Date.valueOf(flat.getCreationDate().toLocalDate()));
+            saveStatement.setLong(5, flat.getArea());
+            saveStatement.setInt(6, flat.getNumberOfRooms());
+            saveStatement.setLong(7, flat.getLivingSpace());
+            saveStatement.setString(8, flat.getView().toString());
+            saveStatement.setString(9, flat.getTransport().toString());
+            saveStatement.setString(10, flat.getHouse().getName());
+            saveStatement.setInt(11, flat.getHouse().getYear());
+            saveStatement.setInt(12, flat.getHouse().getNumberOfFlatsOnFloor());
+            saveStatement.setString(13, flat.getUser());
             saveStatement.executeUpdate();
             saveStatement.close();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateFlatToDB(Flat flat){
+        try {
+            PreparedStatement saveStatement = connection.prepareStatement(UPDATE_FLAT_REQUEST);
+            saveStatement.setString(1, flat.getName());
+            saveStatement.setFloat(2, flat.getCoordinates().getX());
+            saveStatement.setLong(3, flat.getCoordinates().getY());
+            saveStatement.setDate(4, Date.valueOf(flat.getCreationDate().toLocalDate()));
+            saveStatement.setLong(5, flat.getArea());
+            saveStatement.setInt(6, flat.getNumberOfRooms());
+            saveStatement.setLong(7, flat.getLivingSpace());
+            saveStatement.setString(8, flat.getView().toString());
+            saveStatement.setString(9, flat.getTransport().toString());
+            saveStatement.setString(10, flat.getHouse().getName());
+            saveStatement.setInt(11, flat.getHouse().getYear());
+            saveStatement.setInt(12, flat.getHouse().getNumberOfFlatsOnFloor());
+            saveStatement.setLong(13,flat.getId());
+            saveStatement.executeUpdate();
+            saveStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getUserById(long id) throws SQLException {
+        String username;
+        PreparedStatement getstatement = connection.prepareStatement(USER_BY_ID_REQUEST);
+        getstatement.setLong(1,id);
+        ResultSet result = getstatement.executeQuery();
+        if (result.next()) {
+            username = result.getString("username");
+            getstatement.close();
+            return username;
+        }
+        getstatement.close();
+        return null;
+
     }
 
     public Flat extractFlatFromResult(ResultSet result) throws SQLException {

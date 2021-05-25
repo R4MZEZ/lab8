@@ -88,7 +88,7 @@ public class CollectionManager {
      * Добавить элемент коллекции
      */
     public void add(Flat flat){
-        databaseHandler.addFlatToDB(flat,true);
+        databaseHandler.addFlatToDB(flat);
         connector.send("===================================\nЭлемент успешно добавлен.");
     }
 
@@ -97,15 +97,20 @@ public class CollectionManager {
      * @param id : id (не индекс) нужного элемента
      */
     public void update(String id, Flat argument) {
-        for (Flat flat : flats) {
-            if (flat.getId() == Long.parseLong(id)) {
-                flats.set(flats.indexOf(flat),argument);
-                flats.get(flats.indexOf(flat)).setId(flat.getId());
-                connector.send("===================================\nЭлемент успешно обновлён.");
+        try {
+            if (databaseHandler.getUserById(Long.parseLong(id)) == null){
+                connector.send("Элемента с указанным id не существует.");
                 return;
             }
+            if (!databaseHandler.getUserById(Long.parseLong(id)).equals(argument.getUser())){
+                connector.send("У вас недостаточно прав для модификации этого элемента.");
+                return;
+            }
+            databaseHandler.updateFlatToDB(argument);
+            connector.send("Элемент успешно обновлён.");
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
-        connector.send("Элемент с указанным id не найден.");
     }
 
     /**

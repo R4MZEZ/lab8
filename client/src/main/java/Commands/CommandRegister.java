@@ -1,5 +1,6 @@
 package Commands;
 
+import Client.Commander;
 import tools.Checker;
 import tools.DataHasher;
 
@@ -26,6 +27,7 @@ public class CommandRegister implements Command{
             if (symbols != null) password = DataHasher.encryptStringSHA512(String.valueOf(symbols));
         }
         else password = DataHasher.encryptStringSHA512(reader.nextLine());
+        Commander.setUsername(username);
         return true;
     }
 }

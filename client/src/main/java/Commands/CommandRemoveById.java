@@ -1,5 +1,6 @@
 package Commands;
 
+import Client.Commander;
 import tools.Checker;
 
 import java.util.Scanner;
@@ -7,6 +8,7 @@ import java.util.Scanner;
 public class CommandRemoveById implements Command{
     private static final long serialVersionUID = 4540012222739611587L;
     String argument;
+    String username;
 
     @Override
     public boolean validate(String argument, Scanner reader) {
@@ -15,6 +17,7 @@ public class CommandRemoveById implements Command{
             return false;
         }
         this.argument = argument;
+        this.username = Commander.getUsername();
         return true;
     }
 }

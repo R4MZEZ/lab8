@@ -1,5 +1,6 @@
 package Commands;
 
+import Client.Commander;
 import content.Flat;
 import tools.Checker;
 
@@ -10,6 +11,7 @@ public class CommandUpdate implements Command{
 
     Flat flat;
     String id;
+    String username;
 
     @Override
     public boolean validate(String argument, Scanner reader) {
@@ -21,7 +23,10 @@ public class CommandUpdate implements Command{
         a.validate(argument,reader);
         this.flat = a.argument;
         this.id = argument;
+        this.username = Commander.getUsername();
         return true;
     }
+
+
 }
 

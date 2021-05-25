@@ -17,6 +17,7 @@ public class Commander {
     Connector connector;
     static Thread connectorThread;
     static boolean isAuth;
+    static String username;
 
     public Commander(CommandReady commandReady, int PORT){
         connector = new Connector(PORT);
@@ -76,5 +77,13 @@ public class Commander {
         connector.send(invoker.getCommandMap().get("exit"));
         Connector.isExit = true;
         ClientLogger.logger.info("Отключение от сервера");
+    }
+
+    public static void setUsername(String username) {
+        Commander.username = username;
+    }
+
+    public static String getUsername() {
+        return username;
     }
 }
