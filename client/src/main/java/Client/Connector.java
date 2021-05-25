@@ -18,6 +18,7 @@ public class Connector implements Runnable {
     ObjectOutputStream outputStream;
     ObjectInput input;
     protected static boolean isExit = false;
+    String relevantMessage;
 
     ByteBuffer byteBuffer;
     byte[] buffer = new byte[1024];
@@ -54,7 +55,10 @@ public class Connector implements Runnable {
             client.receive(ByteBuffer.wrap(buffer));
             Main.connected = true;
             input = new ObjectInputStream(new ByteArrayInputStream(buffer));
-            return (String) input.readObject();
+            relevantMessage = (String) input.readObject();
+            if (relevantMessage.substring(0,16).equals("Добро пожаловать")
+                    || relevantMessage.substring(0,16).equals("С возвращением, ")) Commander.isAuth = true;
+            return relevantMessage;
 
         }catch (ClosedByInterruptException ignored){
             return "";

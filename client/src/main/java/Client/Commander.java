@@ -16,6 +16,7 @@ public class Commander {
     Invoker invoker = new Invoker();
     Connector connector;
     static Thread connectorThread;
+    static boolean isAuth;
 
     public Commander(CommandReady commandReady, int PORT){
         connector = new Connector(PORT);
@@ -31,7 +32,6 @@ public class Commander {
         invoker.register("update", new CommandUpdate());
         invoker.register("clear", new CommandClear());
         invoker.register("execute_script", new CommandExecuteScript());
-//        invoker.register("save", new CommandSave());
         invoker.register("remove_at", new CommandRemoveAt());
         invoker.register("remove_last", new CommandRemoveLast());
         invoker.register("shuffle", new CommandShuffle());
@@ -39,6 +39,10 @@ public class Commander {
         invoker.register("max_by_house", new CommandMaxByHouse());
         invoker.register("filter_less_than_view", new CommandFilter());
         invoker.register("exit", new CommandExit());
+        invoker.register("login", new CommandLogin());
+        invoker.register("register", new CommandRegister());
+
+
     }
 
     public Commander() {
@@ -56,17 +60,18 @@ public class Commander {
                 fullUserCommand = commandReader.nextLine();
                 String[] command = fullUserCommand.trim().split(" ");
                 if (invoker.contains(command[0])) {
-                    try {
-                        if (invoker.validate(command[0], command[1], commandReader)) {
-                            connector.send(invoker.getCommandMap().get(command[0]));
-
+                    if (isAuth || command[0].equals("login") || command[0].equals("register")) {
+                        try {
+                            if (invoker.validate(command[0], command[1], commandReader)) {
+                                connector.send(invoker.getCommandMap().get(command[0]));
+                            }
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            if (invoker.validate(command[0], "", commandReader)) {
+                                connector.send(invoker.getCommandMap().get(command[0]));
+                            }
                         }
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        if (invoker.validate(command[0], "null", commandReader)) {
-                            connector.send(invoker.getCommandMap().get(command[0]));
-                        }
-                    }
-                }else System.out.println("Неопознанная команда! Введите 'help' для просмотра доступных команд.");
+                    }else System.err.println("Вы не авторизованы!");
+                } else System.err.println("Неопознанная команда! Введите 'help' для просмотра доступных команд.");
 
             }while (!fullUserCommand.equals("exit") && commandReader.hasNext());
         }catch (NoSuchElementException e){ClientLogger.logger.error("Ошибка в интерактивном режиме", e);}

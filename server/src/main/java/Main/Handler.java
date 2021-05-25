@@ -36,6 +36,8 @@ public class Handler implements Serializable, Runnable {
         invoker.register("max_by_house", new CommandMaxByHouse(manager));
         invoker.register("filter_less_than_view", new CommandFilter(manager));
         invoker.register("exit", new CommandExit(manager));
+        invoker.register("login", new CommandLogin());
+        invoker.register("register", new CommandRegister());
     }
 
     public BufferedInputStream getStream() {

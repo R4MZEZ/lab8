@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.*;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -27,8 +28,18 @@ public class CollectionManager {
     private Handler handler;
     private static final Set<String> pathList = new HashSet<>();
     Connector connector;
+    DatabaseHandler databaseHandler;
 
     public CollectionManager() {
+    }
+
+
+    public void setDatabaseHandler(DatabaseHandler databaseHandler) {
+        this.databaseHandler = databaseHandler;
+    }
+
+    public DatabaseHandler getDatabaseHandler() {
+        return databaseHandler;
     }
 
     public void setConnector(Connector connector) {
@@ -269,6 +280,33 @@ public class CollectionManager {
      */
     public LinkedList<Flat> getFlats() {
         return flats;
+    }
+
+    public void login(String username, String password){
+        try {
+            if (!databaseHandler.userExists(username)){
+                connector.send("Пользователя с таким именем не найдено.");
+                return;
+            }
+            if (!databaseHandler.loginUser(username, password)) {
+                connector.send("Неверный пароль.");
+                return;
+            }
+            connector.send("С возвращением, " + username + "!");
+        } catch (SQLException e) {
+            e.printStackTrace();}
+    }
+
+    public void register(String username, String password){
+        try {
+            if (databaseHandler.userExists(username)){
+                connector.send("Пользователь с таким именем уже существует.");
+                return;
+            }
+            databaseHandler.registerUser(username, password);
+            connector.send("Добро пожаловать, " + username + "!");
+        } catch (SQLException e) {
+            e.printStackTrace();}
     }
 
 }

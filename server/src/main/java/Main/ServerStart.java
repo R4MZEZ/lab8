@@ -1,5 +1,6 @@
 package Main;
 
+import com.sun.xml.bind.v2.TODO;
 import content.Flat;
 import content.House;
 import tools.ServerLogger;
@@ -24,9 +25,13 @@ public class ServerStart {
     static HashMap<InetSocketAddress,Connector> users = new HashMap<>();
     static String filepath;
     static CollectionManager manager;
+    static DatabaseHandler databaseHandler;
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");
+        String jdbcURL = "jdbc:postgresql://localhost:3125/studs";
+        databaseHandler = new DatabaseHandler(jdbcURL, "s312515", "mej858");
+        databaseHandler.connectToDatabase();
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
@@ -94,37 +99,40 @@ public class ServerStart {
      * @param filePath путь до файла
      */
     private static void fillCollection(String filePath){
-        JAXBContext context;
-        Unmarshaller unmarshaller;
-        BufferedInputStream stream;
-        try {
-            manager = new CollectionManager();
-            context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
-            unmarshaller = context.createUnmarshaller();
-            stream = new BufferedInputStream(new FileInputStream(filePath));
-            manager = (CollectionManager) unmarshaller.unmarshal(stream);
-            Iterator<Flat> iterator = manager.getFlats().listIterator();
-            while (iterator.hasNext()) {
-                if (iterator.next().isEmpty()) {
-                    System.out.println("Ошибка! Одна из квартир не была добавлена в коллекцию, т.к. одно или несколько полей не были указаны, либо выходят за допустимый диапазон.");
-                    iterator.remove();
-                }
-            }
-        } catch (NumberFormatException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            System.out.println("Ошибка! Невозможно считать коллекцию из файла, т.к. одно или несколько полей указаны в некорректном формате (например, на месте числа - строка).");
-            ServerLogger.logger.error("Ошибка! Невозможно считать коллекцию из файла, т.к. одно или несколько полей указаны в некорректном формате (например, на месте числа - строка).");
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Ошибка! Файл с входными данными не найден, проверьте путь и права доступа к файлу.");
-            ServerLogger.logger.error("Ошибка! Файл с входными данными не найден, проверьте путь и права доступа к файлу.");
-
-        } catch (JAXBException e) {
-            System.out.println("Ошибка при десериализации документа. Проверьте правильность разметки.");
-            ServerLogger.logger.error("Ошибка при десериализации документа. Проверьте правильность разметки.");
-
-        }
+        manager = new CollectionManager();
+        manager.setDatabaseHandler(databaseHandler);
+        //TODO
+//        JAXBContext context;
+//        Unmarshaller unmarshaller;
+//        BufferedInputStream stream;
+//        try {
+//            manager = new CollectionManager();
+//            context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
+//            unmarshaller = context.createUnmarshaller();
+//            stream = new BufferedInputStream(new FileInputStream(filePath));
+//            manager = (CollectionManager) unmarshaller.unmarshal(stream);
+//            Iterator<Flat> iterator = manager.getFlats().listIterator();
+//            while (iterator.hasNext()) {
+//                if (iterator.next().isEmpty()) {
+//                    System.out.println("Ошибка! Одна из квартир не была добавлена в коллекцию, т.к. одно или несколько полей не были указаны, либо выходят за допустимый диапазон.");
+//                    iterator.remove();
+//                }
+//            }
+//        } catch (NumberFormatException e) {
+//            System.out.println(e.getMessage());
+//            e.printStackTrace();
+//            System.out.println("Ошибка! Невозможно считать коллекцию из файла, т.к. одно или несколько полей указаны в некорректном формате (например, на месте числа - строка).");
+//            ServerLogger.logger.error("Ошибка! Невозможно считать коллекцию из файла, т.к. одно или несколько полей указаны в некорректном формате (например, на месте числа - строка).");
+//
+//        } catch (FileNotFoundException e) {
+//            System.out.println("Ошибка! Файл с входными данными не найден, проверьте путь и права доступа к файлу.");
+//            ServerLogger.logger.error("Ошибка! Файл с входными данными не найден, проверьте путь и права доступа к файлу.");
+//
+//        } catch (JAXBException e) {
+//            System.out.println("Ошибка при десериализации документа. Проверьте правильность разметки.");
+//            ServerLogger.logger.error("Ошибка при десериализации документа. Проверьте правильность разметки.");
+//
+//        }
     }
 }
 

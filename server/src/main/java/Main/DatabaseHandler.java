@@ -14,6 +14,8 @@ public class DatabaseHandler {
     private static final String ADD_USER_REQUEST = "INSERT INTO USERS (username, password) VALUES (?, ?)";
     private static final String CHECK_USER_REQUEST = "SELECT * FROM USERS WHERE username = ?";
     private static final String JOIN_FLATS_HOUSES_REQUEST = "SELECT * FROM FLATS INNER JOIN HOUSES ON FLATS.house_id = HOUSES.id";
+    private static final String LOGIN_USER_REQUEST = "SELECT * FROM USERS WHERE username = ? AND password = ?";
+
 
 
     public DatabaseHandler(String URL, String username, String password) {
@@ -33,7 +35,6 @@ public class DatabaseHandler {
     }
 
     public boolean registerUser(String username, String password) throws SQLException {
-        if (userExists(username)) return false;
         PreparedStatement addstatement = connection.prepareStatement(ADD_USER_REQUEST);
         addstatement.setString(1,username);
         addstatement.setString(2,password);
@@ -41,6 +42,20 @@ public class DatabaseHandler {
         addstatement.close();
         return true;
     }
+
+    public boolean loginUser(String username, String password) throws SQLException {
+        PreparedStatement loginstatement = connection.prepareStatement(LOGIN_USER_REQUEST);
+        loginstatement.setString(1,username);
+        loginstatement.setString(2,password);
+        ResultSet result = loginstatement.executeQuery();
+        if (result.next()) {
+            loginstatement.close();
+            return true;
+        };
+        loginstatement.close();
+        return false;
+    }
+
 
     public boolean userExists(String username) throws SQLException {
         PreparedStatement checkstatement = connection.prepareStatement(CHECK_USER_REQUEST);
