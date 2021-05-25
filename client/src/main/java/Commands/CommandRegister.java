@@ -25,7 +25,7 @@ public class CommandRegister implements Command{
             char[] symbols = console.readPassword();
             if (symbols != null) password = DataHasher.encryptStringSHA512(String.valueOf(symbols));
         }
-        else password = reader.nextLine();
+        else password = DataHasher.encryptStringSHA512(reader.nextLine());
         return true;
     }
 }

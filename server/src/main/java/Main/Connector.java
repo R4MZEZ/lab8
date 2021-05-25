@@ -21,9 +21,12 @@ public class Connector{
     ObjectInputStream input;
     byte[] buffer;
 
+    DatabaseHandler databaseHandler;
+
     DatagramSocket datagramSocket; //Сокет для отправки ответов
 
-    public Connector(InetSocketAddress address, DatagramSocket socket, byte[] buffer) {
+    public Connector(InetSocketAddress address, DatagramSocket socket, byte[] buffer, DatabaseHandler databaseHandler) {
+        this.databaseHandler = databaseHandler;
         handler = new Handler(this);
         thread = new Thread(handler);
         handler.setThread(thread);

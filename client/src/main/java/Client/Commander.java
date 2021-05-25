@@ -45,9 +45,6 @@ public class Commander {
 
     }
 
-    public Commander() {
-    }
-
     /**
      * Включить интерактивный режим
      * @param stream : поток ввода

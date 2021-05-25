@@ -1,6 +1,5 @@
 package content;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import java.io.Serializable;
 
 /**
@@ -13,27 +12,14 @@ public class House implements Comparable<House>, Serializable {
         this.numberOfFlatsOnFloor = numberOfFlatsOnFloor;
     }
 
-    public House() {
-    }
-
-    public String getName() {
-        return name;
-    }
 
     public Integer getYear() {
         return year;
     }
 
-    public int getNumberOfFlatsOnFloor() {
-        return numberOfFlatsOnFloor;
-    }
-
-    @XmlAttribute(name = "name")
-    private String name; //Поле не может быть null
-    @XmlAttribute(name = "year")
-    private Integer year; //Значение поля должно быть больше 0
-    @XmlAttribute(name = "numberOfFlatsOnFloor")
-    private int numberOfFlatsOnFloor; //Значение поля должно быть больше 0
+    private final String name; //Поле не может быть null
+    private final Integer year; //Значение поля должно быть больше 0
+    private final int numberOfFlatsOnFloor; //Значение поля должно быть больше 0
 
     @Override
     public int compareTo(House obj) {

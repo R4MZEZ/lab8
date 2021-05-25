@@ -19,6 +19,7 @@ public class Handler implements Serializable, Runnable {
         this.connector = connector;
         manager.setConnector(connector);
         manager.setHandler(this);
+        manager.setDatabaseHandler(connector.databaseHandler);
 
         invoker.register("help", new CommandHelp(manager));
         invoker.register("info", new CommandInfo(manager));
