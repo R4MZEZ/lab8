@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Scanner;
 
 public class CommandHelp implements Command, Serializable {
+    private static final long serialVersionUID = -4848347544087315082L;
 
     CollectionManager manager;
 

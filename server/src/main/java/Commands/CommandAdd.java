@@ -9,9 +9,11 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class CommandAdd implements Command, Serializable {
+    private static final long serialVersionUID = 312956475280869092L;
 
     CollectionManager manager;
     Flat argument;
+    String username;
 
     public CommandAdd(CollectionManager manager) {
         this.manager = manager;
@@ -27,7 +29,7 @@ public class CommandAdd implements Command, Serializable {
 
     @Override
     public void execute() {
-        manager.add(argument);
+        manager.add(argument, username);
     }
 
     @Override

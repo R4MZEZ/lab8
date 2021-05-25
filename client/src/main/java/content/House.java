@@ -6,6 +6,8 @@ import java.io.Serializable;
  * Класс для хранения данных о доме, в котором находится квартира
  */
 public class House implements Comparable<House>, Serializable {
+    private static final long serialVersionUID = 1321406681307379186L;
+
     public House(String name, Integer year, int numberOfFlatsOnFloor) {
         this.name = name;
         this.year = year;

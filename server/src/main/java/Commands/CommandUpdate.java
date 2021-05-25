@@ -7,10 +7,12 @@ import tools.Checker;
 import java.util.Scanner;
 
 public class CommandUpdate implements Command{
+    private static final long serialVersionUID = -8375499694740192662L;
 
     CollectionManager manager;
     Flat flat;
     String id;
+    String username;
 
     public CommandUpdate(CollectionManager manager) {
         this.manager = manager;
@@ -26,7 +28,7 @@ public class CommandUpdate implements Command{
 
     @Override
     public void execute() {
-        manager.update(id,flat);
+        manager.update(id,flat,username);
     }
 
     @Override

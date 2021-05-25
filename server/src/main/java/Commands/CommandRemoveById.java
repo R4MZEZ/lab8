@@ -6,6 +6,8 @@ import tools.Checker;
 import java.util.Scanner;
 
 public class CommandRemoveById implements Command{
+    private static final long serialVersionUID = 4540012222739611587L;
+
     CollectionManager manager;
     String argument;
 

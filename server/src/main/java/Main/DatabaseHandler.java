@@ -16,8 +16,8 @@ public class DatabaseHandler {
     private static final String ADD_NEW_FLAT_REQUEST = "INSERT INTO FLATS (name, coordX, coordY, creationDate, area, numberOfRooms, livingSpace, view, transport, house_name, house_year, house_numberOfFlatsOnFloor, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String CHECK_USER_REQUEST = "SELECT * FROM USERS WHERE username = ?";
     private static final String FLATS_REQUEST = "SELECT * FROM FLATS";
-    private static final String USER_BY_ID_REQUEST = "SELECT username FROM FLATS WHERE id = ?";
-    private static final String LOGIN_USER_REQUEST = "SELECT * FROM FLATS WHERE username = ? AND password = ?";
+    private static final String USER_BY_ID_REQUEST = "SELECT * FROM FLATS WHERE id = ?";
+    private static final String LOGIN_USER_REQUEST = "SELECT * FROM USERS WHERE username = ? AND password = ?";
 
 
 
@@ -170,6 +170,6 @@ public class DatabaseHandler {
                         result.getInt(8),
                         View.valueOf(result.getString(9)),
                         Transport.valueOf(result.getString(10)),
-                        new House(result.getString(12), result.getInt(13),result.getInt(14)));
+                        new House(result.getString(11), result.getInt(12),result.getInt(13)));
     }
 }

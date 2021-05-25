@@ -5,6 +5,7 @@ import Main.CollectionManager;
 import java.util.Scanner;
 
 public class CommandMaxByHouse implements Command{
+    private static final long serialVersionUID = -3649928705995173479L;
 
     CollectionManager manager;
 

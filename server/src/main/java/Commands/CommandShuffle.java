@@ -5,6 +5,7 @@ import Main.CollectionManager;
 import java.util.Scanner;
 
 public class CommandShuffle implements Command{
+    private static final long serialVersionUID = -3236822596483462976L;
 
     CollectionManager manager;
 

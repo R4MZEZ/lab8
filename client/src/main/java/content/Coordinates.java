@@ -6,6 +6,8 @@ import java.io.Serializable;
  * Класс для хранения координат квартиры
  */
 public class Coordinates implements Serializable {
+    private static final long serialVersionUID = 4325446441307549186L;
+
     public Coordinates(Float x, long y) {
         this.x = x;
         this.y = y;

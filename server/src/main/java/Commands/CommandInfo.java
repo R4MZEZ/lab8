@@ -5,6 +5,7 @@ import Main.CollectionManager;
 import java.util.Scanner;
 
 public class CommandInfo implements Command {
+    private static final long serialVersionUID = 2935568159828483139L;
 
     CollectionManager manager;
 

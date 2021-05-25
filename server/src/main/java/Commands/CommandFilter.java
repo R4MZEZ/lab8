@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Scanner;
 
 public class CommandFilter implements Command, Serializable {
+    private static final long serialVersionUID = -5497970455882024000L;
 
     CollectionManager manager;
     String argument;

@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
  * Класс, объекты которого будут храниться в коллекции
  */
 public class Flat implements Comparable<Flat>, Serializable {
+    private static final long serialVersionUID = -4288824612268147150L;
+
     private static long static_id = 0;
 
     public Flat(String name, Coordinates coordinates, Long area, Integer numberOfRooms, long livingSpace, View view, Transport transport, House house) {
@@ -47,7 +49,11 @@ public class Flat implements Comparable<Flat>, Serializable {
     private final View view; //Поле не может быть null
     private final Transport transport; //Поле может быть null
     private final House house; //Поле может быть null
-    private final String user;
+    private String user;
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 
     public static long getNewId() {
         static_id += 1;

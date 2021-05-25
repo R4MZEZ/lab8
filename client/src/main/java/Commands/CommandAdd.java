@@ -1,5 +1,6 @@
 package Commands;
 
+import Client.Commander;
 import content.*;
 import tools.Checker;
 
@@ -11,6 +12,7 @@ public class CommandAdd implements Command, Serializable {
     private static final long serialVersionUID = 312956475280869092L;
 
     Flat argument;
+    String username;
 
 
     @Override
@@ -113,6 +115,9 @@ public class CommandAdd implements Command, Serializable {
                             Long.parseLong(temp[3]), Integer.parseInt(temp[4]), Long.parseLong(temp[5]),
                             View.valueOf(temp[6]), Transport.valueOf(temp[7]), new House(temp[8], Integer.parseInt(temp[9]),
                             Integer.parseInt(temp[10])));
+
+            this.username = Commander.getUsername();
+
             return true;
         } catch (NoSuchElementException ex){
             System.out.println();

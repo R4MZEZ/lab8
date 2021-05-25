@@ -82,6 +82,7 @@ public class Connector{
             }
         } catch (IOException | ClassNotFoundException | IllegalMonitorStateException e) {
             ServerLogger.logger.error("Ошибка при получении данных",e);
+            e.printStackTrace();
         }
 
     }
