@@ -166,13 +166,8 @@ public class CollectionManager {
      * @param index : индекс нужного элемента
      */
     public void remove_at(String username, String index) {
-        try {
-            connector.send(databaseHandler.removeAt(username, Integer.parseInt(index)));
-            flats = databaseHandler.loadCollectionFromDB();
-        } catch (SQLException e) {
-            connector.send("Ошибка доступа к базе данных");
-            e.printStackTrace();
-        }
+        connector.send(databaseHandler.removeAt(username, Integer.parseInt(index)));
+        flats = databaseHandler.loadCollectionFromDB();
 
     }
 
@@ -180,18 +175,8 @@ public class CollectionManager {
      * Удалить последний элемент коллекции
      */
     public void remove_last(String username) {
-        try {
-            flats = databaseHandler.loadCollectionFromDB();
-            if (flats.getLast().getUser().equals(username)) {
-                flats.removeLast();
-                connector.send("Последний элемент коллекции успешно удален.");
-                return;
-            }
-            connector.send("Элемент коллекции принадлежит не вам.");
-        } catch (NoSuchElementException ex) {
-            connector.send("Ошибка. Коллекция пуста.");
-        }
-
+        connector.send(databaseHandler.removeLast(username));
+        flats = databaseHandler.loadCollectionFromDB();
     }
 
     /**
