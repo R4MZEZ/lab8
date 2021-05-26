@@ -18,7 +18,10 @@ public class DatabaseHandler {
     private static final String FLATS_REQUEST = "SELECT * FROM FLATS";
     private static final String USER_BY_ID_REQUEST = "SELECT * FROM FLATS WHERE id = ?";
     private static final String LOGIN_USER_REQUEST = "SELECT * FROM USERS WHERE username = ? AND password = ?";
-
+    private static final String CLEAR_REQUEST = "DELETE FROM FLATS WHERE username = ?";
+    private static final String DELETE_REQUEST = "DELETE FROM FLATS WHERE id = ?";
+    private static final String GET_BY_ID_REQUEST = "SELECT * FROM FLATS WHERE id = ?";
+    private static final String GET_NUMERATED_REQUEST = "SELECT row_number() over (), * FROM flats";
 
 
 
@@ -164,7 +167,7 @@ public class DatabaseHandler {
         return new Flat(result.getInt(1),
                         result.getString(2),
                         new Coordinates(result.getFloat(3), result.getInt(4)),
-                        LocalDateTime.of(result.getDate(5).toLocalDate(), result.getTime(5).toLocalTime()),
+                        LocalDateTime.of(result.getDate(5).toLocalDate(), result.getTime(5).toLocalTime()), //TODO
                         result.getLong(6),
                         result.getInt(7),
                         result.getInt(8),
@@ -172,4 +175,45 @@ public class DatabaseHandler {
                         Transport.valueOf(result.getString(10)),
                         new House(result.getString(11), result.getInt(12),result.getInt(13)));
     }
+
+    public void deleteByUsername(String username) throws SQLException {
+        PreparedStatement clearstatement = connection.prepareStatement(CLEAR_REQUEST);
+        clearstatement.setString(1,username);
+        clearstatement.executeUpdate();
+        clearstatement.close();
+    }
+
+    public boolean deleteById(String username, long id) throws SQLException {
+        PreparedStatement getstatement = connection.prepareStatement(GET_BY_ID_REQUEST);
+        getstatement.setLong(1,id);
+        ResultSet result = getstatement.executeQuery();
+        getstatement.close();
+        if (result.next()) {
+            if (result.getString("username").equals(username)) {
+                PreparedStatement deletestatement = connection.prepareStatement(DELETE_REQUEST);
+                deletestatement.setLong(1, id);
+                deletestatement.executeUpdate();
+                deletestatement.close();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String removeAt(String username, int index) throws SQLException {
+        PreparedStatement getstatement = connection.prepareStatement(GET_NUMERATED_REQUEST);
+        ResultSet result = getstatement.executeQuery();
+        getstatement.close();
+        while (result.next()){
+            if (result.getInt("row_number") == index){
+                if (deleteById(username, result.getInt("id"))){
+                    return "Элемент успешно удалён.";
+                }
+                return "Элемент принадлежит не вам.";
+            }
+        }
+        return "Элемента с указанным номером не существует.";
+    }
+
+
 }

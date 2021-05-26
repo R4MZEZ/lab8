@@ -10,6 +10,8 @@ public class CommandRemoveAt implements Command{
 
     CollectionManager manager;
     String argument;
+    String username;
+
 
     public CommandRemoveAt(CollectionManager manager) {
         this.manager = manager;
@@ -25,7 +27,7 @@ public class CommandRemoveAt implements Command{
 
     @Override
     public void execute() {
-        manager.remove_at(argument);
+        manager.remove_at(username,argument);
     }
 
     @Override

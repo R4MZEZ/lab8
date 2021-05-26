@@ -9,6 +9,8 @@ public class CommandClear implements Command, Serializable {
     private static final long serialVersionUID = 935077734379123140L;
 
     CollectionManager manager;
+    String username;
+
 
     public CommandClear(CollectionManager manager) {
         this.manager = manager;
@@ -24,7 +26,7 @@ public class CommandClear implements Command, Serializable {
 
     @Override
     public void execute() {
-        manager.clear();
+        manager.clear(username);
     }
 
     @Override

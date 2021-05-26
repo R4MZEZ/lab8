@@ -10,6 +10,8 @@ public class CommandRemoveById implements Command{
 
     CollectionManager manager;
     String argument;
+    String username;
+
 
     public CommandRemoveById(CollectionManager manager) {
         this.manager = manager;
@@ -25,7 +27,7 @@ public class CommandRemoveById implements Command{
 
     @Override
     public void execute() {
-        manager.remove_by_id(argument);
+        manager.remove_by_id(username, argument);
     }
 
     @Override

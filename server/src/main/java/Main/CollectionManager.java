@@ -127,50 +127,69 @@ public class CollectionManager {
      *
      * @param id id(не индекс) нужного элемента
      */
-    public void remove_by_id(String id) {
-        if (flats.stream().anyMatch(flat -> flat.getId() == Long.parseLong(id))) {
-            flats.remove(flats.stream().filter(flat -> flat.getId() == Long.parseLong(id)).findFirst().orElse(null));
-            connector.send("Элемент успешно удалён.");
-        } else connector.send("Элемента с id = '" + id + "' не найдено.");
+    public void remove_by_id(String username, String id) {
+        try {
+            if (databaseHandler.deleteById(username, Long.parseLong(id))){
+                connector.send("Элемент успешно удалён.");
+                flats = databaseHandler.loadCollectionFromDB();
+                return;
+            }
+            connector.send("Элемента с id = '" + id + "' не найдено, либо этот элемент принадлежит не вам.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            connector.send("Ошибка доступа к базе данных.");
+        }
     }
 
     /**
      * Очистить коллекцию
      */
-    public void clear() {
-        flats.clear();
-        connector.send("Коллекция успешно очищена.");
+    public void clear(String username) {
+        try {
+            databaseHandler.deleteByUsername(username);
+            flats = databaseHandler.loadCollectionFromDB();
+            connector.send("Элементы коллекции, принадлежащие вам, успешно очищены.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Сохранить коллекцию в файл
      */
     public void save(){
-        //TODO
+        databaseHandler.saveCollectionToDB(flats);
     }
 
     /**
      * Удалить элемент коллекции по его индексу
      * @param index : индекс нужного элемента
      */
-    public void remove_at(String index) {
-            try {
-                flats.remove(Integer.parseInt(index));
-                connector.send("Элемент коллекции успешно удалён.");
-            } catch (IndexOutOfBoundsException ex) {
-                connector.send("Ошибка. Элемента с таким индексом не существует.");
-            }
+    public void remove_at(String username, String index) {
+        try {
+            connector.send(databaseHandler.removeAt(username, Integer.parseInt(index)));
+            flats = databaseHandler.loadCollectionFromDB();
+        } catch (SQLException e) {
+            connector.send("Ошибка доступа к базе данных");
+            e.printStackTrace();
         }
+
+    }
 
     /**
      * Удалить последний элемент коллекции
      */
-    public void remove_last() {
+    public void remove_last(String username) {
         try {
-            flats.removeLast();
-            connector.send("Последний элемент коллекции успешно удален.");
+            flats = databaseHandler.loadCollectionFromDB();
+            if (flats.getLast().getUser().equals(username)) {
+                flats.removeLast();
+                connector.send("Последний элемент коллекции успешно удален.");
+                return;
+            }
+            connector.send("Элемент коллекции принадлежит не вам.");
         } catch (NoSuchElementException ex) {
-            connector.send("Ошибка. Невозможно удалить последний элемент коллекции, т.к. она пуста.");
+            connector.send("Ошибка. Коллекция пуста.");
         }
 
     }
