@@ -45,8 +45,8 @@ public class Connector{
     }
 
     /**
-     * Принять данные от пользователя
-     * @param data - данные (как правило, объект команды)
+     * Отправить пользователю данные
+     * @param data - данные
      */
     public void send(Object data){
         try {
@@ -60,7 +60,7 @@ public class Connector{
     }
 
     /**
-     * Отправить пользователю данные
+     * Принять данные от пользователя
      * @param buffer данные в сериализованном виде
      */
     public synchronized void receive(byte[] buffer){
@@ -86,4 +86,5 @@ public class Connector{
         }
 
     }
+
 }
