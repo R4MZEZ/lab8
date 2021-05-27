@@ -52,7 +52,7 @@ public class Commander {
      */
     public void interactiveMod(InputStream stream) {
         String fullUserCommand = "";
-        if (stream.equals(System.in))System.out.println("***\tНачало работы. Для просмотра доступных команд напишите 'help'\t***");
+        if (stream.equals(System.in))System.out.println("Для выполнения команд необходима авторизация: используйте login/register <username>\n***\tНачало работы. Для просмотра доступных команд напишите 'help'\t***");
         try (Scanner commandReader = new Scanner(stream)) {
             do{
                 fullUserCommand = commandReader.nextLine();

@@ -14,7 +14,7 @@ import java.util.*;
  */
 
 public class CollectionManager {
-    private static LinkedList<Flat> flats = new LinkedList<>();
+    private static List<Flat> flats = Collections.synchronizedList(new LinkedList<>());
     private final static LocalDateTime initDate = LocalDateTime.now();
     private Handler handler;
     private static final Set<String> pathList = new HashSet<>();
@@ -58,7 +58,7 @@ public class CollectionManager {
                       "exit: Завершить программу (без сохранения в файл)\n" +
                       "remove_at index: Удалить элемент, находящийся в заданной позиции коллекции (index)\n" +
                       "remove_last: Удалить последний элемент из коллекции\n" +
-                      "shuffle: Перемешать элементы коллекции в случайном порядке\n" +
+ //                     "shuffle: Перемешать элементы коллекции в случайном порядке\n" +
                       "average_of_living_space: Вывести среднее значение поля livingSpace для всех элементов коллекции\n" +
                       "max_by_house: Вывести любой объект из коллекции, значение поля house которого является максимальным\n" +
                       "filter_less_than_view view: Вывести элементы, значение поля view которых меньше заданного";
@@ -118,7 +118,6 @@ public class CollectionManager {
      * Отключение пользователя
      */
     public void exit(){
-        connector.send("---Сервер выключен---");
         handler.isExit = true;
     }
 
@@ -263,9 +262,6 @@ public class CollectionManager {
      * Получить объект коллекции
      * @return коллекцию
      */
-    public LinkedList<Flat> getFlats() {
-        return flats;
-    }
 
     public void login(String username, String password){
         try {

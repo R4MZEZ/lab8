@@ -1,11 +1,15 @@
 package Main;
 
 import content.*;
+import tools.Checker;
+import tools.LocalDateTimeAdapter;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 public class DatabaseHandler {
     private final String URL;
@@ -23,6 +27,7 @@ public class DatabaseHandler {
     private static final String DELETE_REQUEST = "DELETE FROM FLATS WHERE id = ?";
     private static final String GET_BY_ID_REQUEST = "SELECT * FROM FLATS WHERE id = ?";
     private static final String GET_NUMERATED_REQUEST = "SELECT row_number() over (), * FROM flats";
+    private static final String GET_DATE_REQUEST = "SELECT to_char(creationdate,'dd.mm.yyyy,HH24:mi:ss') from flats where id = ?";
 
 
 
@@ -64,7 +69,6 @@ public class DatabaseHandler {
         return false;
     }
 
-
     public boolean userExists(String username) throws SQLException {
         PreparedStatement checkstatement = connection.prepareStatement(CHECK_USER_REQUEST);
         checkstatement.setString(1,username);
@@ -78,15 +82,19 @@ public class DatabaseHandler {
 
     }
 
-    public LinkedList<Flat> loadCollectionFromDB(){
-        LinkedList<Flat> collection = new LinkedList<>();
+    public List<Flat> loadCollectionFromDB(){
+        List<Flat> collection = Collections.synchronizedList(new LinkedList<>());
         try {
             PreparedStatement joinStatement = connection.prepareStatement(FLATS_REQUEST);
             ResultSet result = joinStatement.executeQuery();
 
-            while (result.next()){
-                Flat flat = extractFlatFromResult(result);
-                collection.add(flat);
+            while (result.next()) {
+                if (validateFlatFromDB(result)) {
+                    Flat flat = extractFlatFromResult(result);
+                    collection.add(flat);
+                } else
+                    System.err.printf("Ошибка. Квартира с id = %d не может быть загружена из БД, одно или несколько полей указаны в недопустимом формате/диапазоне.\n", result.getInt("id"));
+
             }
 
             joinStatement.close();
@@ -99,12 +107,8 @@ public class DatabaseHandler {
         return collection;
     }
 
-    public void saveCollectionToDB(LinkedList<Flat> collection){
+    public void saveCollectionToDB(List<Flat> collection){
         collection.forEach(this::addFlatToDB);
-    }
-
-    public void updateCollectionToDB(LinkedList<Flat> collection){
-        collection.forEach(this::updateFlatToDB);
     }
 
     public void addFlatToDB(Flat flat) {
@@ -113,7 +117,7 @@ public class DatabaseHandler {
             saveStatement.setString(1, flat.getName());
             saveStatement.setFloat(2, flat.getCoordinates().getX());
             saveStatement.setLong(3, flat.getCoordinates().getY());
-            saveStatement.setDate(4, Date.valueOf(flat.getCreationDate().toLocalDate()));
+            saveStatement.setTimestamp(4, Timestamp.valueOf(flat.getCreationDate()));
             saveStatement.setLong(5, flat.getArea());
             saveStatement.setInt(6, flat.getNumberOfRooms());
             saveStatement.setLong(7, flat.getLivingSpace());
@@ -136,7 +140,7 @@ public class DatabaseHandler {
             saveStatement.setString(1, flat.getName());
             saveStatement.setFloat(2, flat.getCoordinates().getX());
             saveStatement.setLong(3, flat.getCoordinates().getY());
-            saveStatement.setDate(4, Date.valueOf(flat.getCreationDate().toLocalDate()));
+            saveStatement.setTimestamp(4, Timestamp.valueOf(flat.getCreationDate()));
             saveStatement.setLong(5, flat.getArea());
             saveStatement.setInt(6, flat.getNumberOfRooms());
             saveStatement.setLong(7, flat.getLivingSpace());
@@ -169,18 +173,46 @@ public class DatabaseHandler {
     }
 
     public Flat extractFlatFromResult(ResultSet result) throws SQLException {
+        Transport transport;
+        try {
+            transport = Transport.valueOf(result.getString(10));
+        } catch (NullPointerException e) {
+            transport = null;
+        }
+
+        PreparedStatement statement = connection.prepareStatement(GET_DATE_REQUEST);
+        statement.setInt(1, result.getInt("id"));
+        ResultSet dateResult = statement.executeQuery();
+        dateResult.next();
+        LocalDateTime dateTime = LocalDateTimeAdapter.unmarshal(dateResult.getString("to_char"));
+        statement.close();
+
         Flat flat = new Flat(result.getInt(1),
-                        result.getString(2),
-                        new Coordinates(result.getFloat(3), result.getInt(4)),
-                        LocalDateTime.of(result.getDate(5).toLocalDate(), LocalTime.of(0,0)), //TODO
-                        result.getLong(6),
-                        result.getInt(7),
-                        result.getInt(8),
-                        View.valueOf(result.getString(9)),
-                        Transport.valueOf(result.getString(10)),
-                        new House(result.getString(11), result.getInt(12),result.getInt(13)));
+                result.getString(2),
+                new Coordinates(result.getFloat(3), result.getInt(4)),
+                dateTime,
+                result.getLong(6),
+                result.getInt(7),
+                result.getInt(8),
+                View.valueOf(result.getString(9)),
+                transport,
+                new House(result.getString(11), result.getInt(12), result.getInt(13)));
         flat.setUser(result.getString("username"));
         return flat;
+    }
+
+    public boolean validateFlatFromDB(ResultSet result) throws SQLException {
+        return result.getInt("id") >= 0 &&
+                !Checker.isNotString(result.getString("name")) &&
+                result.getInt("coordy") <= 368 &&
+                result.getLong("area") >= 0 &&
+                result.getInt("numberofrooms") >= 0 &&
+                Checker.isView(result.getString("view")) &&
+                !(result.getString("transport") != null &
+                        !Checker.isTransport(result.getString("transport"))) &&
+                !Checker.isNotString(result.getString("house_name")) &&
+                result.getInt("house_year") >= 0 &&
+                result.getInt("house_numberofflatsonfloor") >= 0;
     }
 
     public void deleteByUsername(String username) throws SQLException {
@@ -245,4 +277,5 @@ public class DatabaseHandler {
             return "Ошибка доступа к базе данных.";
         }
     }
+
 }
