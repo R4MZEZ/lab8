@@ -3,10 +3,11 @@ package Main;
 import content.*;
 import tools.Checker;
 import tools.LocalDateTimeAdapter;
+import tools.Reconnector;
+import tools.ServerLogger;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,14 +39,10 @@ public class DatabaseHandler {
         this.password = password;
     }
 
-    public void connectToDatabase() {
-        try {
-            connection = DriverManager.getConnection(URL, username, password);
-            System.out.println("Подключение к базе данных успешно.");
-        } catch (SQLException e) {
-            System.err.println("Ошибка подключения к базе данных. Завершение работы.");
-            System.exit(-1);
-        }
+    public void connectToDatabase() throws SQLException {
+        connection = DriverManager.getConnection(URL, username, password);
+        System.out.println("Подключение к базе данных успешно.");
+
     }
 
     public void registerUser(String username, String password) throws SQLException {
@@ -100,9 +97,11 @@ public class DatabaseHandler {
             joinStatement.close();
             System.out.println("Коллекция успешно загружена из базы данных. Количество элементов: " + collection.size());
         }catch (SQLException e){
-            System.out.println("Произошла ошибка при загрузке коллекции из базы данных. Завершение работы.");
-            e.printStackTrace();
-            System.exit(-1);
+            System.err.println("Произошла ошибка при загрузке коллекции из базы данных.");
+            ServerLogger.logger.error("Ошибка доступа к базе", e);
+            //System.exit(-1);
+            collection = null;
+            new Thread(new Reconnector(this)).start();
         }
         return collection;
     }
@@ -130,7 +129,8 @@ public class DatabaseHandler {
             saveStatement.executeUpdate();
             saveStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Ошибка доступа к базе данных.");
+            ServerLogger.logger.error("Ошибка доступа к базе", e);
         }
     }
 
@@ -240,41 +240,42 @@ public class DatabaseHandler {
         return false;
     }
 
-    public String removeAt(String username, int index) {
-        try(PreparedStatement getstatement = connection.prepareStatement(GET_NUMERATED_REQUEST);) {
-            ResultSet result = getstatement.executeQuery();
-            while (result.next()) {
-                if (result.getInt("row_number") == index) {
-                    if (deleteById(username, result.getInt("id"))) {
-                        return "Элемент успешно удалён.";
-                    }
-                    return "Элемент принадлежит не вам.";
+    public String removeAt(String username, int index) throws SQLException {
+        PreparedStatement getstatement = connection.prepareStatement(GET_NUMERATED_REQUEST);
+        ResultSet result = getstatement.executeQuery();
+        while (result.next()) {
+            if (result.getInt("row_number") == index) {
+                if (deleteById(username, result.getInt("id"))) {
+                    getstatement.close();
+                    return "Элемент успешно удалён.";
                 }
+                getstatement.close();
+                return "Элемент принадлежит не вам.";
             }
-            return "Элемента с указанным номером не существует.";
-        }catch (SQLException e){
-            e.printStackTrace();
-            return "Ошибка доступа к базе данных.";
         }
+        getstatement.close();
+        return "Элемента с указанным номером не существует.";
+
     }
 
-    public String removeLast(String username){
-        try(PreparedStatement getstatement = connection.prepareStatement(GET_NUMERATED_REQUEST);) {
-            ResultSet result = getstatement.executeQuery();
-            if(!result.next())return "Коллекция пуста.";
+    public String removeLast(String username) throws SQLException {
+        PreparedStatement getstatement = connection.prepareStatement(GET_NUMERATED_REQUEST);
+        ResultSet result = getstatement.executeQuery();
+        if (!result.next()) {
+            getstatement.close();
+            return "Коллекция пуста.";
+        }
 
-            while (true){
-                int id = result.getInt("id");
-                if (!result.next()) {
-                    if(deleteById(username, id)){
-                        return "Элемент успешно удален.";
-                    }
-                    return "Элемент принадлежит не вам.";
+        while (true) {
+            int id = result.getInt("id");
+            if (!result.next()) {
+                if (deleteById(username, id)) {
+                    getstatement.close();
+                    return "Элемент успешно удален.";
                 }
+                getstatement.close();
+                return "Элемент принадлежит не вам.";
             }
-        }catch (SQLException e){
-            e.printStackTrace();
-            return "Ошибка доступа к базе данных.";
         }
     }
 

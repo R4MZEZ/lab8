@@ -1,6 +1,7 @@
 package Main;
 
 import content.*;
+import tools.ServerLogger;
 
 
 import java.io.*;
@@ -70,6 +71,10 @@ public class CollectionManager {
      */
     public void info() {
         flats = databaseHandler.loadCollectionFromDB();
+        if (flats==null){
+            connector.send("Произошла ошибка при загрузке коллекции из базы данных.");
+            return;
+        }
         String info = "Тип - " + flats.getClass().getName() +
                 "\nДата инициализации - " + getInitDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm:ss")) +
                 "\nКоличество элементов - " + flats.size();
@@ -81,6 +86,10 @@ public class CollectionManager {
      */
     public void show() {
         flats = databaseHandler.loadCollectionFromDB();
+        if (flats==null){
+            connector.send("Произошла ошибка при загрузке коллекции из базы данных.");
+            return;
+        }
         flats.forEach(flat -> connector.send(flat.niceToString()));
     }
 
@@ -130,12 +139,13 @@ public class CollectionManager {
         try {
             if (databaseHandler.deleteById(username, Long.parseLong(id))){
                 connector.send("Элемент успешно удалён.");
-                flats = databaseHandler.loadCollectionFromDB();
+                flats.remove(flats.stream().filter(flat -> flat.getId() == Long.parseLong(id)).findFirst().orElse(null));
                 return;
             }
             connector.send("Элемента с id = '" + id + "' не найдено, либо этот элемент принадлежит не вам.");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Ошибка доступа к базе данных.");
+            ServerLogger.logger.error("Ошибка доступа к базе", e);
             connector.send("Ошибка доступа к базе данных.");
         }
     }
@@ -148,8 +158,10 @@ public class CollectionManager {
             databaseHandler.deleteByUsername(username);
             flats = databaseHandler.loadCollectionFromDB();
             connector.send("Элементы коллекции, принадлежащие вам, успешно очищены.");
+            flats.removeIf(flat -> flat.getUser().equals(username));
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Ошибка доступа к базе данных.");
+            ServerLogger.logger.error("Ошибка доступа к базе", e);
         }
     }
 
@@ -165,8 +177,13 @@ public class CollectionManager {
      * @param index : индекс нужного элемента
      */
     public void remove_at(String username, String index) {
-        connector.send(databaseHandler.removeAt(username, Integer.parseInt(index)));
-        flats = databaseHandler.loadCollectionFromDB();
+        try {
+            connector.send(databaseHandler.removeAt(username, Integer.parseInt(index)));
+            if (flats.get(Integer.parseInt(index)).getUser().equals(username)) flats.remove(Integer.parseInt(index));
+        } catch (SQLException e) {
+            System.err.println("Ошибка доступа к базе данных.");
+            ServerLogger.logger.error("Ошибка доступа к базе", e);
+        }
 
     }
 
@@ -174,8 +191,14 @@ public class CollectionManager {
      * Удалить последний элемент коллекции
      */
     public void remove_last(String username) {
-        connector.send(databaseHandler.removeLast(username));
-        flats = databaseHandler.loadCollectionFromDB();
+        try {
+            connector.send(databaseHandler.removeLast(username));
+            if (flats.get(flats.size()-1).getUser().equals(username)) flats.remove(flats.size()-1);
+        } catch (SQLException e) {
+            System.err.println("Ошибка доступа к базе данных.");
+            ServerLogger.logger.error("Ошибка доступа к базе", e);
+        }
+
     }
 
     /**
@@ -258,10 +281,6 @@ public class CollectionManager {
         pathList.remove(path);
     }
 
-    /**
-     * Получить объект коллекции
-     * @return коллекцию
-     */
 
     public void login(String username, String password){
         try {
@@ -275,7 +294,8 @@ public class CollectionManager {
             }
             connector.send("С возвращением, " + username + "!");
         } catch (SQLException e) {
-            e.printStackTrace();}
+            System.err.println("Ошибка доступа к базе данных.");
+            ServerLogger.logger.error("Ошибка доступа к базе", e);}
     }
 
     public void register(String username, String password){
@@ -287,7 +307,8 @@ public class CollectionManager {
             databaseHandler.registerUser(username, password);
             connector.send("Добро пожаловать, " + username + "!");
         } catch (SQLException e) {
-            e.printStackTrace();}
+            System.err.println("Ошибка доступа к базе данных.");
+            ServerLogger.logger.error("Ошибка доступа к базе", e);}
     }
 
 }

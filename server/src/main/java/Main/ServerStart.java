@@ -7,6 +7,7 @@ import java.net.BindException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -20,7 +21,12 @@ public class ServerStart {
         Class.forName("org.postgresql.Driver");
         String jdbcURL = "jdbc:postgresql://localhost:3125/studs";
         databaseHandler = new DatabaseHandler(jdbcURL, "s312515", "mej858");
-        databaseHandler.connectToDatabase();
+        try {
+            databaseHandler.connectToDatabase();
+        } catch (SQLException e) {
+            System.err.println("Ошибка подключения к базе данных. Завершение работы.");
+            System.exit(-1);
+        }
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
@@ -77,9 +83,6 @@ public class ServerStart {
 
     }
 
-    /**
-     *
-     */
     private static void fillCollection(){
         manager = new CollectionManager();
         manager.setDatabaseHandler(databaseHandler);
