@@ -8,12 +8,15 @@ public class CommandMaxByHouse implements Command{
     private static final long serialVersionUID = -3649928705995173479L;
 
     CollectionManager manager;
+    String username;
 
     public CommandMaxByHouse(CollectionManager manager) {
         this.manager = manager;
     }
 
-    public CommandMaxByHouse() {
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

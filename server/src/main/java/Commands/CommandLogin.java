@@ -19,6 +19,11 @@ public class CommandLogin implements Command {
     public void execute() {manager.login(username,password);}
 
     @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
     public boolean validate(String argument, Scanner reader) {
         if (Checker.isNotString(argument)) {
             System.err.println("Логин должен быть непустой строкой.");

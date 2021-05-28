@@ -17,6 +17,7 @@ public class ServerStart {
     static int PORT;
     static final HashMap<InetSocketAddress,Connector> users = new HashMap<>();
     static final String jdbcURL = "jdbc:postgresql://localhost:3125/studs";
+//    static final String jdbcURL = "jdbc:postgresql://pg:5432/studs";
     static DatabaseHandler databaseHandler= new DatabaseHandler(jdbcURL, "s312515", "mej858");
     static final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
 

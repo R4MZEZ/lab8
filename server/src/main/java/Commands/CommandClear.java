@@ -20,6 +20,11 @@ public class CommandClear implements Command, Serializable {
     }
 
     @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
     public void setManager(CollectionManager manager) {
         this.manager = manager;
     }

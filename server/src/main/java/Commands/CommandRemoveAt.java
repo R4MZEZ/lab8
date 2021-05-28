@@ -17,7 +17,9 @@ public class CommandRemoveAt implements Command{
         this.manager = manager;
     }
 
-    public CommandRemoveAt() {
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

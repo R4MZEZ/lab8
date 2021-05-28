@@ -8,12 +8,15 @@ public class CommandShuffle implements Command{
     private static final long serialVersionUID = -3236822596483462976L;
 
     CollectionManager manager;
+    String username;
 
     public CommandShuffle(CollectionManager manager) {
         this.manager = manager;
     }
 
-    public CommandShuffle() {
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

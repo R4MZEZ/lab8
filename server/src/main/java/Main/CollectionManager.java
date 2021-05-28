@@ -18,7 +18,7 @@ public class CollectionManager {
     private static List<Flat> flats = Collections.synchronizedList(new LinkedList<>());
     private final static LocalDateTime initDate = LocalDateTime.now();
     private Handler handler;
-    private static final Set<String> pathList = new HashSet<>();
+    static final Set<String> pathList = new HashSet<>();
     Connector connector;
     DatabaseHandler databaseHandler;
 
@@ -249,7 +249,7 @@ public class CollectionManager {
      * @param path Путь до файла
      * @throws FileNotFoundException если файл недоступен/не найден
      */
-    public void execute_script(String path) throws FileNotFoundException {
+    public void execute_script(String path, String username) throws FileNotFoundException {
         InputStream stream;
         try {
             if (path.startsWith("/dev")) {
@@ -265,18 +265,16 @@ public class CollectionManager {
             connector.send("Файл для извлечения скрипта не найден. Проверьте путь и права доступа к файлу.");
             return;
         }
-        if (handler.getStream().equals(System.in)) {
-            pathList.clear();
-        } else {
-            if (pathList.contains(path)) {
-                connector.send("#############################################\nОшибка! Один или несколько скриптов зациклены.\n#############################################");
-                return;
-            }
+
+        if (pathList.contains(path)) {
+            connector.send("#############################################\nОшибка! Один или несколько скриптов зациклены.\n#############################################");
+            return;
         }
+
         //Проверка на зацикленность
         pathList.add(path);
         connector.send("====  Начало выполнения скрипта по адресу " + path + "  ====");
-        handler.interactiveMod(stream);
+        handler.interactiveMod(stream, username);
         connector.send("====  Скрипт " + path + " успешно выполнен  ====\n");
         pathList.remove(path);
     }

@@ -1,12 +1,15 @@
+C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\CommandLogin.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Main\CollectionManager.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\CommandExit.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\CommandReady.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\content\View.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\Invoker.java
+C:\Users\User\Desktop\прога\lab6\server\src\main\java\Main\DatabaseHandler.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Main\Handler.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\tools\CoordinatesAdapter.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\CommandAverage.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\tools\LocalDateTimeAdapter.java
+C:\Users\User\Desktop\прога\lab6\server\src\main\java\tools\Reconnector.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\content\House.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\CommandUpdate.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\CommandRemoveAt.java
@@ -17,6 +20,7 @@ C:\Users\User\Desktop\прога\lab6\server\src\main\java\Main\ServerStart.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\content\Transport.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\CommandRemoveLast.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\CommandAdd.java
+C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\CommandRegister.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\CommandSave.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\CommandInfo.java
 C:\Users\User\Desktop\прога\lab6\server\src\main\java\Commands\CommandRemoveById.java

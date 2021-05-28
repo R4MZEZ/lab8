@@ -18,7 +18,9 @@ public class CommandUpdate implements Command{
         this.manager = manager;
     }
 
-    public CommandUpdate() {
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

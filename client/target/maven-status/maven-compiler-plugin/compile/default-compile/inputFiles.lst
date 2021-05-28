@@ -1,5 +1,7 @@
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandHelp.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\content\Coordinates.java
+C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandRegister.java
+C:\Users\User\Desktop\прога\lab6\client\src\main\java\tools\DataHasher.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandClear.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandExit.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\Command.java
@@ -7,7 +9,6 @@ C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandAdd.j
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\tools\ClientLogger.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\content\View.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Client\Commander.java
-C:\Users\User\Desktop\прога\lab6\client\src\main\java\tools\LocalDateTimeAdapter.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\Invoker.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\content\Flat.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandShow.java
@@ -18,12 +19,12 @@ C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandRemov
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandRemoveLast.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\content\House.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\tools\Checker.java
+C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandLogin.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandMaxByHouse.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\content\Transport.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandExecuteScript.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandAverage.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandReady.java
-C:\Users\User\Desktop\прога\lab6\client\src\main\java\tools\CoordinatesAdapter.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandShuffle.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandRemoveAt.java
 C:\Users\User\Desktop\прога\lab6\client\src\main\java\Commands\CommandUpdate.java

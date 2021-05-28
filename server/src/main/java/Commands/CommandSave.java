@@ -7,12 +7,15 @@ import java.util.Scanner;
 public class CommandSave implements Command{
 
     CollectionManager manager;
+    String username;
 
     public CommandSave(CollectionManager manager) {
         this.manager = manager;
     }
 
-    public CommandSave() {
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

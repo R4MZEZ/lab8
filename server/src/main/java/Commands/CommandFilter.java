@@ -11,12 +11,15 @@ public class CommandFilter implements Command, Serializable {
 
     CollectionManager manager;
     String argument;
+    String username;
 
     public CommandFilter(CollectionManager manager) {
         this.manager = manager;
     }
 
-    public CommandFilter() {
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

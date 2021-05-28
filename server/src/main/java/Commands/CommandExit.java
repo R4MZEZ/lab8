@@ -9,9 +9,15 @@ public class CommandExit implements Command, Serializable {
     private static final long serialVersionUID = -3985681923210095903L;
 
     CollectionManager manager;
+    String username;
 
     public CommandExit(CollectionManager manager) {
         this.manager = manager;
+    }
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

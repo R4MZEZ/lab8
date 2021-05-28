@@ -8,12 +8,15 @@ public class CommandInfo implements Command {
     private static final long serialVersionUID = 2935568159828483139L;
 
     CollectionManager manager;
-
-    public CommandInfo() {
-    }
+    String username;
 
     public CommandInfo(CollectionManager manager) {
         this.manager = manager;
+    }
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

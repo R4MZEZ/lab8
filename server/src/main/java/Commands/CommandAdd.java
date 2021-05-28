@@ -27,6 +27,12 @@ public class CommandAdd implements Command, Serializable {
         this.manager = manager;
     }
 
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public void execute() {
         manager.add(argument, username);

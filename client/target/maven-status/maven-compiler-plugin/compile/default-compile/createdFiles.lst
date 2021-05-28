@@ -2,8 +2,7 @@ Commands\CommandRemoveById.class
 tools\Checker.class
 Commands\Command.class
 content\Flat.class
-tools\CoordinatesAdapter.class
-tools\LocalDateTimeAdapter.class
+Commands\CommandRegister.class
 content\House.class
 tools\ClientLogger.class
 Commands\CommandAdd.class
@@ -14,6 +13,7 @@ Commands\CommandShuffle.class
 Client\Connector.class
 Client\Main.class
 Commands\CommandInfo.class
+Commands\CommandLogin.class
 Client\Commander.class
 Commands\CommandAverage.class
 Commands\CommandUpdate.class
@@ -21,6 +21,7 @@ Commands\CommandFilter.class
 Commands\CommandClear.class
 Commands\CommandShow.class
 Commands\Invoker.class
+tools\DataHasher.class
 Commands\CommandHelp.class
 Commands\CommandRemoveAt.class
 content\Coordinates.class

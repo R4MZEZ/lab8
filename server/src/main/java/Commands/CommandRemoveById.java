@@ -17,7 +17,9 @@ public class CommandRemoveById implements Command{
         this.manager = manager;
     }
 
-    public CommandRemoveById() {
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

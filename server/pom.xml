@@ -49,6 +49,11 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.26</version>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.20</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -89,3 +94,4 @@
     </build>
 
 </project>
+

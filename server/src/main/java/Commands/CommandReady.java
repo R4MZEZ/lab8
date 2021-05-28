@@ -8,12 +8,11 @@ public class CommandReady  implements Command {
     private static final long serialVersionUID = 2070506952673629004L;
 
     CollectionManager manager;
+    String username;
 
-    public CommandReady() {
-    }
-
-    public CommandReady(CollectionManager manager) {
-        this.manager = manager;
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

@@ -13,8 +13,6 @@ public class Handler implements Serializable, Runnable {
     protected boolean isExit = false;
     Thread thread;
 
-    BufferedInputStream stream;
-
     public Handler(Connector connector){
         this.connector = connector;
         manager.setConnector(connector);
@@ -41,9 +39,6 @@ public class Handler implements Serializable, Runnable {
         invoker.register("register", new CommandRegister());
     }
 
-    public BufferedInputStream getStream() {
-        return stream;
-    }
 
     public void setThread(Thread thread) {
         this.thread = thread;
@@ -53,7 +48,7 @@ public class Handler implements Serializable, Runnable {
      * Эмуляция интерактивного режима для выполнения скрипта
      * @param stream - поток ввода из скрипта
      */
-    public void interactiveMod(InputStream stream) {
+    public void interactiveMod(InputStream stream, String username) {
         String fullUserCommand = "";
         try (Scanner commandReader = new Scanner(stream)) {
             while (!fullUserCommand.equals("exit") && commandReader.hasNext()) {
@@ -62,11 +57,15 @@ public class Handler implements Serializable, Runnable {
                 if (invoker.contains(command[0])) {
                     try {
                         if (invoker.validate(command[0], command[1], commandReader)) {
-                            invoker.execute(invoker.getCommandMap().get(command[0]));
+                            Command executable = invoker.getCommandMap().get(command[0]);
+                            executable.setUsername(username);
+                            invoker.execute(executable);
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
                         if (invoker.validate(command[0], "null", commandReader)) {
-                            invoker.execute(invoker.getCommandMap().get(command[0]));
+                            Command executable = invoker.getCommandMap().get(command[0]);
+                            executable.setUsername(username);
+                            invoker.execute(executable);
                         }
                     }
                 }

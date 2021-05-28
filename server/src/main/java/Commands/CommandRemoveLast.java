@@ -15,7 +15,9 @@ public class CommandRemoveLast implements Command{
         this.manager = manager;
     }
 
-    public CommandRemoveLast() {
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

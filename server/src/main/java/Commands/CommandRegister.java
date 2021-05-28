@@ -10,10 +10,14 @@ import java.util.Scanner;
 public class CommandRegister implements Command {
     private static final long serialVersionUID = 3349655206396428797L;
 
-
     String username;
     String password;
     CollectionManager manager;
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     @Override
     public void execute() {manager.register(username,password);}

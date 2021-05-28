@@ -3,6 +3,7 @@ tools\Checker.class
 Commands\Command.class
 content\Flat.class
 tools\CoordinatesAdapter.class
+Commands\CommandRegister.class
 tools\LocalDateTimeAdapter.class
 content\House.class
 Commands\CommandAdd.class
@@ -10,12 +11,15 @@ Commands\CommandExecuteScript.class
 Commands\CommandMaxByHouse.class
 Commands\CommandSave.class
 Commands\CommandShuffle.class
+Main\DatabaseHandler.class
 Main\Connector.class
 Commands\CommandInfo.class
 tools\ServerLogger.class
+Commands\CommandLogin.class
 Main\CollectionManager.class
 Commands\CommandAverage.class
 Commands\CommandUpdate.class
+Main\ServerStart$Reciever.class
 Commands\CommandFilter.class
 Commands\CommandClear.class
 Commands\CommandShow.class
@@ -23,10 +27,12 @@ Commands\Invoker.class
 Main\ServerStart.class
 Commands\CommandHelp.class
 Commands\CommandRemoveAt.class
+tools\Reconnector.class
 content\Coordinates.class
 content\View.class
 content\Transport.class
 Commands\CommandRemoveLast.class
+Main\Connector$Sender.class
 Main\Handler.class
 Commands\CommandExit.class
 Commands\CommandReady.class

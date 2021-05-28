@@ -9,12 +9,15 @@ public class CommandHelp implements Command, Serializable {
     private static final long serialVersionUID = -4848347544087315082L;
 
     CollectionManager manager;
+    String username;
 
     public CommandHelp(CollectionManager manager) {
         this.manager = manager;
     }
 
-    public CommandHelp() {
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
