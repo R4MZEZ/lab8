@@ -100,6 +100,8 @@ public class CollectionManager {
         flat.setUser(username);
         databaseHandler.addFlatToDB(flat);
         connector.send("===================================\nЭлемент успешно добавлен.");
+        flats.add(flat);
+
     }
 
     /**
@@ -118,6 +120,14 @@ public class CollectionManager {
             }
             databaseHandler.updateFlatToDB(argument);
             connector.send("Элемент успешно обновлён.");
+
+            for (Flat flat : flats) {
+                if (flat.getId() == Long.parseLong(id)) {
+                    flats.set(flats.indexOf(flat), argument);
+                    flats.get(flats.indexOf(flat)).setId(flat.getId());
+                }
+            }
+
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }

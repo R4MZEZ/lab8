@@ -2,6 +2,8 @@ package Main;
 
 import tools.ServerLogger;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.DatagramPacket;
@@ -9,6 +11,7 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -16,14 +19,34 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class ServerStart {
     static int PORT;
     static final HashMap<InetSocketAddress,Connector> users = new HashMap<>();
-    static final String jdbcURL = "jdbc:postgresql://localhost:3125/studs";
-//    static final String jdbcURL = "jdbc:postgresql://pg:5432/studs";
-    static DatabaseHandler databaseHandler= new DatabaseHandler(jdbcURL, "s312515", "mej858");
+//    static final String jdbcURL = "jdbc:postgresql://localhost:3125/studs";
+    static final String jdbcURL = "jdbc:postgresql://pg:5432/studs";
+    static DatabaseHandler databaseHandler;
     static final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
 
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");
+
+        Scanner scanner = new Scanner(System.in);
+        String login = "";
+        String password = "";
+
+        try {
+            scanner = new Scanner(new FileReader("credentials.txt"));
+        } catch (FileNotFoundException ex) {
+            System.err.println("Не найден файл с данными для входа. Завершение работы.");
+            System.exit(-1);
+        }
+        try {
+            login = scanner.nextLine().trim();
+            password = scanner.nextLine().trim();
+        } catch (NoSuchElementException ex) {
+            System.err.println("Не найдены данные для входа. Завершение работы.");
+            System.exit(-1);
+        }
+
+        databaseHandler= new DatabaseHandler(jdbcURL, login, password);
 
         try {
             databaseHandler.connectToDatabase();
@@ -47,7 +70,6 @@ public class ServerStart {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 datagramSocket.receive(packet);
                 executor.execute(new Reciever(packet,datagramSocket,buffer));
-
 //                if (!users.containsKey(new InetSocketAddress(packet.getAddress(),packet.getPort()))) {
 //                    System.out.println("Соединение с пользователем " + packet.getAddress() + ":" + packet.getPort() + " установлено.");
 //                    ServerLogger.logger.info("Соединение с пользователем " + packet.getAddress() + ":" + packet.getPort() + " установлено.");
