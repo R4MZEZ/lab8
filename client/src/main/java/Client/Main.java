@@ -1,11 +1,13 @@
 package Client;
 
 import Commands.CommandReady;
+import javafx.application.Application;
+import javafx.stage.Stage;
 import tools.ClientLogger;
 
 import java.util.Scanner;
 
-public class Main {
+public class Main extends Application {
     static boolean connected = false;
 
     public static void main(String[] args) throws InterruptedException {
@@ -39,7 +41,12 @@ public class Main {
             Connector.isExit = true;
             Commander.connectorThread.interrupt();
         }
+        launch(args);
 
     }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+    }
 }

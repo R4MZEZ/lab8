@@ -19,6 +19,16 @@ public class Commander {
     static boolean isAuth;
     static String username;
 
+    public String getPassword() {
+        return password;
+    }
+
+    public static void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String password;
+
     public Commander(CommandReady commandReady, int PORT){
         connector = new Connector(PORT);
         connectorThread = new Thread(connector);

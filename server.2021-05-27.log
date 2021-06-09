@@ -1,0 +1,200 @@
+27.05.2021 17:21:56.770 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 17:22:05.084 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:52108 установлено.
+27.05.2021 17:31:09.903 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 17:31:15.996 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:56044 установлено.
+27.05.2021 17:57:18.038 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 17:57:24.283 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:52638 установлено.
+27.05.2021 17:59:05.655 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 17:59:08.215 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:52638 установлено.
+27.05.2021 18:02:20.049 [Thread-2] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:52638 разорвано.
+27.05.2021 18:02:29.582 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:56802 установлено.
+27.05.2021 18:08:32.320 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 18:08:41.273 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:56802 установлено.
+27.05.2021 18:16:27.625 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 18:16:30.423 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:56802 установлено.
+27.05.2021 18:36:13.399 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 18:36:17.096 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:56802 установлено.
+27.05.2021 18:36:17.384 [Thread-1] INFO   tools.ServerLogger - Выключение сервера
+27.05.2021 18:37:15.889 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 18:37:18.542 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:56802 установлено.
+27.05.2021 18:37:58.119 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 18:38:01.175 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:56802 установлено.
+27.05.2021 18:50:53.462 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 18:50:56.244 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:56421 установлено.
+27.05.2021 18:52:43.877 [main] INFO   tools.ServerLogger - Запуск сервера на порту 111
+27.05.2021 18:52:51.422 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 18:52:54.029 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:56421 установлено.
+27.05.2021 19:10:07.963 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 19:10:22.775 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:53250 установлено.
+27.05.2021 19:44:19.995 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 19:44:30.251 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:64431 установлено.
+27.05.2021 19:44:47.379 [Thread-1] INFO   tools.ServerLogger - Выключение сервера
+27.05.2021 19:59:07.314 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 19:59:14.858 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:56003 установлено.
+27.05.2021 19:59:53.605 [Thread-2] ERROR  tools.ServerLogger - Ошибка доступа к базе
+org.postgresql.util.PSQLException: Ошибка ввода/вывода при отправке бэкенду
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:350)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:481)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:401)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:164)
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:114)
+	at Main.DatabaseHandler.loadCollectionFromDB(DatabaseHandler.java:89)
+	at Main.CollectionManager.info(CollectionManager.java:73)
+	at Commands.CommandInfo.execute(CommandInfo.java:26)
+	at Commands.Invoker.execute(Invoker.java:22)
+	at Main.Handler.run(Handler.java:94)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: null
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:445)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2057)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:323)
+	... 10 common frames omitted
+27.05.2021 19:59:53.807 [Thread-1] INFO   tools.ServerLogger - Выключение сервера
+27.05.2021 19:59:53.809 [Thread-1] ERROR  tools.ServerLogger - Ошибка доступа к базе
+org.postgresql.util.PSQLException: Соединение уже было закрыто
+	at org.postgresql.jdbc.PgConnection.checkClosed(PgConnection.java:877)
+	at org.postgresql.jdbc.PgConnection.prepareStatement(PgConnection.java:1734)
+	at org.postgresql.jdbc.PgConnection.prepareStatement(PgConnection.java:428)
+	at Main.DatabaseHandler.addFlatToDB(DatabaseHandler.java:116)
+	at java.lang.Iterable.forEach(Iterable.java:75)
+	at java.util.Collections$SynchronizedCollection.forEach(Collections.java:2062)
+	at Main.DatabaseHandler.saveCollectionToDB(DatabaseHandler.java:111)
+	at Main.CollectionManager.save(CollectionManager.java:163)
+	at Main.ServerStart.lambda$main$0(ServerStart.java:30)
+	at java.lang.Thread.run(Thread.java:748)
+27.05.2021 20:01:46.125 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 20:01:50.660 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:56003 установлено.
+27.05.2021 20:01:59.030 [Thread-2] ERROR  tools.ServerLogger - Ошибка доступа к базе
+org.postgresql.util.PSQLException: Ошибка ввода/вывода при отправке бэкенду
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:350)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:481)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:401)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:164)
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:114)
+	at Main.DatabaseHandler.loadCollectionFromDB(DatabaseHandler.java:89)
+	at Main.CollectionManager.info(CollectionManager.java:73)
+	at Commands.CommandInfo.execute(CommandInfo.java:26)
+	at Commands.Invoker.execute(Invoker.java:22)
+	at Main.Handler.run(Handler.java:94)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: null
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:445)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2057)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:323)
+	... 10 common frames omitted
+27.05.2021 20:02:03.858 [Thread-2] ERROR  tools.ServerLogger - Ошибка доступа к базе
+org.postgresql.util.PSQLException: Соединение уже было закрыто
+	at org.postgresql.jdbc.PgConnection.checkClosed(PgConnection.java:877)
+	at org.postgresql.jdbc.PgConnection.prepareStatement(PgConnection.java:1734)
+	at org.postgresql.jdbc.PgConnection.prepareStatement(PgConnection.java:428)
+	at Main.DatabaseHandler.loadCollectionFromDB(DatabaseHandler.java:88)
+	at Main.CollectionManager.info(CollectionManager.java:73)
+	at Commands.CommandInfo.execute(CommandInfo.java:26)
+	at Commands.Invoker.execute(Invoker.java:22)
+	at Main.Handler.run(Handler.java:94)
+	at java.lang.Thread.run(Thread.java:748)
+27.05.2021 20:24:59.827 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 20:25:10.172 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:59177 установлено.
+27.05.2021 20:25:43.795 [Thread-2] ERROR  tools.ServerLogger - Ошибка доступа к базе
+org.postgresql.util.PSQLException: Ошибка ввода/вывода при отправке бэкенду
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:350)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:481)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:401)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:164)
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:114)
+	at Main.DatabaseHandler.loadCollectionFromDB(DatabaseHandler.java:89)
+	at Main.CollectionManager.info(CollectionManager.java:73)
+	at Commands.CommandInfo.execute(CommandInfo.java:26)
+	at Commands.Invoker.execute(Invoker.java:22)
+	at Main.Handler.run(Handler.java:94)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: null
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:445)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2057)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:323)
+	... 10 common frames omitted
+27.05.2021 20:25:48.797 [Thread-2] ERROR  tools.ServerLogger - Ошибка доступа к базе
+org.postgresql.util.PSQLException: Соединение уже было закрыто
+	at org.postgresql.jdbc.PgConnection.checkClosed(PgConnection.java:877)
+	at org.postgresql.jdbc.PgConnection.prepareStatement(PgConnection.java:1734)
+	at org.postgresql.jdbc.PgConnection.prepareStatement(PgConnection.java:428)
+	at Main.DatabaseHandler.loadCollectionFromDB(DatabaseHandler.java:88)
+	at Main.CollectionManager.info(CollectionManager.java:73)
+	at Commands.CommandInfo.execute(CommandInfo.java:26)
+	at Commands.Invoker.execute(Invoker.java:22)
+	at Main.Handler.run(Handler.java:94)
+	at java.lang.Thread.run(Thread.java:748)
+27.05.2021 20:45:30.790 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 20:45:35.705 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:57558 установлено.
+27.05.2021 20:45:52.722 [Thread-2] ERROR  tools.ServerLogger - Ошибка доступа к базе
+org.postgresql.util.PSQLException: Ошибка ввода/вывода при отправке бэкенду
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:350)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:481)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:401)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:164)
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:114)
+	at Main.DatabaseHandler.loadCollectionFromDB(DatabaseHandler.java:86)
+	at Main.CollectionManager.info(CollectionManager.java:73)
+	at Commands.CommandInfo.execute(CommandInfo.java:26)
+	at Commands.Invoker.execute(Invoker.java:22)
+	at Main.Handler.run(Handler.java:94)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: null
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:445)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2057)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:323)
+	... 10 common frames omitted
+27.05.2021 20:47:45.615 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 20:47:50.152 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:57558 установлено.
+27.05.2021 20:48:05.287 [Thread-2] ERROR  tools.ServerLogger - Ошибка доступа к базе
+org.postgresql.util.PSQLException: Ошибка ввода/вывода при отправке бэкенду
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:350)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:481)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:401)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:164)
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:114)
+	at Main.DatabaseHandler.loadCollectionFromDB(DatabaseHandler.java:86)
+	at Main.CollectionManager.info(CollectionManager.java:73)
+	at Commands.CommandInfo.execute(CommandInfo.java:26)
+	at Commands.Invoker.execute(Invoker.java:22)
+	at Main.Handler.run(Handler.java:94)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: null
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:445)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2057)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:323)
+	... 10 common frames omitted
+27.05.2021 20:48:19.591 [Thread-2] ERROR  tools.ServerLogger - Ошибка доступа к базе
+org.postgresql.util.PSQLException: Соединение уже было закрыто
+	at org.postgresql.jdbc.PgConnection.checkClosed(PgConnection.java:877)
+	at org.postgresql.jdbc.PgConnection.prepareStatement(PgConnection.java:1734)
+	at org.postgresql.jdbc.PgConnection.prepareStatement(PgConnection.java:428)
+	at Main.DatabaseHandler.loadCollectionFromDB(DatabaseHandler.java:85)
+	at Main.CollectionManager.info(CollectionManager.java:73)
+	at Commands.CommandInfo.execute(CommandInfo.java:26)
+	at Commands.Invoker.execute(Invoker.java:22)
+	at Main.Handler.run(Handler.java:94)
+	at java.lang.Thread.run(Thread.java:748)
+27.05.2021 20:51:43.229 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 20:51:47.110 [main] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:57558 установлено.
+27.05.2021 20:51:54.488 [Thread-2] ERROR  tools.ServerLogger - Ошибка доступа к базе
+org.postgresql.util.PSQLException: Ошибка ввода/вывода при отправке бэкенду
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:350)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:481)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:401)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:164)
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:114)
+	at Main.DatabaseHandler.loadCollectionFromDB(DatabaseHandler.java:86)
+	at Main.CollectionManager.info(CollectionManager.java:73)
+	at Commands.CommandInfo.execute(CommandInfo.java:26)
+	at Commands.Invoker.execute(Invoker.java:22)
+	at Main.Handler.run(Handler.java:94)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: null
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:445)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2057)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:323)
+	... 10 common frames omitted
+27.05.2021 21:13:39.157 [main] INFO   tools.ServerLogger - Запуск сервера на порту 1111
+27.05.2021 21:13:54.012 [pool-1-thread-1] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:63194 установлено.
+27.05.2021 21:14:05.507 [Thread-2] INFO   tools.ServerLogger - Соединение с пользователем /127.0.0.1:63194 разорвано.
