@@ -10,7 +10,7 @@ import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.DatagramChannel;
 
 
-public class Connector implements Runnable {
+public class Connector{
     InetSocketAddress serverAddress;
     DatagramChannel client;
 
@@ -28,6 +28,7 @@ public class Connector implements Runnable {
             serverAddress = new InetSocketAddress("localhost", PORT);
             client = DatagramChannel.open();
             client.bind(null);
+            client.configureBlocking(false);
             outputStream = new ObjectOutputStream(b1);
         } catch (IOException e) {
             ClientLogger.logger.error("Ошибка в конструкторе Коннектора", e);
@@ -51,16 +52,17 @@ public class Connector implements Runnable {
 
     public String receive() {
         try {
+            Thread.sleep(100);
             buffer = new byte[2048];
             client.receive(ByteBuffer.wrap(buffer));
             Main.connected = true;
             input = new ObjectInputStream(new ByteArrayInputStream(buffer));
             relevantMessage = (String) input.readObject();
-            if (relevantMessage.substring(0,16).equals("Добро пожаловать")
-                    || relevantMessage.substring(0,16).equals("С возвращением, ")) Commander.isAuth = true;
+            if (relevantMessage.startsWith("Добро пожаловать")
+                    || relevantMessage.startsWith("С возвращением, ")) Commander.isAuth = true;
             return relevantMessage;
 
-        }catch (ClosedByInterruptException ignored){
+        }catch (ClosedByInterruptException | InterruptedException ignored){
             return "";
         }
         catch (IOException | ClassNotFoundException e) {
@@ -70,12 +72,6 @@ public class Connector implements Runnable {
 
     }
 
-    @Override
-    public void run() {
-        while (!isExit){
-            System.out.println(receive());
-        }
-    }
 }
 
 

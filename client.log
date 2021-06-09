@@ -1,2 +1,51 @@
-28.05.2021 18:43:31.630 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 1111
-28.05.2021 18:43:32.713 [main] INFO   tools.ClientLogger - Подключено к серверу с портом 1111
+09.06.2021 17:46:02.153 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 1111
+09.06.2021 18:12:54.238 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 1216
+09.06.2021 19:14:19.579 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 19:14:20.149 [main] ERROR  tools.ClientLogger - Неудачная попытка соединения: сервер с портом 3125 не отвечает
+09.06.2021 19:16:43.845 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 19:16:44.384 [main] ERROR  tools.ClientLogger - Неудачная попытка соединения: сервер с портом 3125 не отвечает
+09.06.2021 19:20:52.866 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 19:24:11.728 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 19:25:01.428 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 19:25:28.572 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 19:50:57.561 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 19:51:21.729 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 19:56:55.903 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 20:09:18.843 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 20:09:38.437 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 20:09:38.477 [JavaFX Application Thread] ERROR  tools.ClientLogger - Ошибка при принятии данных
+java.net.PortUnreachableException: null
+	at sun.nio.ch.DatagramChannelImpl.receive0(Native Method)
+	at sun.nio.ch.DatagramChannelImpl.receiveIntoNativeBuffer(DatagramChannelImpl.java:414)
+	at sun.nio.ch.DatagramChannelImpl.receive(DatagramChannelImpl.java:400)
+	at sun.nio.ch.DatagramChannelImpl.receive(DatagramChannelImpl.java:345)
+	at Client.Connector.receive(Connector.java:57)
+	at Client.Main.start(Main.java:35)
+	at com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863)
+	at com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326)
+	at com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177)
+	at java.lang.Thread.run(Thread.java:748)
+09.06.2021 20:10:46.462 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 20:11:31.215 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 20:12:02.333 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 20:13:09.981 [main] INFO   tools.ClientLogger - Попытка подключения к серверу с портом 3125
+09.06.2021 20:13:10.029 [JavaFX Application Thread] ERROR  tools.ClientLogger - Ошибка при принятии данных
+java.io.StreamCorruptedException: invalid stream header: 00000000
+	at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:866)
+	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:358)
+	at Client.Connector.receive(Connector.java:58)
+	at Client.Main.start(Main.java:35)
+	at com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863)
+	at com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326)
+	at com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177)
+	at java.lang.Thread.run(Thread.java:748)

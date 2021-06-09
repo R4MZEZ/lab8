@@ -19,8 +19,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class ServerStart {
     static int PORT;
     static final HashMap<InetSocketAddress,Connector> users = new HashMap<>();
-//    static final String jdbcURL = "jdbc:postgresql://localhost:3125/studs";
-    static final String jdbcURL = "jdbc:postgresql://pg:5432/studs";
+    static final String jdbcURL = "jdbc:postgresql://localhost:3125/studs";
+//    static final String jdbcURL = "jdbc:postgresql://pg:5432/studs";
     static DatabaseHandler databaseHandler;
     static final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
 
@@ -33,7 +33,7 @@ public class ServerStart {
         String password = "";
 
         try {
-            scanner = new Scanner(new FileReader("credentials.txt"));
+            scanner = new Scanner(new FileReader("C:\\Users\\User\\Desktop\\прога\\lab6\\server\\src\\main\\resources\\credentials.txt"));
         } catch (FileNotFoundException ex) {
             System.err.println("Не найден файл с данными для входа. Завершение работы.");
             System.exit(-1);
@@ -70,15 +70,6 @@ public class ServerStart {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 datagramSocket.receive(packet);
                 executor.execute(new Reciever(packet,datagramSocket,buffer));
-//                if (!users.containsKey(new InetSocketAddress(packet.getAddress(),packet.getPort()))) {
-//                    System.out.println("Соединение с пользователем " + packet.getAddress() + ":" + packet.getPort() + " установлено.");
-//                    ServerLogger.logger.info("Соединение с пользователем " + packet.getAddress() + ":" + packet.getPort() + " установлено.");
-//                    InetSocketAddress address = new InetSocketAddress(packet.getAddress(),packet.getPort());
-//                    Connector connector = new Connector(address,datagramSocket,buffer, databaseHandler);
-//                    users.put(address,connector);
-//                }
-//
-//                users.get(new InetSocketAddress(packet.getAddress(),packet.getPort())).receive(buffer);
             }
         } catch (BindException e) {
             System.err.println("Порт занят.");

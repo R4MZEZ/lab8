@@ -1,52 +1,102 @@
 package Client;
 
 import Commands.CommandReady;
+import gui.controllers.Controller;
+import gui.controllers.LogInWindowController;
+import gui.controllers.StartWindowController;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import tools.ClientLogger;
 
-import java.util.Scanner;
+import java.io.IOException;
 
 public class Main extends Application {
     static boolean connected = false;
+    static int PORT = 3125;
+    static Connector connector = new Connector(PORT);
 
-    public static void main(String[] args) throws InterruptedException {
-        Commander commander;
-        CommandReady commandReady = new CommandReady();
-        int count = 0;
-        int PORT;
-        try {
-            System.out.print("Введите порт для подключения: ");
-            PORT = Integer.parseInt(new Scanner(System.in).next());
-            if (PORT < 0 || PORT >65535) throw new Exception();
-        }catch (Exception e){
-            System.out.println("Ошибка чтения порта, используется значение по умолчанию.");
-            PORT = 1216;
-        }
-
-        ClientLogger.logger.info("Попытка подключения к серверу с портом {}",PORT);
-        commander = new Commander(commandReady,PORT);
-        System.out.println("Ожидание ответа сервера(10 секунд)...");
-        while (!connected & count++<10) {
-            Thread.sleep(1000);
-        }
-        if (count != 11) {
-            ClientLogger.logger.info("Подключено к серверу с портом {}", PORT);
-            commander.interactiveMod(System.in);
-            Connector.isExit = true;
-            Commander.connectorThread.interrupt();
-        }
-        else {
-            ClientLogger.logger.error("Неудачная попытка соединения: сервер с портом {} не отвечает", PORT);
-            Connector.isExit = true;
-            Commander.connectorThread.interrupt();
-        }
+    public static void main(String[] args){
         launch(args);
-
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
+        new StartWindowController().setStage(stage);
+        stage.setMinHeight(435);
+        stage.setMinWidth(100);
+        stage.setTitle("FlatsApp");
+        stage.setWidth(700);
+        stage.setHeight(500);
+        stage.getIcons().add(new Image("/gui/scenes/2hpWoQJPELU.jpg"));
 
+
+        FXMLLoader root = new FXMLLoader();
+//        StartWindowController.setBundle(bundleRu);
+        root.setLocation(getClass().getResource("/gui/scenes/start.fxml"));
+        Scene scene = new Scene(root.load());
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static Stage changeWindow(String window, Stage startStage, double minHeight, double minWidth) {
+        try {
+            FXMLLoader root = new FXMLLoader();
+            root.setLocation(Main.class.getResource(window));
+            Scene scene = new Scene(root.load());
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setMinHeight(minHeight);
+            stage.setMinWidth(minWidth);
+            startStage.close();
+
+            Controller controller = root.getController();
+            controller.setStage(stage);
+
+            stage.show();
+            return stage;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void showWindow(double height, double width, String msg, Color color) {
+        Label label = new Label(msg);
+        label.setTextFill(color);
+        label.setFont(new Font(20));
+        BorderPane pane = new BorderPane(label);
+        Button ok = new Button();
+        ok.setText("Ok");
+        pane.setBottom(ok);
+        BorderPane.setMargin(ok, new Insets(20));
+        ok.setPrefSize(100, 20);
+        BorderPane.setAlignment(ok, Pos.CENTER);
+        Scene scene = new Scene(pane);
+        Stage stage = new Stage();
+        ok.setOnAction(event -> {
+            if (connected) {
+                stage.close();
+            } else {
+                System.exit(-1);
+            }
+        });
+        stage.setScene(scene);
+        stage.setMinWidth(width);
+        stage.setMinHeight(height);
+        stage.setHeight(height);
+        stage.setWidth(width);
+        stage.setAlwaysOnTop(true);
+        stage.show();
     }
 }

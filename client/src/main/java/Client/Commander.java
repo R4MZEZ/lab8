@@ -14,25 +14,18 @@ import java.util.Scanner;
 public class Commander {
 
     Invoker invoker = new Invoker();
-    Connector connector;
-    static Thread connectorThread;
+    static Connector connector;
     static boolean isAuth;
     static String username;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public static void setPassword(String password) {
-        this.password = password;
+    public static Connector getConnector() {
+        return connector;
     }
 
     private String password;
 
     public Commander(CommandReady commandReady, int PORT){
         connector = new Connector(PORT);
-        connectorThread = new Thread(connector);
-        connectorThread.start();
         connector.send(commandReady);
 
         invoker.register("help", new CommandHelp());
