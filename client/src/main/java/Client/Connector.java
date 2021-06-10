@@ -10,7 +10,7 @@ import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.DatagramChannel;
 
 
-public class Connector{
+public class Connector {
     InetSocketAddress serverAddress;
     DatagramChannel client;
 
@@ -18,7 +18,6 @@ public class Connector{
     ObjectOutputStream outputStream;
     ObjectInput input;
     protected static boolean isExit = false;
-    String relevantMessage;
 
     ByteBuffer byteBuffer;
     byte[] buffer = new byte[1024];
@@ -36,7 +35,7 @@ public class Connector{
     }
 
 
-    public void send(Object data) {
+    public void send(Commands.Command data) {
         try {
             b1 = new ByteArrayOutputStream(1024);
             outputStream = new ObjectOutputStream(b1);
@@ -50,24 +49,24 @@ public class Connector{
         }
     }
 
-    public String receive() {
+    public <T> T receive() {
         try {
             Thread.sleep(100);
             buffer = new byte[2048];
             client.receive(ByteBuffer.wrap(buffer));
             Main.connected = true;
             input = new ObjectInputStream(new ByteArrayInputStream(buffer));
-            relevantMessage = (String) input.readObject();
-            if (relevantMessage.startsWith("Добро пожаловать")
-                    || relevantMessage.startsWith("С возвращением, ")) Commander.isAuth = true;
-            return relevantMessage;
+            Object answer = input.readObject();
+            return (T) answer;
 
-        }catch (ClosedByInterruptException | InterruptedException ignored){
-            return "";
-        }
-        catch (IOException | ClassNotFoundException e) {
+        } catch (StreamCorruptedException e) {
+            return receive();
+        } catch (ClosedByInterruptException | InterruptedException ignored) {
+            return (T) "";
+        } catch (IOException | ClassNotFoundException e) {
             ClientLogger.logger.error("Ошибка при принятии данных", e);
-            return "Ошибка";
+            e.printStackTrace();
+            return (T) "Ошибка";
         }
 
     }

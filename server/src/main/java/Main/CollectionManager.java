@@ -48,21 +48,21 @@ public class CollectionManager {
      */
     public void help() {
         String res = "help: Вывести справку по доступным командам\n" +
-                      "info: Вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)\n" +
-                      "show: Вывести в стандартный поток вывода все элементы коллекции в строковом представлении\n" +
+                      "info: Вывести информацию о коллекции \n" +
+                      "show: Вывести все элементы коллекции\n" +
                       "add {element}: Добавить новый элемент в коллекцию\n" +
-                      "update id {element}: Обновить значение элемента коллекции, id которого равен заданному\n" +
-                      "remove_by_id id: Удалить элемент коллекции по его id\n" +
+                      "update id {element}: Обновить значение элемента коллекции по ID\n" +
+                      "remove_by_id id: Удалить элемент коллекции по ID\n" +
                       "clear: Очистить коллекцию\n" +
 //                      "save: Сохранить коллекцию в файл\n" +
-                      "execute_script file_name: Считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.\n" +
-                      "exit: Завершить программу (без сохранения в файл)\n" +
-                      "remove_at index: Удалить элемент, находящийся в заданной позиции коллекции (index)\n" +
+                      "execute_script file_name: Считать и исполнить скрипт из указанного файла.\n" +
+                      "exit: Завершить программу\n" +
+                      "remove_at index: Удалить элемент, находящийся в заданной позиции коллекции\n" +
                       "remove_last: Удалить последний элемент из коллекции\n" +
  //                     "shuffle: Перемешать элементы коллекции в случайном порядке\n" +
-                      "average_of_living_space: Вывести среднее значение поля livingSpace для всех элементов коллекции\n" +
-                      "max_by_house: Вывести любой объект из коллекции, значение поля house которого является максимальным\n" +
-                      "filter_less_than_view view: Вывести элементы, значение поля view которых меньше заданного";
+                      "average_of_living_space: Вывести среднее значение поля livingSpace\n" +
+                      "max_by_house: Вывести квартиру с максимальным годом постройки дома\n" +
+                      "filter_less_than_view view: Вывести элементы, view которых меньше заданного";
         connector.send(res);
     }
 
@@ -90,7 +90,8 @@ public class CollectionManager {
             connector.send("Произошла ошибка при загрузке коллекции из базы данных.");
             return;
         }
-        flats.forEach(flat -> connector.send(flat.niceToString()));
+//        flats.forEach(flat -> connector.send(flat.niceToString()));
+        connector.send(flats);
     }
 
     /**
@@ -302,6 +303,7 @@ public class CollectionManager {
             }
             connector.send("С возвращением, " + username + "!");
         } catch (SQLException e) {
+            connector.send("Ошибка доступа к базе данных.");
             System.err.println("Ошибка доступа к базе данных.");
             ServerLogger.logger.error("Ошибка доступа к базе", e);}
     }
@@ -315,6 +317,7 @@ public class CollectionManager {
             databaseHandler.registerUser(username, password);
             connector.send("Добро пожаловать, " + username + "!");
         } catch (SQLException e) {
+            connector.send("Ошибка доступа к базе данных.");
             System.err.println("Ошибка доступа к базе данных.");
             ServerLogger.logger.error("Ошибка доступа к базе", e);}
     }

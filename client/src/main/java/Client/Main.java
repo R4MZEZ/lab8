@@ -1,6 +1,6 @@
 package Client;
 
-import Commands.CommandReady;
+//import Commands.CommandReady;
 import gui.controllers.Controller;
 import gui.controllers.LogInWindowController;
 import gui.controllers.StartWindowController;
@@ -22,6 +22,11 @@ import java.io.IOException;
 public class Main extends Application {
     static boolean connected = false;
     static int PORT = 3125;
+
+    public static Connector getConnector() {
+        return connector;
+    }
+
     static Connector connector = new Connector(PORT);
 
     public static void main(String[] args){
@@ -31,11 +36,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         new StartWindowController().setStage(stage);
-        stage.setMinHeight(435);
-        stage.setMinWidth(100);
         stage.setTitle("FlatsApp");
-        stage.setWidth(700);
-        stage.setHeight(500);
         stage.getIcons().add(new Image("/gui/scenes/2hpWoQJPELU.jpg"));
 
 
@@ -48,7 +49,7 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static Stage changeWindow(String window, Stage startStage, double minHeight, double minWidth) {
+    public static Stage changeWindow(String window, Stage startStage) {
         try {
             FXMLLoader root = new FXMLLoader();
             root.setLocation(Main.class.getResource(window));
@@ -56,8 +57,6 @@ public class Main extends Application {
             Stage stage = new Stage();
 
             stage.setScene(scene);
-            stage.setMinHeight(minHeight);
-            stage.setMinWidth(minWidth);
             startStage.close();
 
             Controller controller = root.getController();
@@ -75,9 +74,9 @@ public class Main extends Application {
         Label label = new Label(msg);
         label.setTextFill(color);
         label.setFont(new Font(20));
-        BorderPane pane = new BorderPane(label);
-        Button ok = new Button();
-        ok.setText("Ok");
+        BorderPane pane = new BorderPane();
+        pane.setCenter(label);
+        Button ok = new Button("OK");
         pane.setBottom(ok);
         BorderPane.setMargin(ok, new Insets(20));
         ok.setPrefSize(100, 20);

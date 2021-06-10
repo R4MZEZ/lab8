@@ -30,6 +30,8 @@ public class Flat implements Comparable<Flat>, Serializable {
     private final long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private final String name; //Поле не может быть null, Строка не может быть пустой
     private final Coordinates coordinates; //Поле не может быть null
+    private Float coordX;
+    private Long coordY;
     private final LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private final Long area; //Поле не может быть null, Значение поля должно быть больше 0
     private final Integer numberOfRooms; //Значение поля должно быть больше 0
@@ -37,6 +39,11 @@ public class Flat implements Comparable<Flat>, Serializable {
     private final View view; //Поле не может быть null
     private final Transport transport; //Поле может быть null
     private final House house; //Поле может быть null
+    private String house_name;
+    private Integer house_year;
+    private Integer house_numberOfFlatsOnFloor;
+    private String user;
+
 
     public static long getNewId() {
         static_id += 1;
@@ -46,6 +53,65 @@ public class Flat implements Comparable<Flat>, Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public Float getCoordX() {
+        return coordinates.getX();
+    }
+
+    public Long getCoordY() {
+        return coordinates.getY();
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public Long getArea() {
+        return area;
+    }
+
+    public Integer getNumberOfRooms() {
+        return numberOfRooms;
+    }
+
+    public long getLivingSpace() {
+        return livingSpace;
+    }
+
+    public View getView() {
+        return view;
+    }
+
+    public Transport getTransport() {
+        return transport;
+    }
+
+    public House getHouse() {
+        return house;
+    }
+    public String getHouse_name() {
+        return house.getName();
+    }
+
+    public Integer getHouse_year() {
+        return house.getYear();
+    }
+
+    public Integer getHouse_numberOfFlatsOnFloor() {
+        return house.getNumberOfFlatsOnFloor();
+    }
+
+    public String getUser() {
+        return user;
     }
 
     @Override

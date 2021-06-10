@@ -20,7 +20,7 @@ public class Invoker {
 
     public boolean validate(String commandName, String argument, Scanner reader) {
         Command command = commandMap.get(commandName);
-        return command.validate(argument, reader);
+        return command.validate(argument);
     }
 }
 

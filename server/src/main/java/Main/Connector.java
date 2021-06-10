@@ -95,9 +95,10 @@ public class Connector{
         @Override
         public void run() {
             try {
-                b1 = new ByteArrayOutputStream(1024);
+                b1 = new ByteArrayOutputStream(2048);
                 outputStream = new ObjectOutputStream(b1);
                 outputStream.writeObject(data);
+                outputStream.flush();
                 datagramSocket.send(new DatagramPacket(b1.toByteArray(), b1.toByteArray().length, userSocketAddress));
             }catch (IOException exception){
                 ServerLogger.logger.error("",exception);

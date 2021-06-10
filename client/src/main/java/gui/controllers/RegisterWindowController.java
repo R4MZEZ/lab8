@@ -1,5 +1,8 @@
 package gui.controllers;
 
+import Client.Commander;
+import Commands.CommandLogin;
+import Commands.CommandRegister;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,6 +20,7 @@ public class RegisterWindowController implements Controller{
     public Button backButton;
     private static Stage stage;
     private static String prevWindow;
+    public Label infoLabel;
 
     public void setStage(Stage stage) {
         RegisterWindowController.stage = stage;
@@ -33,9 +37,19 @@ public class RegisterWindowController implements Controller{
     }
 
     public void register(ActionEvent actionEvent) {
+        if (new CommandRegister().validate(login.getText())) {
+            Client.Main.getConnector().send(new CommandRegister(login.getText(), password.getText()));
+            String ans = Client.Main.getConnector().receive();
+            if (ans.startsWith("Добро пожаловать")) {
+                Commander.setUsername(login.getText());
+                Client.Main.changeWindow("/gui/scenes/mainscene.fxml", stage);
+            }
+            infoLabel.setText(ans);
+            infoLabel.setOpacity(100);
+        }
     }
 
     public void back(ActionEvent actionEvent) {
-        Client.Main.changeWindow(prevWindow,stage,400,250);
+        Client.Main.changeWindow(prevWindow,stage);
     }
 }

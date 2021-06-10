@@ -19,6 +19,14 @@ public class House implements Comparable<House>, Serializable {
         return year;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getNumberOfFlatsOnFloor() {
+        return numberOfFlatsOnFloor;
+    }
+
     private final String name; //Поле не может быть null
     private final Integer year; //Значение поля должно быть больше 0
     private final int numberOfFlatsOnFloor; //Значение поля должно быть больше 0

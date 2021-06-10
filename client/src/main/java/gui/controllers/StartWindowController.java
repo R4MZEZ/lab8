@@ -11,7 +11,7 @@ public class StartWindowController implements Controller{
     public Button authorizationButton;
     public Button registerButton;
     public Button exitButton;
-    public ChoiceBox language;
+    public ChoiceBox<String> language;
     static Stage stage;
 
     public void setStage(Stage stage) {
@@ -20,12 +20,12 @@ public class StartWindowController implements Controller{
 
     public void authorization(ActionEvent actionEvent){
         LogInWindowController.setPrevWindow("/gui/scenes/start.fxml");
-        new LogInWindowController().setStage(Client.Main.changeWindow("/gui/scenes/logging.fxml", stage, 400, 250));
+        new LogInWindowController().setStage(Client.Main.changeWindow("/gui/scenes/logging.fxml", stage));
     }
 
     public void register(ActionEvent actionEvent) {
         RegisterWindowController.setPrevWindow("/gui/scenes/start.fxml");
-        new RegisterWindowController().setStage(Client.Main.changeWindow("/gui/scenes/register.fxml", stage, 400, 250));
+        new RegisterWindowController().setStage(Client.Main.changeWindow("/gui/scenes/register.fxml", stage));
     }
 
     public void exit(ActionEvent actionEvent) {

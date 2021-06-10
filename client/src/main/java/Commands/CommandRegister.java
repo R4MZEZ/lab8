@@ -13,20 +13,19 @@ public class CommandRegister implements Command{
     String username;
     String password;
 
+    public CommandRegister() {
+    }
+
+    public CommandRegister(String username, String password) {
+        this.username = username;
+        this.password = DataHasher.encryptStringSHA512(password);
+    }
+
     @Override
-    public boolean validate(String argument, Scanner reader) {
+    public boolean validate(String argument) {
         if (Checker.isNotString(argument)){
-            System.err.println("Логин должен быть непустой строкой.");
             return false;
         }
-        this.username = argument;
-        Console console = System.console();
-        System.out.print("Введите пароль: ");
-        if (console != null){
-            char[] symbols = console.readPassword();
-            if (symbols != null) password = DataHasher.encryptStringSHA512(String.valueOf(symbols));
-        }
-        else password = DataHasher.encryptStringSHA512(reader.nextLine());
         Commander.setUsername(username);
         return true;
     }

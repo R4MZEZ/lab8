@@ -24,30 +24,30 @@ public class Commander {
 
     private String password;
 
-    public Commander(CommandReady commandReady, int PORT){
-        connector = new Connector(PORT);
-        connector.send(commandReady);
-
-        invoker.register("help", new CommandHelp());
-        invoker.register("info", new CommandInfo());
-        invoker.register("show", new CommandShow());
-        invoker.register("remove_by_id", new CommandRemoveById());
-        invoker.register("add", new CommandAdd());
-        invoker.register("update", new CommandUpdate());
-        invoker.register("clear", new CommandClear());
-        invoker.register("execute_script", new CommandExecuteScript());
-        invoker.register("remove_at", new CommandRemoveAt());
-        invoker.register("remove_last", new CommandRemoveLast());
-        invoker.register("shuffle", new CommandShuffle());
-        invoker.register("average_of_living_space", new CommandAverage());
-        invoker.register("max_by_house", new CommandMaxByHouse());
-        invoker.register("filter_less_than_view", new CommandFilter());
-        invoker.register("exit", new CommandExit());
-        invoker.register("login", new CommandLogin());
-        invoker.register("register", new CommandRegister());
-
-
-    }
+//    public Commander(CommandReady commandReady, int PORT){
+//        connector = new Connector(PORT);
+//        connector.send(commandReady);
+//
+//        invoker.register("help", new CommandHelp());
+//        invoker.register("info", new CommandInfo());
+//        invoker.register("show", new CommandShow());
+//        invoker.register("remove_by_id", new CommandRemoveById());
+//        invoker.register("add", new CommandAdd());
+//        invoker.register("update", new CommandUpdate());
+//        invoker.register("clear", new CommandClear());
+//        invoker.register("execute_script", new CommandExecuteScript());
+//        invoker.register("remove_at", new CommandRemoveAt());
+//        invoker.register("remove_last", new CommandRemoveLast());
+//        invoker.register("shuffle", new CommandShuffle());
+//        invoker.register("average_of_living_space", new CommandAverage());
+//        invoker.register("max_by_house", new CommandMaxByHouse());
+//        invoker.register("filter_less_than_view", new CommandFilter());
+//        invoker.register("exit", new CommandExit());
+//        invoker.register("login", new CommandLogin());
+//        invoker.register("register", new CommandRegister());
+//
+//
+//    }
 
     /**
      * Включить интерактивный режим
