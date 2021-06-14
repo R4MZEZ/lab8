@@ -104,7 +104,7 @@ public class CollectionManager {
     public void add(Flat flat, String username){
         flat.setUser(username);
         databaseHandler.addFlatToDB(flat);
-        connector.send("===================================\nЭлемент успешно добавлен.");
+        connector.send("Элемент успешно добавлен.");
         flats.add(flat);
 
     }

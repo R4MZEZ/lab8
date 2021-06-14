@@ -3,7 +3,6 @@ package gui.controllers;
 import Client.Commander;
 import Commands.*;
 import content.*;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -18,8 +18,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-import static Client.Main.getConnector;
-import static Client.Main.showWindow;
+import static Client.Main.*;
 
 
 public class MainWindowController implements Controller, Initializable {
@@ -29,52 +28,10 @@ public class MainWindowController implements Controller, Initializable {
     public TextField viewField;
     public TextField removeAtField;
     public TextField scriptField;
+    public TextField updateField;
     Command command;
     @FXML
     private Menu languageMenu;
-
-    @FXML
-    private Button helpButton;
-
-    @FXML
-    private Button infoButton;
-
-    @FXML
-    private Button showButton;
-
-    @FXML
-    private Button addButton;
-
-    @FXML
-    private Button updateButton;
-
-    @FXML
-    private Button removeByIdButton;
-
-    @FXML
-    private Button clearButton;
-
-    @FXML
-    private Button executeScriptButton;
-
-    @FXML
-    private Button removeAtButton;
-
-    @FXML
-    private Button removeLastButton;
-
-    @FXML
-    private Button averageOfLivingSpaceButton;
-
-    @FXML
-    private Button maxByHouseButton;
-
-    @FXML
-    private Button filterLessThanViewButton;
-
-    @FXML
-    private Button exitButton;
-
     @FXML
     private TableView<Flat> table;
 
@@ -146,7 +103,7 @@ public class MainWindowController implements Controller, Initializable {
             ObservableList<Flat> list = FXCollections.observableList(getConnector().receive());
             table.setItems(list);
             lostConnLabel.setVisible(false);
-        }catch (ClassCastException e){
+        } catch (ClassCastException e) {
             lostConnLabel.setVisible(true);
         }
     }
@@ -159,9 +116,9 @@ public class MainWindowController implements Controller, Initializable {
 
     public void remove_by_id(ActionEvent actionEvent) {
         command = new CommandRemoveById();
-        if (command.validate(removeByIdField.getText())){
+        if (command.validate(removeByIdField.getText())) {
             getConnector().send(command);
-            showWindow(150,900,getConnector().receive(),Color.BLACK);
+            showWindow(150, 900, getConnector().receive(), Color.BLACK);
             show(null);
         }
     }
@@ -183,45 +140,47 @@ public class MainWindowController implements Controller, Initializable {
         house_year.setCellValueFactory(new PropertyValueFactory<>("house_year"));
         numberOfFlatsOnFloor.setCellValueFactory(new PropertyValueFactory<>("house_numberOfFlatsOnFloor"));
         user.setCellValueFactory(new PropertyValueFactory<>("user"));
-
     }
 
 
     public void add(ActionEvent actionEvent) {
+        AddWindowController.setStage(changeWindow("/gui/scenes/add.fxml", stage));
     }
 
     public void update(ActionEvent actionEvent) {
+        AddWindowController.setUpdatedFlat(table.getItems().get(updateField.getText()));
+        AddWindowController.setStage(changeWindow("/gui/scenes/add.fxml", stage));
     }
 
     public void remove_last(ActionEvent actionEvent) {
         getConnector().send(new CommandRemoveLast());
-        showWindow(200,600,getConnector().receive(),Color.BLACK);
+        showWindow(200, 600, getConnector().receive(), Color.BLACK);
     }
 
     public void average_of_living_space(ActionEvent actionEvent) {
         getConnector().send(new CommandAverage());
-        showWindow(200,600,getConnector().receive(),Color.BLACK);
+        showWindow(200, 600, getConnector().receive(), Color.BLACK);
     }
 
     public void max_by_house(ActionEvent actionEvent) {
         getConnector().send(new CommandMaxByHouse());
-        showWindow(400,600,getConnector().receive(),Color.BLACK);
+        showWindow(400, 600, getConnector().receive(), Color.BLACK);
     }
 
     public void remove_at(ActionEvent actionEvent) {
         command = new CommandRemoveAt();
-        if (command.validate(removeAtField.getText())){
+        if (command.validate(removeAtField.getText())) {
             getConnector().send(command);
-            showWindow(150,900,getConnector().receive(),Color.BLACK);
+            showWindow(150, 900, getConnector().receive(), Color.BLACK);
             show(null);
         }
     }
 
     public void filter_less_than_view(ActionEvent actionEvent) {
         command = new CommandFilter();
-        if (command.validate(viewField.getText())){
+        if (command.validate(viewField.getText())) {
             getConnector().send(command);
-            showWindow(600,1000,getConnector().receive(),Color.BLACK);
+            showWindow(600, 1000, getConnector().receive(), Color.BLACK);
         }
     }
 
@@ -236,11 +195,22 @@ public class MainWindowController implements Controller, Initializable {
         command.validate(path);
         getConnector().send(command);
         Object answer = getConnector().receive();
-        while (answer!=null && !answer.toString().startsWith("====  Скрипт " + path + " успешно выполнен  ====")){
+        while (answer != null && !answer.toString().startsWith("====  Скрипт " + path + " успешно выполнен  ====")) {
             if (answer.getClass().getName().equals("".getClass().getName()))
-                showWindow(400,800,(String) answer,Color.BLACK);
+                showWindow(400, 800, (String) answer, Color.BLACK);
             else show(null);
             answer = getConnector().receive();
         }
+    }
+
+    public void tableClick(MouseEvent mouseEvent) {
+        Flat flat = table.getSelectionModel().getSelectedItem();
+        int index = table.getSelectionModel().getSelectedIndex();
+        if (flat != null) {
+            updateField.setText(String.valueOf(flat.getId()));
+            removeByIdField.setText(String.valueOf(flat.getId()));
+            removeAtField.setText(String.valueOf(index));
+        }
+
     }
 }

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="100.0" prefHeight="486.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.AddWindowController">
+    <left>
+        <VBox alignment="CENTER" minHeight="100.0" minWidth="100.0" prefHeight="311.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets left="50.0" />
+            </BorderPane.margin>
+            <Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" text="Имя собственника" />
+            <TextField fx:id="name" VBox.vgrow="ALWAYS" />
+         <Label fx:id="nameError" minHeight="-Infinity" prefHeight="12.0" prefWidth="174.0" text="Имя должно быть непустой строкой." textFill="RED" visible="false">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+            <Label fx:id="coordLabel" text="Координаты" />
+            <HBox alignment="CENTER" prefHeight="32.0" prefWidth="200.0" spacing="15.0">
+                <TextField fx:id="coordX" />
+                <TextField fx:id="coordY" />
+            </HBox>
+            <HBox prefHeight="39.0" prefWidth="219.0">
+                <Label fx:id="XError" alignment="CENTER" contentDisplay="TOP" depthTest="DISABLE" minHeight="-Infinity"
+                       prefHeight="39.0" prefWidth="107.0" text="Координата X должна быть числом."
+                       textAlignment="CENTER" textFill="RED" textOverrun="LEADING_WORD_ELLIPSIS" visible="false"
+                       wrapText="true" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets left="-5.0"/>
+                    </HBox.margin>
+                    <font>
+                        <Font size="10.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="YError" contentDisplay="RIGHT" prefHeight="39.0" prefWidth="111.0"
+                       text="Координата Y должна быть числом до 368." textAlignment="CENTER" textFill="RED"
+                       visible="false" wrapText="true">
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                    <font>
+                        <Font size="10.0"/>
+                    </font>
+                </Label>
+            </HBox>
+            <Label fx:id="areaLabel" text="Площадь" />
+            <TextField fx:id="area" />
+         <Label fx:id="areaError" minHeight="-Infinity" prefHeight="34.0" prefWidth="174.0" text="Жил.площадь должна быть положительным числом" textAlignment="CENTER" textFill="RED" visible="false" wrapText="true">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+            <Label fx:id="numberOfRoomsLabel" text="Количество комнат" />
+            <TextField fx:id="number_of_rooms" />
+         <Label fx:id="numberError" minHeight="-Infinity" text="Количество комнат должно быть целым положительным числом" textAlignment="CENTER" textFill="#fa0000" visible="false" wrapText="true">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+            <Label fx:id="livingAreaLabel" text="Жилплощадь" />
+            <TextField fx:id="living_area" />
+         <Label fx:id="livingAreaError" minHeight="-Infinity" text="Площадь жилых комнат должна быть положительным числом" textAlignment="CENTER" textFill="RED" visible="false" wrapText="true">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+        </VBox>
+    </left>
+    <right>
+        <VBox alignment="CENTER" prefHeight="352.0" prefWidth="200.0" spacing="3.5" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets right="50.0" />
+            </BorderPane.margin>
+            <Label fx:id="viewLabel" text="Вид из окна" />
+            <ChoiceBox fx:id="view" onAction="#checkBoxes" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="27.0" prefWidth="139.0" />
+            <Label fx:id="transportLabel" text="Транспорт" />
+            <ChoiceBox fx:id="transport" onAction="#checkBoxes" prefWidth="150.0" />
+            <Label fx:id="houseNameLabel" text="Название дома">
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="house_name">
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+            </TextField>
+         <Label fx:id="houseNameError" text="Название должно быть непустой строкой." textFill="RED" visible="false">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+            <Label fx:id="houseYearLabel" text="Год постройки дома" />
+            <TextField fx:id="house_year" />
+         <Label fx:id="houseYearError" text="Год постройки дома должен быть целым положительным числом" textAlignment="CENTER" textFill="RED" visible="false" wrapText="true">
+            <font>
+               <Font size="10.0" />
+            </font>
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+         </Label>
+            <Label fx:id="numberOfFlatsOnFloorLabel" text="Количество квартир на этаже" />
+            <TextField fx:id="numberOfFlatsOnFloor" />
+         <Label fx:id="houseNumberError" text="Количество квартир на этаже должно быть целым положительным числом" textAlignment="CENTER" textFill="RED" visible="false" wrapText="true">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+        </VBox>
+    </right>
+    <top>
+        <Label text="Квартира" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="System Bold" size="29.0" />
+            </font>
+            <BorderPane.margin>
+                <Insets top="15.0" />
+            </BorderPane.margin>
+        </Label>
+    </top>
+    <bottom>
+        <HBox alignment="BOTTOM_CENTER" prefHeight="70.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <Button fx:id="enter" disable="true" alignment="CENTER" mnemonicParsing="false" onAction="#enter" text="Ввести">
+                <HBox.margin>
+                    <Insets bottom="10.0" />
+                </HBox.margin>
+            </Button>
+            <Button fx:id="back" mnemonicParsing="false" onAction="#back" text="Назад">
+                <HBox.margin>
+                    <Insets bottom="10.0" />
+                </HBox.margin>
+            </Button>
+        </HBox>
+    </bottom>
+</BorderPane>

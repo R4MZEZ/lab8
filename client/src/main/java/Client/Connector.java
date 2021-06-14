@@ -41,15 +41,18 @@ public class Connector {
 
     public void send(Commands.Command data) {
         try {
-            b1 = new ByteArrayOutputStream(1024);
+            b1 = new ByteArrayOutputStream(2048);
             outputStream = new ObjectOutputStream(b1);
             outputStream.writeObject(data);
+            outputStream.close();
 
             byteBuffer = ByteBuffer.wrap(b1.toByteArray());
             client.send(byteBuffer, serverAddress);
 
+
         } catch (IOException e) {
             ClientLogger.logger.error("Ошибка при отправке данных", e);
+            e.printStackTrace();
         }
     }
 

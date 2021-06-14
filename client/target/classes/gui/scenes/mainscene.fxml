@@ -45,19 +45,19 @@
             <Button fx:id="maxByHouseButton" layoutX="20.0" layoutY="425.0" mnemonicParsing="false" onAction="#max_by_house" prefHeight="29.0" prefWidth="226.0" text="Макс. по году постройки дома" />
             <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="206.0">
                 <Button fx:id="updateButton" mnemonicParsing="false" onAction="#update" prefHeight="28.0" prefWidth="126.0" text="Обновить квартиру" />
-                <TextField prefHeight="26.0" prefWidth="82.0" />
+                <TextField fx:id="updateField" prefHeight="26.0" prefWidth="82.0" />
             </HBox>
             <HBox prefHeight="29.0" prefWidth="200.0">
                 <Button fx:id="removeByIdButton" mnemonicParsing="false" onAction="#remove_by_id" prefHeight="28.0" prefWidth="126.0" text="Удалить по ID" />
                 <TextField fx:id="removeByIdField" prefHeight="26.0" prefWidth="82.0" />
             </HBox>
             <HBox prefHeight="29.0" prefWidth="200.0">
-                <Button fx:id="executeScriptButton" onAction="#execute_script" mnemonicParsing="false" prefHeight="29.0" prefWidth="126.0" text="Выполнить скрипт" />
-                <TextField fx:id="scriptField" prefHeight="26.0" prefWidth="82.0" />
-            </HBox>
-            <HBox prefHeight="29.0" prefWidth="200.0">
                 <Button fx:id="removeAtButton" mnemonicParsing="false" onAction="#remove_at" prefHeight="29.0" prefWidth="126.0" text="Удалить по индексу" />
                 <TextField fx:id="removeAtField" prefHeight="26.0" prefWidth="82.0" />
+            </HBox>
+            <HBox prefHeight="29.0" prefWidth="200.0">
+                <Button fx:id="executeScriptButton" onAction="#execute_script" mnemonicParsing="false" prefHeight="29.0" prefWidth="126.0" text="Выполнить скрипт" />
+                <TextField fx:id="scriptField" prefHeight="26.0" prefWidth="82.0" />
             </HBox>
             <HBox prefHeight="29.0" prefWidth="200.0">
                 <Button fx:id="filterLessThanViewButton" mnemonicParsing="false" onAction="#filter_less_than_view" prefHeight="29.0" prefWidth="126.0" text="Фильтр по View" />
@@ -69,7 +69,7 @@
             <TabPane prefHeight="551.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                 <Tab id="listOfFlats" text="Список квартир">
                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                        <TableView fx:id="table" minWidth="862" prefHeight="526.0" prefWidth="862.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="28.0">
+                        <TableView fx:id="table" onMouseClicked="#tableClick" minWidth="862" prefHeight="526.0" prefWidth="862.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="28.0">
                             <columns>
                                 <TableColumn fx:id="id" prefWidth="30" text="id" />
                                 <TableColumn fx:id="name" prefWidth="70" text="name" />
