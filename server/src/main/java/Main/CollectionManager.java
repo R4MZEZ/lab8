@@ -39,6 +39,10 @@ public class CollectionManager {
         this.handler = handler;
     }
 
+    public static void setFlats(List<Flat> flats) {
+        CollectionManager.flats = flats;
+    }
+
     public static LocalDateTime getInitDate() {
         return initDate;
     }
@@ -70,11 +74,11 @@ public class CollectionManager {
      * Получить информацию о коллекции
      */
     public void info() {
-        flats = databaseHandler.loadCollectionFromDB();
-        if (flats==null){
-            connector.send("Произошла ошибка при загрузке коллекции из базы данных.");
-            return;
-        }
+//        flats = databaseHandler.loadCollectionFromDB();
+//        if (flats==null){
+//            connector.send("Произошла ошибка при загрузке коллекции из базы данных.");
+//            return;
+//        }
         String info = "Тип - " + flats.getClass().getName() +
                 "\nДата инициализации - " + getInitDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm:ss")) +
                 "\nКоличество элементов - " + flats.size();
@@ -85,11 +89,11 @@ public class CollectionManager {
      * Показать элементы коллекции
      */
     public void show() {
-        flats = databaseHandler.loadCollectionFromDB();
-        if (flats==null){
-            connector.send("Произошла ошибка при загрузке коллекции из базы данных.");
-            return;
-        }
+//        flats = databaseHandler.loadCollectionFromDB();
+//        if (flats==null){
+//            connector.send("Произошла ошибка при загрузке коллекции из базы данных.");
+//            return;
+//        }
 //        flats.forEach(flat -> connector.send(flat.niceToString()));
         connector.send(flats);
     }
@@ -167,20 +171,14 @@ public class CollectionManager {
     public void clear(String username) {
         try {
             databaseHandler.deleteByUsername(username);
-            flats = databaseHandler.loadCollectionFromDB();
+//            flats = databaseHandler.loadCollectionFromDB();
             connector.send("Элементы коллекции, принадлежащие вам, успешно очищены.");
             flats.removeIf(flat -> flat.getUser().equals(username));
         } catch (SQLException e) {
             System.err.println("Ошибка доступа к базе данных.");
+            connector.send("Ошибка доступа к базе данных.");
             ServerLogger.logger.error("Ошибка доступа к базе", e);
         }
-    }
-
-    /**
-     * Сохранить коллекцию в файл
-     */
-    public void save(){
-        databaseHandler.saveCollectionToDB(flats);
     }
 
     /**
@@ -194,6 +192,7 @@ public class CollectionManager {
         } catch (SQLException e) {
             System.err.println("Ошибка доступа к базе данных.");
             ServerLogger.logger.error("Ошибка доступа к базе", e);
+            connector.send("Ошибка доступа к базе данных.");
         }
 
     }
@@ -208,6 +207,8 @@ public class CollectionManager {
         } catch (SQLException e) {
             System.err.println("Ошибка доступа к базе данных.");
             ServerLogger.logger.error("Ошибка доступа к базе", e);
+            connector.send("Ошибка доступа к базе данных.");
+
         }
 
     }
@@ -260,16 +261,9 @@ public class CollectionManager {
      * @param path Путь до файла
      * @throws FileNotFoundException если файл недоступен/не найден
      */
-    public void execute_script(String path, String username) throws FileNotFoundException {
+    public void execute_script(String path, String username){
         InputStream stream;
-        try {
-            if (path.startsWith("/dev")) {
-                connector.send("Файл для извлечения скрипта не найден. Проверьте путь и права доступа к файлу.");
-                return;
-            }
-        }catch (StringIndexOutOfBoundsException ignored){
 
-        }
         try{
             stream = new BufferedInputStream(new FileInputStream(path));
         }catch (FileNotFoundException e){
@@ -284,7 +278,6 @@ public class CollectionManager {
 
         //Проверка на зацикленность
         pathList.add(path);
-        connector.send("====  Начало выполнения скрипта по адресу " + path + "  ====");
         handler.interactiveMod(stream, username);
         connector.send("====  Скрипт " + path + " успешно выполнен  ====\n");
         pathList.remove(path);

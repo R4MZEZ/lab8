@@ -18,12 +18,6 @@ public class Commander {
     static boolean isAuth;
     static String username;
 
-    public static Connector getConnector() {
-        return connector;
-    }
-
-    private String password;
-
 //    public Commander(CommandReady commandReady, int PORT){
 //        connector = new Connector(PORT);
 //        connector.send(commandReady);

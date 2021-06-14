@@ -18,6 +18,7 @@ public class Handler implements Serializable, Runnable {
         manager.setConnector(connector);
         manager.setHandler(this);
         manager.setDatabaseHandler(connector.databaseHandler);
+        CollectionManager.setFlats(manager.databaseHandler.loadCollectionFromDB());
 
         invoker.register("help", new CommandHelp(manager));
         invoker.register("info", new CommandInfo(manager));
@@ -27,7 +28,6 @@ public class Handler implements Serializable, Runnable {
         invoker.register("update", new CommandUpdate(manager));
         invoker.register("clear", new CommandClear(manager));
         invoker.register("execute_script", new CommandExecuteScript(manager));
-        invoker.register("save", new CommandSave(manager));
         invoker.register("remove_at", new CommandRemoveAt(manager));
         invoker.register("remove_last", new CommandRemoveLast(manager));
         invoker.register("shuffle", new CommandShuffle(manager));

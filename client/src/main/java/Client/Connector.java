@@ -1,6 +1,7 @@
 package Client;
 
 
+import javafx.scene.paint.Color;
 import tools.ClientLogger;
 
 import java.io.*;
@@ -8,6 +9,7 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.DatagramChannel;
+import java.util.Arrays;
 
 
 public class Connector {
@@ -21,6 +23,8 @@ public class Connector {
 
     ByteBuffer byteBuffer;
     byte[] buffer = new byte[1024];
+
+    private int attemps = 0;
 
     public Connector(int PORT) {
         try {
@@ -60,6 +64,10 @@ public class Connector {
             return (T) answer;
 
         } catch (StreamCorruptedException e) {
+            if (attemps++ > 5){
+                attemps = 0;
+                return (T) "Server connection error. Please try again.";
+            }
             return receive();
         } catch (ClosedByInterruptException | InterruptedException ignored) {
             return (T) "";

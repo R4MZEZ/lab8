@@ -17,9 +17,6 @@ public class CommandExecuteScript implements Command, Serializable {
         this.manager = manager;
     }
 
-    public CommandExecuteScript() {
-    }
-
     @Override
     public void setUsername(String username) {
         this.username = username;
@@ -32,11 +29,7 @@ public class CommandExecuteScript implements Command, Serializable {
 
     @Override
     public void execute(){
-        try {
-            manager.execute_script(argument, username);
-        }catch (FileNotFoundException e){
-            System.out.println("Файл для извлечения скрипта не найден. Проверьте путь и права доступа к файлу.");
-        }
+        manager.execute_script(argument, username);
     }
 
     @Override

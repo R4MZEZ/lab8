@@ -13,7 +13,7 @@ public enum View implements Serializable {
     GOOD,
     TERRIBLE;
 
-    public static void ViewToString(){
-        System.out.println("Список возможных видов из окна: " + Arrays.toString(View.values()));
+    public static String ViewToString(){
+        return ("Список возможных видов из окна: " + Arrays.toString(View.values()));
     }
 }
