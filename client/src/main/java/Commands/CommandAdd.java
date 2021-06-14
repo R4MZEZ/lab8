@@ -20,6 +20,10 @@ public class CommandAdd implements Command, Serializable {
         this.controller = controller;
     }
 
+    public Flat getArgument() {
+        return argument;
+    }
+
     @Override
     public boolean validate(String argument) {
         boolean result = true;

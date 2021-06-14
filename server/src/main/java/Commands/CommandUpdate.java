@@ -42,7 +42,7 @@ public class CommandUpdate implements Command{
         CommandAdd a = new CommandAdd();
         a.validate(argument,reader);
         this.flat = a.argument;
-        this.id = argument;
+        id = argument;
         return true;
     }
 }

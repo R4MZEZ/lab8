@@ -1,7 +1,7 @@
 package gui.controllers;
 
-import Commands.Command;
 import Commands.CommandAdd;
+import Commands.CommandUpdate;
 import content.Flat;
 import content.Transport;
 import content.View;
@@ -176,16 +176,25 @@ public class AddWindowController implements Controller, Initializable{
         builder.append(view.getValue().toString()).append("-_-");
         builder.append(transport.getValue().toString()).append("-_-");
 
-        Command command = new CommandAdd(this);
+        CommandAdd commandAdd = new CommandAdd(this);
 
-        if (command.validate(builder.toString())) {
-            getConnector().send(command);
-            showWindow(200, 600, getConnector().receive(), Color.BLACK);
+        if (commandAdd.validate(builder.toString())) {
+            if (updatedFlat != null){
+                updatedFlat = null;
+                CommandUpdate commandUpdate = MainWindowController.commandUpdate;
+                commandUpdate.setFlat(commandAdd.getArgument());
+                getConnector().send(commandUpdate);
+                showWindow(200, 600, getConnector().receive(), Color.BLACK);
+                back(null);
+            }else {
+                getConnector().send(commandAdd);
+                showWindow(200, 600, getConnector().receive(), Color.BLACK);
+            }
         }
     }
 
     @Override
-    public static void setStage(Stage stage) {
+    public void setStage(Stage stage) {
         AddWindowController.stage = stage;
     }
 
@@ -193,6 +202,19 @@ public class AddWindowController implements Controller, Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         view.setItems(FXCollections.observableList(Arrays.asList(View.values())));
         transport.setItems(FXCollections.observableList(Arrays.asList(Transport.values())));
+        if (updatedFlat != null) {
+            name.setText(updatedFlat.getName());
+            coordX.setText(String.valueOf(updatedFlat.getCoordX()));
+            coordY.setText(String.valueOf(updatedFlat.getCoordY()));
+            area.setText(String.valueOf(updatedFlat.getArea()));
+            number_of_rooms.setText(String.valueOf(updatedFlat.getNumberOfRooms()));
+            living_area.setText(String.valueOf(updatedFlat.getLivingSpace()));
+            view.setValue(updatedFlat.getView());
+            transport.setValue(updatedFlat.getTransport());
+            house_name.setText(updatedFlat.getHouse_name());
+            house_year.setText(String.valueOf(updatedFlat.getHouse_year()));
+            numberOfFlatsOnFloor.setText(String.valueOf(updatedFlat.getHouse_numberOfFlatsOnFloor()));
+        }
     }
 
     public void checkBoxes(ActionEvent actionEvent) {

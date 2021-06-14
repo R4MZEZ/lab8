@@ -23,6 +23,7 @@ import static Client.Main.*;
 
 public class MainWindowController implements Controller, Initializable {
     static Stage stage;
+    static CommandUpdate commandUpdate;
     public TextField removeByIdField;
     public Label lostConnLabel;
     public TextField viewField;
@@ -144,12 +145,24 @@ public class MainWindowController implements Controller, Initializable {
 
 
     public void add(ActionEvent actionEvent) {
-        AddWindowController.setStage(changeWindow("/gui/scenes/add.fxml", stage));
+        new AddWindowController().setStage(changeWindow("/gui/scenes/add.fxml", stage));
     }
 
     public void update(ActionEvent actionEvent) {
-        AddWindowController.setUpdatedFlat(table.getItems().get(updateField.getText()));
-        AddWindowController.setStage(changeWindow("/gui/scenes/add.fxml", stage));
+        commandUpdate = new CommandUpdate();
+
+        if (commandUpdate.validate(updateField.getText())){
+            if (table.getItems().stream()
+                    .anyMatch(flat -> flat.getId() == Integer.parseInt(updateField.getText()))) {
+
+                AddWindowController.setUpdatedFlat(table.getItems().stream()
+                        .filter(flat -> flat.getId() == Integer.parseInt(updateField.getText()))
+                        .findFirst().get());
+                new AddWindowController().setStage(changeWindow("/gui/scenes/add.fxml", stage));
+
+            }else showWindow(200,500,"Элемента с указанным id не найдено.", Color.BLACK);
+
+        }
     }
 
     public void remove_last(ActionEvent actionEvent) {

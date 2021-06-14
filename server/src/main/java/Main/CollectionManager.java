@@ -123,13 +123,14 @@ public class CollectionManager {
                 connector.send("У вас недостаточно прав для модификации этого элемента.");
                 return;
             }
+            argument.setUser(username);
             databaseHandler.updateFlatToDB(argument);
             connector.send("Элемент успешно обновлён.");
 
             for (Flat flat : flats) {
                 if (flat.getId() == Long.parseLong(id)) {
                     flats.set(flats.indexOf(flat), argument);
-                    flats.get(flats.indexOf(flat)).setId(flat.getId());
+                    flats.get(flats.indexOf(argument)).setId(flat.getId());
                 }
             }
 
