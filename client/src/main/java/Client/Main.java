@@ -1,9 +1,6 @@
 package Client;
 
-//import Commands.CommandReady;
-import Commands.CommandExit;
 import gui.controllers.Controller;
-import gui.controllers.LogInWindowController;
 import gui.controllers.StartWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,10 +16,20 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
     static boolean connected = false;
     static int PORT = 3125;
+    static ResourceBundle bundle = ResourceBundle.getBundle("bundles.Resources");
+
+    public static ResourceBundle getBundle() {
+        return bundle;
+    }
+
+    public static void setBundle(ResourceBundle bundle) {
+        Main.bundle = bundle;
+    }
 
     public static Connector getConnector() {
         return connector;

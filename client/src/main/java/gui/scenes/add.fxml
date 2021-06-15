@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="100.0" prefHeight="486.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.AddWindowController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="550.0" minWidth="100.0" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.AddWindowController">
     <left>
         <VBox alignment="CENTER" minHeight="100.0" minWidth="100.0" prefHeight="311.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <BorderPane.margin>
@@ -118,7 +118,7 @@
         </VBox>
     </right>
     <top>
-        <Label text="Квартира" BorderPane.alignment="CENTER">
+        <Label fx:id="flatLabel" text="Квартира" BorderPane.alignment="CENTER">
             <font>
                 <Font name="System Bold" size="29.0" />
             </font>

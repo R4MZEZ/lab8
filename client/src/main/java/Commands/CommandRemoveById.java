@@ -17,7 +17,7 @@ public class CommandRemoveById implements Command{
     @Override
     public boolean validate(String argument) {
         if (!Checker.isLong(argument)) {
-            Main.showWindow(200,600,"Ошибка! 'id' должен быть целым положительным числом. \nПовторите ввод команды.", Color.RED);
+            Main.showWindow(200,600,Main.getBundle().getString("idErr"), Color.RED);
             return false;
         }
         this.argument = argument;

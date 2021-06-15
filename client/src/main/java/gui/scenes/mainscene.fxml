@@ -23,9 +23,13 @@
 
 <VBox maxWidth="1124" minWidth="1124" prefHeight="600.0" prefWidth="1124.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.MainWindowController">
     <MenuBar VBox.vgrow="NEVER">
-        <Menu mnemonicParsing="false" text="Настройки">
+        <Menu fx:id="settingsMenu" mnemonicParsing="false" text="Настройки">
             <Menu fx:id="languageMenu" mnemonicParsing="false" text="Язык">
-                <MenuItem text="Русский" />
+                <MenuItem text="Русский" onAction="#setRussian"/>
+                <MenuItem text="English" onAction="#setEnglish"/>
+                <MenuItem text="Shqiptare" onAction="#setAlbanian"/>
+                <MenuItem text="Slovák" onAction="#setSlovak"/>
+
             </Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="changeUserButton" onAction="#changeUser" mnemonicParsing="false" text="Сменить пользователя"/>
@@ -68,7 +72,7 @@
         </VBox>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <TabPane prefHeight="551.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                <Tab id="listOfFlats" text="Список квартир">
+                <Tab fx:id="listOfFlats" text="Список квартир">
                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
                         <TableView fx:id="table" onMouseClicked="#tableClick" minWidth="862" prefHeight="526.0" prefWidth="862.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="28.0">
                             <columns>
@@ -90,7 +94,7 @@
                         </TableView>
                     </AnchorPane>
                 </Tab>
-                <Tab text="Визуализация квартир">
+                <Tab fx:id="visualization" text="Визуализация квартир">
                     <ScatterChart prefHeight="328.0" prefWidth="450.0">
                         <xAxis>
                             <CategoryAxis side="BOTTOM" />
@@ -109,7 +113,7 @@
         </padding>
         <Label fx:id="username" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="34.0" text="guest" textFill="#484848" HBox.hgrow="ALWAYS">
             <font>
-                <Font size="11.0" fx:id="x3" />
+                <Font size="11.0"/>
             </font>
         </Label>
       <Label fx:id="lostConnLabel" prefHeight="18.0" prefWidth="672.0" text="Соединение с сервером потеряно. Коллекция может отображаться некорректно." textFill="RED" visible="false">

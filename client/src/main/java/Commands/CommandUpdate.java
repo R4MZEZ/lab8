@@ -1,6 +1,7 @@
 package Commands;
 
 import Client.Commander;
+import Client.Main;
 import content.Flat;
 import javafx.scene.paint.Color;
 import tools.Checker;
@@ -23,7 +24,7 @@ public class CommandUpdate implements Command{
     @Override
     public boolean validate(String argument) {
         if (!Checker.isLong(argument)) {
-            Client.Main.showWindow(300,500,"Ошибка! 'id' должен быть целым положительным числом.\n Повторите ввод команды.", Color.RED);
+            Client.Main.showWindow(300,500, Main.getBundle().getString("idErr"), Color.RED);
             return false;
         }
         id = argument;

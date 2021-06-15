@@ -20,7 +20,7 @@ public class CommandExecuteScript implements Command, Serializable {
     @Override
     public boolean validate(String argument) {
         if (Checker.isNotString(argument)){
-            Main.showWindow(200,500,"Путь должен быть непустой строкой", Color.RED);
+            Main.showWindow(200,500,Main.getBundle().getString("scriptErr"), Color.RED);
             return false;
         }
         this.argument = argument;

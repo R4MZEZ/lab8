@@ -1,6 +1,7 @@
 package gui.controllers;
 
 import Client.Commander;
+import Client.Main;
 import Commands.*;
 import content.*;
 import javafx.collections.FXCollections;
@@ -30,6 +31,24 @@ public class MainWindowController implements Controller, Initializable {
     public TextField removeAtField;
     public TextField scriptField;
     public TextField updateField;
+    public MenuItem changeUserButton;
+    public Button helpButton;
+    public Button infoButton;
+    public Button showButton;
+    public Button addButton;
+    public Button clearButton;
+    public Button removeLastButton;
+    public Button averageOfLivingSpaceButton;
+    public Button maxByHouseButton;
+    public Button updateButton;
+    public Button removeByIdButton;
+    public Button removeAtButton;
+    public Button executeScriptButton;
+    public Button filterLessThanViewButton;
+    public Button exitButton;
+    public Menu settingsMenu;
+    public Tab listOfFlats;
+    public Tab visualization;
     Command command;
     Thread thread = new Thread(new Shower());
 
@@ -101,13 +120,15 @@ public class MainWindowController implements Controller, Initializable {
 
 
     public void show(ActionEvent actionEvent) {
-        try {
-            getConnector().send(new CommandShow());
-            ObservableList<Flat> list = FXCollections.observableList(getConnector().receive());
-            table.setItems(list);
-            lostConnLabel.setVisible(false);
-        } catch (ClassCastException e) {
-            lostConnLabel.setVisible(true);
+        synchronized (this) {
+            try {
+                getConnector().send(new CommandShow());
+                ObservableList<Flat> list = FXCollections.observableList(getConnector().receive());
+                table.setItems(list);
+                lostConnLabel.setVisible(false);
+            } catch (ClassCastException e) {
+                lostConnLabel.setVisible(true);
+            }
         }
     }
 
@@ -143,7 +164,34 @@ public class MainWindowController implements Controller, Initializable {
         house_year.setCellValueFactory(new PropertyValueFactory<>("house_year"));
         numberOfFlatsOnFloor.setCellValueFactory(new PropertyValueFactory<>("house_numberOfFlatsOnFloor"));
         user.setCellValueFactory(new PropertyValueFactory<>("user"));
-        thread.start();
+
+        try {
+            thread.start();
+        }catch (IllegalThreadStateException ignored){
+            //thread is already running
+        }
+
+        ResourceBundle bundle = Main.getBundle();
+        settingsMenu.setText(bundle.getString("settings"));
+        languageMenu.setText(bundle.getString("language"));
+        changeUserButton.setText(bundle.getString("change_user"));
+        helpButton.setText(bundle.getString("help"));
+        infoButton.setText(bundle.getString("info"));
+        showButton.setText(bundle.getString("show"));
+        addButton.setText(bundle.getString("add"));
+        clearButton.setText(bundle.getString("clear"));
+        removeLastButton.setText(bundle.getString("remove_last"));
+        averageOfLivingSpaceButton.setText(bundle.getString("average"));
+        maxByHouseButton.setText(bundle.getString("max"));
+        updateButton.setText(bundle.getString("update"));
+        removeByIdButton.setText(bundle.getString("remove_by_id"));
+        removeAtButton.setText(bundle.getString("remove_at"));
+        executeScriptButton.setText(bundle.getString("execute_script"));
+        filterLessThanViewButton.setText(bundle.getString("filter"));
+        exitButton.setText(bundle.getString("exit"));
+        listOfFlats.setText(bundle.getString("list"));
+        visualization.setText(bundle.getString("visualization"));
+
 
     }
 
@@ -240,6 +288,26 @@ public class MainWindowController implements Controller, Initializable {
         new StartWindowController().setStage(changeWindow("/gui/scenes/start.fxml", stage));
         thread.interrupt();
 
+    }
+
+    public void setRussian(ActionEvent actionEvent) {
+        Main.setBundle(ResourceBundle.getBundle("bundles.Resources"));
+        initialize(null,Main.getBundle());
+    }
+
+    public void setEnglish(ActionEvent actionEvent) {
+        Main.setBundle(ResourceBundle.getBundle("bundles.Resources_en_CA"));
+        initialize(null,Main.getBundle());
+    }
+
+    public void setAlbanian(ActionEvent actionEvent) {
+        Main.setBundle(ResourceBundle.getBundle("bundles.Resources_sq"));
+        initialize(null,Main.getBundle());
+    }
+
+    public void setSlovak(ActionEvent actionEvent) {
+        Main.setBundle(ResourceBundle.getBundle("bundles.Resources_sk"));
+        initialize(null,Main.getBundle());
     }
 
     class Shower implements Runnable {

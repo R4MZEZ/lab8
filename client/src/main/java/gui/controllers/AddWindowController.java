@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import Client.Main;
 import Commands.CommandAdd;
 import Commands.CommandUpdate;
 import content.Flat;
@@ -27,6 +28,7 @@ public class AddWindowController implements Controller, Initializable{
 
     private static Stage stage;
     private static Flat updatedFlat = null;
+    public Label flatLabel;
 
     public static void setUpdatedFlat(Flat updatedFlat) {
         AddWindowController.updatedFlat = updatedFlat;
@@ -215,6 +217,29 @@ public class AddWindowController implements Controller, Initializable{
             house_year.setText(String.valueOf(updatedFlat.getHouse_year()));
             numberOfFlatsOnFloor.setText(String.valueOf(updatedFlat.getHouse_numberOfFlatsOnFloor()));
         }
+
+        ResourceBundle bundle = Main.getBundle();
+        flatLabel.setText(bundle.getString("flat"));
+        nameLabel.setText(bundle.getString("name"));
+        coordLabel.setText(bundle.getString("coordinates"));
+        areaLabel.setText(bundle.getString("area"));
+        numberOfRoomsLabel.setText(bundle.getString("number_of_rooms"));
+        livingAreaLabel.setText(bundle.getString("living_space"));
+        viewLabel.setText(bundle.getString("view"));
+        transportLabel.setText(bundle.getString("transport"));
+        houseNameLabel.setText(bundle.getString("house_name"));
+        houseYearLabel.setText(bundle.getString("house_year"));
+        numberOfFlatsOnFloorLabel.setText(bundle.getString("number_of_flats"));
+        enter.setText(bundle.getString("type"));
+        back.setText(bundle.getString("back"));
+        nameError.setText(bundle.getString("nameErr"));
+        XError.setText(bundle.getString("xErr"));
+        YError.setText(bundle.getString("yErr"));
+        areaError.setText(bundle.getString("areaErr"));
+        numberError.setText(bundle.getString("numberErr"));
+        houseNameError.setText(bundle.getString("hnameErr"));
+        houseYearError.setText(bundle.getString("hyearErr"));
+        houseNumberError.setText(bundle.getString("hnumberErr"));
     }
 
     public void checkBoxes(ActionEvent actionEvent) {

@@ -1,16 +1,20 @@
 package gui.controllers;
 
 import Client.Commander;
-import Commands.CommandLogin;
+import Client.Main;
 import Commands.CommandRegister;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class RegisterWindowController implements Controller{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class RegisterWindowController implements Controller, Initializable {
     public Label registrationLabel;
     public Label loginLabel;
     public TextField login;
@@ -51,5 +55,15 @@ public class RegisterWindowController implements Controller{
 
     public void back(ActionEvent actionEvent) {
         Client.Main.changeWindow(prevWindow,stage);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ResourceBundle bundle = Main.getBundle();
+        registerButton.setText(bundle.getString("register"));
+        backButton.setText(bundle.getString("back"));
+        loginLabel.setText(bundle.getString("login"));
+        passwordLabel.setText(bundle.getString("password"));
+        registrationLabel.setText(bundle.getString("registration"));
     }
 }

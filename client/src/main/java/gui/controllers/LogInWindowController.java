@@ -1,15 +1,20 @@
 package gui.controllers;
 
 import Client.Commander;
+import Client.Main;
 import Commands.CommandLogin;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LogInWindowController implements Controller {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LogInWindowController implements Controller, Initializable {
     public Label enterLabel;
     public Label loginLabel;
     public TextField login;
@@ -46,4 +51,13 @@ public class LogInWindowController implements Controller {
         Client.Main.changeWindow(prevWindow, stage);
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ResourceBundle bundle = Main.getBundle();
+        enterLabel.setText(bundle.getString("logging"));
+        loginLabel.setText(bundle.getString("login"));
+        passwordLabel.setText(bundle.getString("password"));
+        enterButton.setText(bundle.getString("enter"));
+        back.setText(bundle.getString("back"));
+    }
 }

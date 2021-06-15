@@ -1,12 +1,17 @@
 package gui.controllers;
 
+import Client.Main;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class StartWindowController implements Controller{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class StartWindowController implements Controller, Initializable {
     public Label flatsLabel;
     public Button authorizationButton;
     public Button registerButton;
@@ -30,5 +35,15 @@ public class StartWindowController implements Controller{
 
     public void exit(ActionEvent actionEvent) {
         System.exit(-1);
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ResourceBundle bundle = Main.getBundle();
+        authorizationButton.setText(bundle.getString("enter"));
+        registerButton.setText(bundle.getString("registration"));
+        exitButton.setText(bundle.getString("exit"));
+        flatsLabel.setText(bundle.getString("flats"));
     }
 }

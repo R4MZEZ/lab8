@@ -14,6 +14,6 @@ public enum View implements Serializable {
     TERRIBLE;
 
     public static String ViewToString(){
-        return ("Список возможных видов из окна: " + Arrays.toString(View.values()));
+        return (Arrays.toString(View.values()));
     }
 }
