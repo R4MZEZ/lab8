@@ -2,8 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -11,49 +13,43 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="100.0" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.controllers.StartWindowController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="100.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.StartWindowController">
     <center>
-        <VBox alignment="CENTER" minHeight="343.0" minWidth="0.0" prefHeight="343.0" prefWidth="584.0" spacing="18.0"
-              BorderPane.alignment="CENTER">
+        <VBox alignment="CENTER" minHeight="343.0" minWidth="0.0" prefHeight="343.0" prefWidth="584.0" spacing="18.0" BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
             </BorderPane.margin>
-            <Label fx:id="flatsLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="161.0"
-                   text="Квартиры" VBox.vgrow="ALWAYS">
+            <Label fx:id="flatsLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="161.0" text="Квартиры" VBox.vgrow="ALWAYS">
                 <font>
-                    <Font name="System Bold" size="27.0"/>
+                    <Font name="System Bold" size="27.0" />
                 </font>
             </Label>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@2hpWoQJPELU.jpg"/>
+                <Image url="@2hpWoQJPELU.jpg" />
             </ImageView>
             <HBox alignment="CENTER" prefHeight="51.0" prefWidth="584.0" spacing="30.0">
-                <Button fx:id="authorizationButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
-                        onAction="#authorization" prefHeight="31.0" prefWidth="114.0" text="Войти"
-                        textAlignment="CENTER"
-                        HBox.hgrow="ALWAYS">
+                <Button fx:id="authorizationButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#authorization" prefHeight="31.0" prefWidth="114.0" text="Войти" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                     <HBox.margin>
-                        <Insets/>
+                        <Insets />
                     </HBox.margin>
                 </Button>
-                <Button fx:id="registerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
-                        onAction="#register" prefHeight="31.0" prefWidth="109.0" text="Регистрация" HBox.hgrow="ALWAYS">
+                <Button fx:id="registerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#register" prefHeight="31.0" prefWidth="109.0" text="Регистрация" HBox.hgrow="ALWAYS">
                     <HBox.margin>
-                        <Insets/>
+                        <Insets />
                     </HBox.margin>
                 </Button>
             </HBox>
-            <Button fx:id="exitButton" layoutX="260.0" layoutY="131.0" mnemonicParsing="false" onAction="#exit"
-                    prefHeight="31.0" prefWidth="108.0" text="Выход" VBox.vgrow="ALWAYS"/>
+            <Button fx:id="exitButton" layoutX="260.0" layoutY="131.0" mnemonicParsing="false" onAction="#exit" prefHeight="31.0" prefWidth="108.0" text="Выход" VBox.vgrow="ALWAYS" />
         </VBox>
     </center>
-    <top>
-        <ChoiceBox fx:id="language" prefHeight="31.0" prefWidth="150.0" BorderPane.alignment="CENTER_RIGHT">
-            <BorderPane.margin>
-                <Insets right="10.0" top="10.0"/>
-            </BorderPane.margin>
-        </ChoiceBox>
-    </top>
+   <top>
+       <MenuBar BorderPane.alignment="CENTER">
+           <Menu fx:id="languageMenu" mnemonicParsing="false" text="Язык">
+               <MenuItem onAction="#setRussian" mnemonicParsing="false" text="Русский"/>
+               <MenuItem onAction="#setEnglish" mnemonicParsing="false" text="English"/>
+               <MenuItem onAction="#setAlbanian" mnemonicParsing="false" text="Shqiptare"/>
+               <MenuItem onAction="#setSlovak" mnemonicParsing="false" text="Slovák"/>
+           </Menu>
+       </MenuBar>
+   </top>
 </BorderPane>

@@ -7,16 +7,27 @@ import content.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static Client.Main.*;
@@ -49,6 +60,8 @@ public class MainWindowController implements Controller, Initializable {
     public Menu settingsMenu;
     public Tab listOfFlats;
     public Tab visualization;
+    public Pane canvas;
+
     Command command;
     Thread thread = new Thread(new Shower());
 
@@ -308,6 +321,40 @@ public class MainWindowController implements Controller, Initializable {
     public void setSlovak(ActionEvent actionEvent) {
         Main.setBundle(ResourceBundle.getBundle("bundles.Resources_sk"));
         initialize(null,Main.getBundle());
+    }
+
+    public void visualiseAll(Event event) {
+        for (Flat flat: table.getItems()) {
+            Circle circle = new Circle(flat.getCoordX(),flat.getCoordY(),
+                    (flat.getArea())/5,Color.color(
+                    ((double) Math.abs(flat.getUser().hashCode()-111)%10)/10,
+                    ((double) Math.abs(flat.getUser().hashCode()-333)%10)/10,
+                    ((double) Math.abs(flat.getUser().hashCode()-555)%10)/10));
+            circle.setStroke(Paint.valueOf("BLACK"));
+            circle.setStrokeWidth(circle.getRadius()/10);
+            canvas.getChildren().add(circle);
+        }
+    }
+
+    public List<Flat> getNewElements(List<Flat> serverList){
+        List<Flat> temp = new ArrayList<>(serverList);
+        if (!table.getItems().containsAll(serverList)){
+            temp.retainAll(table.getItems());
+            serverList.removeAll(temp);
+            return serverList;
+        }
+        return null;
+    }
+
+    public List<Flat> getDeletedElements(List<Flat> serverList){
+        List<Flat> result = new ArrayList<>(table.getItems());
+        List<Flat> temp = new ArrayList<>(table.getItems());
+        if (!serverList.containsAll(table.getItems())){
+            temp.retainAll(serverList);
+            result.removeAll(temp);
+            return result;
+        }
+        return null;
     }
 
     class Shower implements Runnable {

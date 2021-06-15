@@ -3,9 +3,7 @@ package gui.controllers;
 import Client.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -18,6 +16,7 @@ public class StartWindowController implements Controller, Initializable {
     public Button exitButton;
     public ChoiceBox<String> language;
     static Stage stage;
+    public Menu languageMenu;
 
     public void setStage(Stage stage) {
         StartWindowController.stage = stage;
@@ -45,5 +44,26 @@ public class StartWindowController implements Controller, Initializable {
         registerButton.setText(bundle.getString("registration"));
         exitButton.setText(bundle.getString("exit"));
         flatsLabel.setText(bundle.getString("flats"));
+        languageMenu.setText(bundle.getString("language"));
+    }
+
+    public void setRussian(ActionEvent actionEvent) {
+        Main.setBundle(ResourceBundle.getBundle("bundles.Resources"));
+        initialize(null,Main.getBundle());
+    }
+
+    public void setEnglish(ActionEvent actionEvent) {
+        Main.setBundle(ResourceBundle.getBundle("bundles.Resources_en_CA"));
+        initialize(null,Main.getBundle());
+    }
+
+    public void setAlbanian(ActionEvent actionEvent) {
+        Main.setBundle(ResourceBundle.getBundle("bundles.Resources_sq"));
+        initialize(null,Main.getBundle());
+    }
+
+    public void setSlovak(ActionEvent actionEvent) {
+        Main.setBundle(ResourceBundle.getBundle("bundles.Resources_sk"));
+        initialize(null,Main.getBundle());
     }
 }
