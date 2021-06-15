@@ -28,6 +28,7 @@
                 <MenuItem text="Русский" />
             </Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="changeUserButton" onAction="#changeUser" mnemonicParsing="false" text="Сменить пользователя"/>
         </Menu>
     </MenuBar>
     <SplitPane dividerPositions="0.20456165359942977" focusTraversable="true" minWidth="200.0" prefHeight="553.0" prefWidth="1118.0" VBox.vgrow="ALWAYS">

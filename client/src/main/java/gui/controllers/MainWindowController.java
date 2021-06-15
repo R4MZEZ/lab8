@@ -31,6 +31,8 @@ public class MainWindowController implements Controller, Initializable {
     public TextField scriptField;
     public TextField updateField;
     Command command;
+    Thread thread = new Thread(new Shower());
+
     @FXML
     private Menu languageMenu;
     @FXML
@@ -141,17 +143,20 @@ public class MainWindowController implements Controller, Initializable {
         house_year.setCellValueFactory(new PropertyValueFactory<>("house_year"));
         numberOfFlatsOnFloor.setCellValueFactory(new PropertyValueFactory<>("house_numberOfFlatsOnFloor"));
         user.setCellValueFactory(new PropertyValueFactory<>("user"));
+        thread.start();
+
     }
 
 
     public void add(ActionEvent actionEvent) {
         new AddWindowController().setStage(changeWindow("/gui/scenes/add.fxml", stage));
+        thread.interrupt();
     }
 
     public void update(ActionEvent actionEvent) {
         commandUpdate = new CommandUpdate();
 
-        if (commandUpdate.validate(updateField.getText())){
+        if (commandUpdate.validate(updateField.getText())) {
             if (table.getItems().stream()
                     .anyMatch(flat -> flat.getId() == Integer.parseInt(updateField.getText()))) {
 
@@ -159,8 +164,9 @@ public class MainWindowController implements Controller, Initializable {
                         .filter(flat -> flat.getId() == Integer.parseInt(updateField.getText()))
                         .findFirst().get());
                 new AddWindowController().setStage(changeWindow("/gui/scenes/add.fxml", stage));
+                thread.interrupt();
 
-            }else showWindow(200,500,"Элемента с указанным id не найдено.", Color.BLACK);
+            } else showWindow(200, 500, "Элемента с указанным id не найдено.", Color.BLACK);
 
         }
     }
@@ -205,14 +211,17 @@ public class MainWindowController implements Controller, Initializable {
     public void execute_script(ActionEvent actionEvent) {
         Command command = new CommandExecuteScript();
         String path = scriptField.getText();
-        command.validate(path);
-        getConnector().send(command);
-        Object answer = getConnector().receive();
-        while (answer != null && !answer.toString().startsWith("====  Скрипт " + path + " успешно выполнен  ====")) {
-            if (answer.getClass().getName().equals("".getClass().getName()))
-                showWindow(400, 800, (String) answer, Color.BLACK);
-            else show(null);
-            answer = getConnector().receive();
+        if (command.validate(path)) {
+            getConnector().send(command);
+            Object answer = getConnector().receive();
+            do {
+                if (answer.getClass().getName().equals("".getClass().getName()))
+                    showWindow(400, 800, (String) answer, Color.BLACK);
+                else show(null);
+                answer = getConnector().receive();
+            } while (!answer.toString().startsWith("Server") &&
+                    !answer.toString().startsWith("====  Скрипт " + path) &&
+                    !answer.toString().startsWith("Файл"));
         }
     }
 
@@ -225,5 +234,24 @@ public class MainWindowController implements Controller, Initializable {
             removeAtField.setText(String.valueOf(index));
         }
 
+    }
+
+    public void changeUser(ActionEvent actionEvent) {
+        new StartWindowController().setStage(changeWindow("/gui/scenes/start.fxml", stage));
+        thread.interrupt();
+
+    }
+
+    class Shower implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    show(null);
+                    Thread.sleep(3000);
+                }
+            } catch (InterruptedException ignored) { }
+        }
     }
 }

@@ -18,7 +18,7 @@ public class CommandFilter implements Command, Serializable {
             this.argument = argument;
             return true;
         } catch (IllegalArgumentException e) {
-            Main.showWindow(200,500,"Ошибка. Вы ввели недопустимое значение 'view'.\n"+ View.ViewToString(), Color.RED);
+            Main.showWindow(200,1000,"Ошибка. Вы ввели недопустимое значение 'view'.\n"+ View.ViewToString(), Color.RED);
             return false;
         }
     }

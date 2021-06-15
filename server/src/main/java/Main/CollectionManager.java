@@ -252,15 +252,16 @@ public class CollectionManager {
      * @param view : объект Enum'a View, относительно которого нужно фильтровать
      */
     public void filter_less_than_view(String view) {
+        StringBuilder result = new StringBuilder();
         if (flats.stream().anyMatch(flat -> flat.getView().compareTo(View.valueOf(view)) < 0))
-            flats.stream().filter(flat -> flat.getView().compareTo(View.valueOf(view)) < 0).forEach(flat -> connector.send(flat.niceToString()));
+            flats.stream().filter(flat -> flat.getView().compareTo(View.valueOf(view)) < 0).forEach(flat -> result.append(flat.niceToString()).append("\n"));
         else connector.send("Не найдено элементов со значением поля view меньше заданного.");
+        if (!result.toString().equals("")) connector.send(result.toString());
     }
 
     /**
      * Выполнить скрипт из заданного файла
      * @param path Путь до файла
-     * @throws FileNotFoundException если файл недоступен/не найден
      */
     public void execute_script(String path, String username){
         InputStream stream;

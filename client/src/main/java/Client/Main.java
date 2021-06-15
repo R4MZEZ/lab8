@@ -1,6 +1,7 @@
 package Client;
 
 //import Commands.CommandReady;
+import Commands.CommandExit;
 import gui.controllers.Controller;
 import gui.controllers.LogInWindowController;
 import gui.controllers.StartWindowController;
