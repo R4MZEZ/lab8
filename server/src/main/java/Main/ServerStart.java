@@ -66,7 +66,7 @@ public class ServerStart {
             System.out.println("Ожидание подключения...");
 
             while (true) {
-                buffer = new byte[2048];
+                buffer = new byte[65536];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 datagramSocket.receive(packet);
                 executor.execute(new Reciever(packet,datagramSocket,buffer));

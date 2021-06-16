@@ -55,7 +55,8 @@ public class Resources_en_CA extends ListResourceBundle {
             {"idErr","Error! 'id' must be a positive integer. \n Please re-enter the command."},
             {"indexErr","Error! The index must be a non-negative integer. \n Please re-enter the command."},
             {"scriptErr","The path must be a non-empty string"},
-            {"viewErr","Error. You entered an invalid value for 'view'. \n"}
+            {"viewErr","Error. You entered an invalid value for 'view'. \n"},
+            {"showButton","Show"}
     };
 
     @Override

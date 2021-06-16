@@ -43,13 +43,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setResizable(false);
         new StartWindowController().setStage(stage);
         stage.setTitle("FlatsApp");
-        stage.getIcons().add(new Image("/gui/scenes/2hpWoQJPELU.jpg"));
+        stage.getIcons().add(new Image("/gui/scenes/icon.jpg"));
 
 
         FXMLLoader root = new FXMLLoader();
-//        StartWindowController.setBundle(bundleRu);
         root.setLocation(getClass().getResource("/gui/scenes/start.fxml"));
         Scene scene = new Scene(root.load());
 
@@ -70,6 +70,9 @@ public class Main extends Application {
             Controller controller = root.getController();
             controller.setStage(stage);
 
+            stage.setResizable(false);
+            stage.setTitle("FlatsApp");
+            stage.getIcons().add(new Image("/gui/scenes/icon.jpg"));
             stage.show();
             return stage;
         } catch (IOException e) {
@@ -104,6 +107,7 @@ public class Main extends Application {
         stage.setHeight(height);
         stage.setWidth(width);
         stage.setAlwaysOnTop(true);
+        stage.getIcons().add(new Image("/gui/scenes/icon.jpg"));
         stage.show();
     }
 }

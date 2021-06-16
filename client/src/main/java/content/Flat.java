@@ -9,12 +9,10 @@ import java.time.LocalDateTime;
  */
 
 public class Flat implements Comparable<Flat>, Serializable {
-    private static long static_id = 0;
     private static final long serialVersionUID = -4288824612268147150L;
 
 
     public Flat(String name, Coordinates coordinates, Long area, Integer numberOfRooms, long livingSpace, View view, Transport transport, House house) {
-        this.id = getNewId();
         this.name = name;
         this.coordinates = coordinates;
         this.creationDate = LocalDateTime.now(); //LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm:ss"))
@@ -27,7 +25,7 @@ public class Flat implements Comparable<Flat>, Serializable {
     }
 
 
-    private final long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private final String name; //Поле не может быть null, Строка не может быть пустой
     private final Coordinates coordinates; //Поле не может быть null
     private Float coordX;
@@ -45,14 +43,13 @@ public class Flat implements Comparable<Flat>, Serializable {
     private String user;
 
 
-    public static long getNewId() {
-        static_id += 1;
-        return static_id;
-    }
-
 
     public String getName() {
         return name;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getId() {
@@ -123,17 +120,23 @@ public class Flat implements Comparable<Flat>, Serializable {
     public String toString() {
         return "Flat{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", coordinates=" + coordinates +
-                ", creationDate=" + creationDate +
-                ", area=" + area +
-                ", numberOfRooms=" + numberOfRooms +
-                ", livingSpace=" + livingSpace +
-                ", view=" + view +
-                ", transport=" + transport +
-                ", house=" + house +
+                ",\n name='" + name + '\'' +
+                ",\n coordinates=" + coordinates.getX() + " ; " + coordinates.getY() +
+                ",\n creationDate=" + creationDate +
+                ",\n area=" + area +
+                ",\n numberOfRooms=" + numberOfRooms +
+                ",\n livingSpace=" + livingSpace +
+                ",\n view=" + view +
+                ",\n transport=" + transport +
+                ",\n user=" + user +
                 '}';
     }
 
-
+    @Override
+    public boolean equals(Object obj) {
+        if (!obj.getClass().getName().equals("content.Flat")) return false;
+        return (id == ((Flat)obj).getId()) &&
+                coordinates.getX().equals(((Flat) obj).getCoordX()) &&
+                coordinates.getY() == (((Flat) obj).getCoordY());
+    }
 }

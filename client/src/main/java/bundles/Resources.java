@@ -22,7 +22,7 @@ public class Resources extends ListResourceBundle {
             {"add","Добавить квартиру"},
             {"clear","Очистить коллекцию"},
             {"remove_last","Удалить последнего"},
-            {"average","Среднее значение \"living space\""},
+            {"average","Ср.знач. \"living space\""},
             {"max","Макс. по году постройки"},
             {"update","Обновить квартиру"},
             {"remove_by_id","Удалить по ID"},
@@ -55,7 +55,8 @@ public class Resources extends ListResourceBundle {
             {"idErr","Ошибка! 'id' должен быть целым положительным числом.\n Повторите ввод команды."},
             {"indexErr","Ошибка! Индекс должен быть целым неотрицательным числом.\n Повторите ввод команды."},
             {"scriptErr","Путь должен быть непустой строкой"},
-            {"viewErr","Ошибка. Вы ввели недопустимое значение 'view'.\n"}
+            {"viewErr","Ошибка. Вы ввели недопустимое значение 'view'.\n"},
+            {"showButton","Показать"}
     };
 
     @Override

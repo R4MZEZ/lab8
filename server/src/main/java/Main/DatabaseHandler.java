@@ -18,7 +18,7 @@ public class DatabaseHandler {
     private final String password;
     private Connection connection;
     private static final String ADD_USER_REQUEST = "INSERT INTO USERS (username, password) VALUES (?, ?)";
-    private static final String UPDATE_FLAT_REQUEST = "UPDATE FLATS SET name = ?, coordX = ?, coordY = ?, creationDate = ?, area = ?, numberOfRooms = ?, livingSpace = ?, view = ?, transport = ?, house_name = ?, house_year = ?, house_numberOfFlatsOnFloor = ? WHERE id = ?";
+    private static final String UPDATE_FLAT_REQUEST = "UPDATE FLATS SET name = ?, coordx = ?, coordy = ?, creationdate = ?, area = ?, numberofrooms = ?, livingspace = ?, view = ?, transport = ?, house_name = ?, house_year = ?, house_numberofflatsonfloor = ? WHERE id = ?";
     private static final String ADD_NEW_FLAT_REQUEST = "INSERT INTO FLATS (name, coordX, coordY, creationDate, area, numberOfRooms, livingSpace, view, transport, house_name, house_year, house_numberOfFlatsOnFloor, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String CHECK_USER_REQUEST = "SELECT * FROM USERS WHERE username = ?";
     private static final String FLATS_REQUEST = "SELECT * FROM FLATS";
@@ -95,7 +95,6 @@ public class DatabaseHandler {
             }
 
             joinStatement.close();
-            System.out.println("Коллекция успешно загружена из базы данных. Количество элементов: " + collection.size());
         }catch (SQLException e){
             System.err.println("Произошла ошибка при загрузке коллекции из базы данных.");
             ServerLogger.logger.error("Ошибка доступа к базе", e);
@@ -138,7 +137,7 @@ public class DatabaseHandler {
         try {
             PreparedStatement saveStatement = connection.prepareStatement(UPDATE_FLAT_REQUEST);
             saveStatement.setString(1, flat.getName());
-            saveStatement.setFloat(2, flat.getCoordinates().getX());
+            saveStatement.setFloat(2, 300F);
             saveStatement.setLong(3, flat.getCoordinates().getY());
             saveStatement.setTimestamp(4, Timestamp.valueOf(flat.getCreationDate()));
             saveStatement.setLong(5, flat.getArea());
@@ -244,7 +243,7 @@ public class DatabaseHandler {
         PreparedStatement getstatement = connection.prepareStatement(GET_NUMERATED_REQUEST);
         ResultSet result = getstatement.executeQuery();
         while (result.next()) {
-            if (result.getInt("row_number") == index) {
+            if (result.getInt("row_number") == index+1) {
                 if (deleteById(username, result.getInt("id"))) {
                     getstatement.close();
                     return "Элемент успешно удалён.";

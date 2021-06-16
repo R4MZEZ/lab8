@@ -19,7 +19,7 @@ public class CommandRemoveAt implements Command{
     @Override
     public boolean validate(String argument) {
         if (!Checker.isInteger(argument)) {
-            Main.showWindow(200,500,Main.getBundle().getString("indexErr"), Color.RED);
+            Main.showWindow(200,700,Main.getBundle().getString("indexErr"), Color.RED);
             return false;
         }
         this.argument = argument;

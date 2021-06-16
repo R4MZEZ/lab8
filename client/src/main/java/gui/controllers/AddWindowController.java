@@ -29,6 +29,7 @@ public class AddWindowController implements Controller, Initializable{
     private static Stage stage;
     private static Flat updatedFlat = null;
     public Label flatLabel;
+    private long id;
 
     public static void setUpdatedFlat(Flat updatedFlat) {
         AddWindowController.updatedFlat = updatedFlat;
@@ -182,6 +183,7 @@ public class AddWindowController implements Controller, Initializable{
 
         if (commandAdd.validate(builder.toString())) {
             if (updatedFlat != null){
+                commandAdd.getArgument().setId(id);
                 updatedFlat = null;
                 CommandUpdate commandUpdate = MainWindowController.commandUpdate;
                 commandUpdate.setFlat(commandAdd.getArgument());
@@ -205,6 +207,7 @@ public class AddWindowController implements Controller, Initializable{
         view.setItems(FXCollections.observableList(Arrays.asList(View.values())));
         transport.setItems(FXCollections.observableList(Arrays.asList(Transport.values())));
         if (updatedFlat != null) {
+            id = updatedFlat.getId();
             name.setText(updatedFlat.getName());
             coordX.setText(String.valueOf(updatedFlat.getCoordX()));
             coordY.setText(String.valueOf(updatedFlat.getCoordY()));

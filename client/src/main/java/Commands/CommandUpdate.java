@@ -24,7 +24,7 @@ public class CommandUpdate implements Command{
     @Override
     public boolean validate(String argument) {
         if (!Checker.isLong(argument)) {
-            Client.Main.showWindow(300,500, Main.getBundle().getString("idErr"), Color.RED);
+            Client.Main.showWindow(200,700, Main.getBundle().getString("idErr"), Color.RED);
             return false;
         }
         id = argument;

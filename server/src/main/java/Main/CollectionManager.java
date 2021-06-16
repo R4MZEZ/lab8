@@ -89,12 +89,11 @@ public class CollectionManager {
      * Показать элементы коллекции
      */
     public void show() {
-//        flats = databaseHandler.loadCollectionFromDB();
+        flats = databaseHandler.loadCollectionFromDB();
 //        if (flats==null){
 //            connector.send("Произошла ошибка при загрузке коллекции из базы данных.");
 //            return;
 //        }
-//        flats.forEach(flat -> connector.send(flat.niceToString()));
         connector.send(flats);
     }
 
@@ -190,10 +189,12 @@ public class CollectionManager {
         try {
             connector.send(databaseHandler.removeAt(username, Integer.parseInt(index)));
             if (flats.get(Integer.parseInt(index)).getUser().equals(username)) flats.remove(Integer.parseInt(index));
-        } catch (SQLException e) {
+        }catch (IndexOutOfBoundsException ignored){
+        }catch (SQLException e) {
             System.err.println("Ошибка доступа к базе данных.");
             ServerLogger.logger.error("Ошибка доступа к базе", e);
             connector.send("Ошибка доступа к базе данных.");
+            e.printStackTrace();
         }
 
     }

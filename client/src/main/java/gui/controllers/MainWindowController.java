@@ -4,12 +4,17 @@ import Client.Commander;
 import Client.Main;
 import Commands.*;
 import content.*;
+import javafx.animation.FadeTransition;
+import javafx.animation.StrokeTransition;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,18 +22,20 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import tools.FlatCircle;
 
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static Client.Main.*;
 
@@ -59,8 +66,11 @@ public class MainWindowController implements Controller, Initializable {
     public Button exitButton;
     public Menu settingsMenu;
     public Tab listOfFlats;
-    public Tab visualization;
     public Pane canvas;
+    public ToggleButton visualizeButton;
+    public Tab visualizationTab;
+    public Label label = new Label();
+    private final Lock lock = new ReentrantLock();
 
     Command command;
     Thread thread = new Thread(new Shower());
@@ -133,22 +143,21 @@ public class MainWindowController implements Controller, Initializable {
 
 
     public void show(ActionEvent actionEvent) {
-        synchronized (this) {
-            try {
-                getConnector().send(new CommandShow());
-                ObservableList<Flat> list = FXCollections.observableList(getConnector().receive());
-                table.setItems(list);
-                lostConnLabel.setVisible(false);
-            } catch (ClassCastException e) {
-                lostConnLabel.setVisible(true);
-            }
+        lock.lock();
+        try {
+            getConnector().send(new CommandShow());
+            ObservableList<Flat> list = FXCollections.observableList(getConnector().receive());
+            table.setItems(list);
+            lostConnLabel.setVisible(false);
+        } catch (ClassCastException e) {
+            lostConnLabel.setVisible(true);
         }
+        lock.unlock();
     }
 
     public void clear(ActionEvent actionEvent) {
         getConnector().send(new CommandClear());
         showWindow(200, 500, getConnector().receive(), Color.BLACK);
-        show(null);
     }
 
     public void remove_by_id(ActionEvent actionEvent) {
@@ -156,7 +165,6 @@ public class MainWindowController implements Controller, Initializable {
         if (command.validate(removeByIdField.getText())) {
             getConnector().send(command);
             showWindow(150, 900, getConnector().receive(), Color.BLACK);
-            show(null);
         }
     }
 
@@ -178,12 +186,6 @@ public class MainWindowController implements Controller, Initializable {
         numberOfFlatsOnFloor.setCellValueFactory(new PropertyValueFactory<>("house_numberOfFlatsOnFloor"));
         user.setCellValueFactory(new PropertyValueFactory<>("user"));
 
-        try {
-            thread.start();
-        }catch (IllegalThreadStateException ignored){
-            //thread is already running
-        }
-
         ResourceBundle bundle = Main.getBundle();
         settingsMenu.setText(bundle.getString("settings"));
         languageMenu.setText(bundle.getString("language"));
@@ -203,9 +205,14 @@ public class MainWindowController implements Controller, Initializable {
         filterLessThanViewButton.setText(bundle.getString("filter"));
         exitButton.setText(bundle.getString("exit"));
         listOfFlats.setText(bundle.getString("list"));
-        visualization.setText(bundle.getString("visualization"));
+        visualizeButton.setText(bundle.getString("showButton"));
+        visualizationTab.setText(bundle.getString("visualization"));
 
-
+        show(null);
+        try {
+            canvas.getChildren().add(label);
+        } catch (IllegalArgumentException ignored) {
+        }
     }
 
 
@@ -252,7 +259,6 @@ public class MainWindowController implements Controller, Initializable {
         if (command.validate(removeAtField.getText())) {
             getConnector().send(command);
             showWindow(150, 900, getConnector().receive(), Color.BLACK);
-            show(null);
         }
     }
 
@@ -305,56 +311,116 @@ public class MainWindowController implements Controller, Initializable {
 
     public void setRussian(ActionEvent actionEvent) {
         Main.setBundle(ResourceBundle.getBundle("bundles.Resources"));
-        initialize(null,Main.getBundle());
+        initialize(null, Main.getBundle());
     }
 
     public void setEnglish(ActionEvent actionEvent) {
         Main.setBundle(ResourceBundle.getBundle("bundles.Resources_en_CA"));
-        initialize(null,Main.getBundle());
+        initialize(null, Main.getBundle());
     }
 
     public void setAlbanian(ActionEvent actionEvent) {
         Main.setBundle(ResourceBundle.getBundle("bundles.Resources_sq"));
-        initialize(null,Main.getBundle());
+        initialize(null, Main.getBundle());
     }
 
     public void setSlovak(ActionEvent actionEvent) {
         Main.setBundle(ResourceBundle.getBundle("bundles.Resources_sk"));
-        initialize(null,Main.getBundle());
+        initialize(null, Main.getBundle());
     }
 
-    public void visualiseAll(Event event) {
-        for (Flat flat: table.getItems()) {
-            Circle circle = new Circle(flat.getCoordX(),flat.getCoordY(),
-                    (flat.getArea())/5,Color.color(
-                    ((double) Math.abs(flat.getUser().hashCode()-111)%10)/10,
-                    ((double) Math.abs(flat.getUser().hashCode()-333)%10)/10,
-                    ((double) Math.abs(flat.getUser().hashCode()-555)%10)/10));
-            circle.setStroke(Paint.valueOf("BLACK"));
-            circle.setStrokeWidth(circle.getRadius()/10);
+    public void visualizeAll() {
+        if (visualizeButton.isSelected()) {
+            for (Flat flat : table.getItems()) {
+                visualizeFlat(flat);
+            }
+            thread = new Thread(new Shower());
+            thread.start();
+        } else {
+            canvas.getChildren().clear();
+            thread.interrupt();
+        }
+    }
+
+    public void visualizeFlat(Flat flat) {
+        Color color = Color.color(
+                ((double) Math.abs(flat.getUser().hashCode() - 111) % 10) / 10,
+                ((double) Math.abs(flat.getUser().hashCode() - 333) % 10) / 10,
+                ((double) Math.abs(flat.getUser().hashCode() - 555) % 10) / 10);
+        FlatCircle circle = new FlatCircle(0, 0, (flat.getArea()) / 5, color);
+        circle.setStrokeWidth(circle.getRadius() / 12);
+
+        circle.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                label.setText(flat.toString());
+                label.setFont(Font.font(11));
+                label.setLayoutX(flat.getCoordX() + 480);
+                label.setLayoutY(flat.getCoordY() + 265);
+                label.setVisible(true);
+                label.toFront();
+            }
+        });
+
+        circle.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                label.setVisible(false);
+            }
+        });
+        circle.setFlat(flat);
+
+
+        StrokeTransition transition = new StrokeTransition(Duration.millis(1000), circle, color.darker(), color.brighter());
+        transition.setCycleCount(-1);
+        transition.setAutoReverse(true);
+
+        TranslateTransition transition1 = new TranslateTransition(Duration.seconds(2), circle);
+        transition1.setToX(flat.getCoordX() + 455);
+        transition1.setByY(flat.getCoordY() + 265);
+
+        DropShadow ds = new DropShadow();
+        ds.setOffsetY(3.0);
+        ds.setColor(Color.color(0.4, 0.4, 0.4));
+        circle.setEffect(ds);
+
+        Platform.runLater(() -> {
             canvas.getChildren().add(circle);
+            transition.play();
+            transition1.play();
+        });
+    }
+
+    public void vanishFlat(Flat flat) {
+        for (Node circle : canvas.getChildren()) {
+            if (((FlatCircle) circle).getFlat().getId() == flat.getId()) {
+                FadeTransition transition1 = new FadeTransition(Duration.seconds(3), circle);
+                transition1.setFromValue(1.0);
+                transition1.setToValue(0.0);
+                transition1.play();
+                transition1.setOnFinished(event -> canvas.getChildren().remove(circle));
+                return;
+            }
         }
     }
 
-    public List<Flat> getNewElements(List<Flat> serverList){
-        List<Flat> temp = new ArrayList<>(serverList);
-        if (!table.getItems().containsAll(serverList)){
-            temp.retainAll(table.getItems());
-            serverList.removeAll(temp);
-            return serverList;
+
+    public List<Flat> getNewElements(List<Flat> serverList) {
+        List<Flat> result = new ArrayList<>();
+        for (Flat flat : serverList) {
+            if (!table.getItems().contains(flat))
+                result.add(flat);
         }
-        return null;
+        return result;
     }
 
-    public List<Flat> getDeletedElements(List<Flat> serverList){
-        List<Flat> result = new ArrayList<>(table.getItems());
-        List<Flat> temp = new ArrayList<>(table.getItems());
-        if (!serverList.containsAll(table.getItems())){
-            temp.retainAll(serverList);
-            result.removeAll(temp);
-            return result;
+    public List<Flat> getDeletedElements(List<Flat> serverList) {
+        List<Flat> result = new ArrayList<>();
+        for (Flat flat : table.getItems()) {
+            if (!serverList.contains(flat))
+                result.add(flat);
         }
-        return null;
+        return result;
     }
 
     class Shower implements Runnable {
@@ -363,10 +429,20 @@ public class MainWindowController implements Controller, Initializable {
         public void run() {
             try {
                 while (true) {
+                    getConnector().send(new CommandShow());
+                    List<Flat> serverList = getConnector().receive();
+                    List<Flat> deletedFlats = getDeletedElements(serverList);
+                    List<Flat> newFlats = getNewElements(serverList);
+                    for (Flat flat : deletedFlats)
+                        vanishFlat(flat);
+                    for (Flat flat : newFlats)
+                        visualizeFlat(flat);
                     show(null);
                     Thread.sleep(3000);
                 }
-            } catch (InterruptedException ignored) { }
+            } catch (InterruptedException ignored) {
+            }
         }
+
     }
 }

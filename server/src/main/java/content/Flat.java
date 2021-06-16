@@ -13,7 +13,6 @@ public class Flat implements Comparable<Flat>, Serializable {
     private static long static_id = 0;
 
     public Flat(String name, Coordinates coordinates, Long area, Integer numberOfRooms, long livingSpace, View view, Transport transport, House house) {
-        this.id = getNewId();
         this.name = name;
         this.coordinates = coordinates;
         this.creationDate = LocalDateTime.now(); //LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm:ss"))
@@ -55,10 +54,6 @@ public class Flat implements Comparable<Flat>, Serializable {
         this.user = user;
     }
 
-    public static long getNewId() {
-        static_id += 1;
-        return static_id;
-    }
 
     public long getId(){
         return id;

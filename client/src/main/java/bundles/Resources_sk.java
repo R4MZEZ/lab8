@@ -55,7 +55,9 @@ public class Resources_sk extends ListResourceBundle {
             {"idErr","Chyba! 'id' musí byť kladné celé číslo.\n Opakujte príkaz."},
             {"indexErr","Chyba! Index musí byť nezáporné celé číslo.\n Opakujte príkaz."},
             {"scriptErr","Cesta musí byť neprázdny reťazec"},
-            {"viewErr","Chyba. Zadali ste neplatnú hodnotu zobrazenia.\n"}
+            {"viewErr","Chyba. Zadali ste neplatnú hodnotu zobrazenia.\n"},
+            {"showButton","Dramdrum"}
+
     };
 
     @Override

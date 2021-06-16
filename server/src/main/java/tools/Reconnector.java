@@ -1,6 +1,8 @@
 package tools;
 
+import Main.CollectionManager;
 import Main.DatabaseHandler;
+import Main.ServerStart;
 
 import java.sql.SQLException;
 
@@ -19,6 +21,7 @@ public class Reconnector implements Runnable{
                 databaseHandler.connectToDatabase();
                 System.out.println("Успешное переподключение к базе данных.");
                 stop = true;
+                CollectionManager.setFlats(databaseHandler.loadCollectionFromDB());
             } catch (SQLException e) {
                 System.err.println("Неудачная попытка подключения к БД...");
                 synchronized (this) {

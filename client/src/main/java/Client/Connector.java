@@ -59,7 +59,7 @@ public class Connector {
     public <T> T receive() {
         try {
             Thread.sleep(100);
-            buffer = new byte[2048];
+            buffer = new byte[65536];
             client.receive(ByteBuffer.wrap(buffer));
             Main.connected = true;
             input = new ObjectInputStream(new ByteArrayInputStream(buffer));
