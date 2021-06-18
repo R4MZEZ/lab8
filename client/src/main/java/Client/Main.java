@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+
 public class Main extends Application {
     static boolean connected = false;
     static int PORT = 3125;
@@ -37,7 +38,7 @@ public class Main extends Application {
 
     static Connector connector = new Connector(PORT);
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         launch(args);
     }
 
@@ -82,16 +83,20 @@ public class Main extends Application {
     }
 
     public static void showWindow(double height, double width, String msg, Color color) {
+
         Label label = new Label(msg);
         label.setTextFill(color);
         label.setFont(new Font(20));
+        label.setStyle("-fx-text-fill: lightgray;");
         BorderPane pane = new BorderPane();
         pane.setCenter(label);
         Button ok = new Button("OK");
         pane.setBottom(ok);
         BorderPane.setMargin(ok, new Insets(20));
         ok.setPrefSize(100, 20);
+        ok.setStyle("-fx-focus-traversable: false; -fx-text-fill: white;");
         BorderPane.setAlignment(ok, Pos.CENTER);
+        pane.setStyle("-fx-accent: #1e74c6;  -fx-focus-color: -fx-accent;-fx-base: #373e43;-fx-control-inner-background: derive(-fx-base, 35%);-fx-control-inner-background-alt: -fx-control-inner-background ;");
         Scene scene = new Scene(pane);
         Stage stage = new Stage();
         ok.setOnAction(event -> {
@@ -101,6 +106,7 @@ public class Main extends Application {
                 System.exit(-1);
             }
         });
+
         stage.setScene(scene);
         stage.setMinWidth(width);
         stage.setMinHeight(height);

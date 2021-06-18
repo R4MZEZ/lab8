@@ -3,7 +3,9 @@ package gui.controllers;
 import Client.Commander;
 import Client.Main;
 import Commands.*;
-import content.*;
+import content.Flat;
+import content.Transport;
+import content.View;
 import javafx.animation.FadeTransition;
 import javafx.animation.StrokeTransition;
 import javafx.animation.TranslateTransition;
@@ -11,16 +13,10 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
@@ -32,8 +28,9 @@ import javafx.util.Duration;
 import tools.FlatCircle;
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -71,6 +68,7 @@ public class MainWindowController implements Controller, Initializable {
     public Tab visualizationTab;
     public Label label = new Label();
     private final Lock lock = new ReentrantLock();
+    public TableColumn house;
 
     Command command;
     Thread thread = new Thread(new Shower());
@@ -93,7 +91,7 @@ public class MainWindowController implements Controller, Initializable {
     private TableColumn<Flat, Integer> coordY;
 
     @FXML
-    private TableColumn<Flat, LocalDateTime> creationDate;
+    private TableColumn<Flat, String> creationDate;
 
     @FXML
     private TableColumn<Flat, Integer> area;
@@ -175,7 +173,7 @@ public class MainWindowController implements Controller, Initializable {
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         coordX.setCellValueFactory(new PropertyValueFactory<>("coordX"));
         coordY.setCellValueFactory(new PropertyValueFactory<>("coordY"));
-        creationDate.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
+        creationDate.setCellValueFactory(new PropertyValueFactory<>("stringCreationDate"));
         area.setCellValueFactory(new PropertyValueFactory<>("area"));
         numberOfRooms.setCellValueFactory(new PropertyValueFactory<>("numberOfRooms"));
         livingSpace.setCellValueFactory(new PropertyValueFactory<>("livingSpace"));
@@ -207,6 +205,19 @@ public class MainWindowController implements Controller, Initializable {
         listOfFlats.setText(bundle.getString("list"));
         visualizeButton.setText(bundle.getString("showButton"));
         visualizationTab.setText(bundle.getString("visualization"));
+        id.setText(bundle.getString("id"));
+        name.setText(bundle.getString("name"));
+        creationDate.setText(bundle.getString("creationDate"));
+        area.setText(bundle.getString("area"));
+        numberOfRooms.setText(bundle.getString("number_of_rooms"));
+        livingSpace.setText(bundle.getString("living_space"));
+        view.setText(bundle.getString("view"));
+        transport.setText(bundle.getString("transport"));
+        house_name.setText(bundle.getString("house_name"));
+        house_year.setText(bundle.getString("house_year"));
+        numberOfFlatsOnFloor.setText(bundle.getString("number_of_flats"));
+        user.setText(bundle.getString("user"));
+        house.setText(bundle.getString("house"));
 
         show(null);
         try {
@@ -350,26 +361,25 @@ public class MainWindowController implements Controller, Initializable {
         FlatCircle circle = new FlatCircle(0, 0, (flat.getArea()) / 5, color);
         circle.setStrokeWidth(circle.getRadius() / 12);
 
-        circle.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                label.setText(flat.toString());
-                label.setFont(Font.font(11));
-                label.setLayoutX(flat.getCoordX() + 480);
-                label.setLayoutY(flat.getCoordY() + 265);
-                label.setVisible(true);
-                label.toFront();
-            }
-        });
-
-        circle.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                label.setVisible(false);
-            }
-        });
         circle.setFlat(flat);
 
+        circle.setOnMouseEntered(event -> {
+            label.setText(flat.toString());
+            label.setFont(Font.font(11));
+            label.setLayoutX(flat.getCoordX() + 480);
+            label.setLayoutY(flat.getCoordY() + 265);
+            label.setVisible(true);
+            label.toFront();
+        });
+
+        circle.setOnMouseExited(event -> label.setVisible(false));
+
+        circle.setOnMouseClicked(event -> {
+            updateField.setText(String.valueOf(circle.getFlat().getId()));
+            removeByIdField.setText(String.valueOf(circle.getFlat().getId()));
+            table.getSelectionModel().select(circle.getFlat());
+            removeAtField.setText(String.valueOf(table.getSelectionModel().getSelectedIndex()));
+        });
 
         StrokeTransition transition = new StrokeTransition(Duration.millis(1000), circle, color.darker(), color.brighter());
         transition.setCycleCount(-1);
@@ -393,14 +403,15 @@ public class MainWindowController implements Controller, Initializable {
 
     public void vanishFlat(Flat flat) {
         for (Node circle : canvas.getChildren()) {
-            if (((FlatCircle) circle).getFlat().getId() == flat.getId()) {
-                FadeTransition transition1 = new FadeTransition(Duration.seconds(3), circle);
-                transition1.setFromValue(1.0);
-                transition1.setToValue(0.0);
-                transition1.play();
-                transition1.setOnFinished(event -> canvas.getChildren().remove(circle));
-                return;
-            }
+            if (circle.getClass().equals(FlatCircle.class))
+                if (((FlatCircle) circle).getFlat().getId() == flat.getId()) {
+                    FadeTransition transition1 = new FadeTransition(Duration.seconds(3), circle);
+                    transition1.setFromValue(1.0);
+                    transition1.setToValue(0.0);
+                    transition1.play();
+                    transition1.setOnFinished(event -> canvas.getChildren().remove(circle));
+                    return;
+                }
         }
     }
 

@@ -33,7 +33,7 @@ public class ServerStart {
         String password = "";
 
         try {
-            scanner = new Scanner(new FileReader("C:\\Users\\User\\Desktop\\прога\\lab6\\server\\src\\main\\resources\\credentials.txt"));
+            scanner = new Scanner(new FileReader("C:\\Users\\User\\Desktop\\prog\\lab6\\server\\src\\main\\resources\\credentials.txt"));
         } catch (FileNotFoundException ex) {
             System.err.println("Не найден файл с данными для входа. Завершение работы.");
             System.exit(-1);

@@ -3,6 +3,7 @@ package content;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Класс, объекты которого будут храниться в коллекции
@@ -31,6 +32,7 @@ public class Flat implements Comparable<Flat>, Serializable {
     private Float coordX;
     private Long coordY;
     private final LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private String stringCreationDate;
     private final Long area; //Поле не может быть null, Значение поля должно быть больше 0
     private final Integer numberOfRooms; //Значение поля должно быть больше 0
     private final long livingSpace; //Значение поля должно быть больше 0
@@ -43,6 +45,9 @@ public class Flat implements Comparable<Flat>, Serializable {
     private String user;
 
 
+    public String getStringCreationDate() {
+        return creationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm:ss"));
+    }
 
     public String getName() {
         return name;

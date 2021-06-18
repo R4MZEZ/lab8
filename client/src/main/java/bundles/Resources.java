@@ -56,7 +56,13 @@ public class Resources extends ListResourceBundle {
             {"indexErr","Ошибка! Индекс должен быть целым неотрицательным числом.\n Повторите ввод команды."},
             {"scriptErr","Путь должен быть непустой строкой"},
             {"viewErr","Ошибка. Вы ввели недопустимое значение 'view'.\n"},
-            {"showButton","Показать"}
+            {"showButton","Показать"},
+            {"id","ID"},
+            {"creationDate","Дата\nсоздания"},
+            {"user","Пользователь"},
+            {"house","Данные о доме"}
+
+
     };
 
     @Override

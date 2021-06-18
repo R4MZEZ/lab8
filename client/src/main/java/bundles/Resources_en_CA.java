@@ -56,7 +56,12 @@ public class Resources_en_CA extends ListResourceBundle {
             {"indexErr","Error! The index must be a non-negative integer. \n Please re-enter the command."},
             {"scriptErr","The path must be a non-empty string"},
             {"viewErr","Error. You entered an invalid value for 'view'. \n"},
-            {"showButton","Show"}
+            {"showButton","Show"},
+            {"creationDate","Creation\ndate"},
+            {"id","ID"},
+            {"user","User"},
+            {"house","House information"}
+
     };
 
     @Override

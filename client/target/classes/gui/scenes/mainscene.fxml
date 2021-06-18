@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
@@ -25,185 +26,264 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="1124.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.MainWindowController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0"
+      prefWidth="1124.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      stylesheets="@DarkTheme.css"
+      fx:controller="gui.controllers.MainWindowController">
     <MenuBar VBox.vgrow="NEVER">
         <Menu fx:id="settingsMenu" mnemonicParsing="false" text="Настройки">
             <Menu fx:id="languageMenu" mnemonicParsing="false" text="Язык">
-                <MenuItem onAction="#setRussian" text="Русский" />
-                <MenuItem onAction="#setEnglish" text="English" />
-                <MenuItem onAction="#setAlbanian" text="Shqiptare" />
-                <MenuItem onAction="#setSlovak" text="Slovák" />
+                <MenuItem onAction="#setRussian" text="Русский"/>
+                <MenuItem onAction="#setEnglish" text="English"/>
+                <MenuItem onAction="#setAlbanian" text="Shqiptare"/>
+                <MenuItem onAction="#setSlovak" text="Slovák"/>
 
             </Menu>
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="changeUserButton" mnemonicParsing="false" onAction="#changeUser" text="Сменить пользователя" />
+            <SeparatorMenuItem mnemonicParsing="false"/>
+            <MenuItem fx:id="changeUserButton" mnemonicParsing="false" onAction="#changeUser"
+                      text="Сменить пользователя"/>
         </Menu>
     </MenuBar>
-    <SplitPane dividerPositions="0.20456165359942977" focusTraversable="true" minWidth="200.0" prefHeight="553.0" prefWidth="1118.0" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.20456165359942977" focusTraversable="true" minWidth="200.0" prefHeight="553.0"
+               prefWidth="1118.0" VBox.vgrow="ALWAYS">
         <VBox maxWidth="269.0" minWidth="249.0" prefHeight="553.0" prefWidth="249.0" spacing="10.0">
             <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
             </padding>
-            <Button fx:id="helpButton" mnemonicParsing="false" onAction="#help" prefHeight="29.0" prefWidth="226.0" text="Справка по командам" />
-            <Button fx:id="infoButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#info" prefHeight="29.0" prefWidth="226.0" text="Информация о коллекции" />
-            <Button fx:id="showButton" layoutX="20.0" layoutY="57.0" mnemonicParsing="false" onAction="#show" prefHeight="29.0" prefWidth="226.0" text="Показать всю коллекцию" />
-            <Button fx:id="addButton" layoutX="20.0" layoutY="94.0" mnemonicParsing="false" onAction="#add" prefHeight="29.0" prefWidth="226.0" text="Добавить квартиру" />
-            <Button fx:id="clearButton" layoutX="20.0" layoutY="204.0" mnemonicParsing="false" onAction="#clear" prefHeight="29.0" prefWidth="226.0" text="Очистить коллекцию" />
-            <Button fx:id="removeLastButton" layoutX="20.0" layoutY="352.0" mnemonicParsing="false" onAction="#remove_last" prefHeight="29.0" prefWidth="226.0" text="Удалить последнюю" />
-            <Button fx:id="averageOfLivingSpaceButton" layoutX="20.0" layoutY="388.0" mnemonicParsing="false" onAction="#average_of_living_space" prefHeight="29.0" prefWidth="226.0" text="Среднее значение &quot;living space&quot;" />
-            <Button fx:id="maxByHouseButton" layoutX="20.0" layoutY="425.0" mnemonicParsing="false" onAction="#max_by_house" prefHeight="29.0" prefWidth="226.0" text="Макс. по году постройки дома" />
+            <Button fx:id="helpButton" mnemonicParsing="false" onAction="#help" prefHeight="29.0" prefWidth="226.0"
+                    text="Справка по командам"/>
+            <Button fx:id="infoButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#info"
+                    prefHeight="29.0" prefWidth="226.0" text="Информация о коллекции"/>
+            <Button fx:id="showButton" layoutX="20.0" layoutY="57.0" mnemonicParsing="false" onAction="#show"
+                    prefHeight="29.0" prefWidth="226.0" text="Показать всю коллекцию"/>
+            <Button fx:id="addButton" layoutX="20.0" layoutY="94.0" mnemonicParsing="false" onAction="#add"
+                    prefHeight="29.0" prefWidth="226.0" text="Добавить квартиру"/>
+            <Button fx:id="clearButton" layoutX="20.0" layoutY="204.0" mnemonicParsing="false" onAction="#clear"
+                    prefHeight="29.0" prefWidth="226.0" text="Очистить коллекцию"/>
+            <Button fx:id="removeLastButton" layoutX="20.0" layoutY="352.0" mnemonicParsing="false"
+                    onAction="#remove_last" prefHeight="29.0" prefWidth="226.0" text="Удалить последнюю"/>
+            <Button fx:id="averageOfLivingSpaceButton" layoutX="20.0" layoutY="388.0" mnemonicParsing="false"
+                    onAction="#average_of_living_space" prefHeight="29.0" prefWidth="226.0"
+                    text="Среднее значение &quot;living space&quot;"/>
+            <Button fx:id="maxByHouseButton" layoutX="20.0" layoutY="425.0" mnemonicParsing="false"
+                    onAction="#max_by_house" prefHeight="29.0" prefWidth="226.0" text="Макс. по году постройки дома"/>
             <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="206.0">
-                <Button fx:id="updateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#update" prefHeight="28.0" prefWidth="163.0" text="Обновить квартиру" />
-                <TextField fx:id="updateField" prefHeight="26.0" prefWidth="64.0" />
+                <Button fx:id="updateButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                        minWidth="-Infinity" mnemonicParsing="false" onAction="#update" prefHeight="28.0"
+                        prefWidth="163.0" text="Обновить квартиру"/>
+                <TextField fx:id="updateField" prefHeight="26.0" prefWidth="64.0"/>
             </HBox>
             <HBox prefHeight="29.0" prefWidth="200.0">
-                <Button fx:id="removeByIdButton" mnemonicParsing="false" onAction="#remove_by_id" prefHeight="28.0" prefWidth="163.0" text="Удалить по ID" />
-                <TextField fx:id="removeByIdField" prefHeight="26.0" prefWidth="64.0" />
+                <Button fx:id="removeByIdButton" mnemonicParsing="false" onAction="#remove_by_id" prefHeight="28.0"
+                        prefWidth="163.0" text="Удалить по ID"/>
+                <TextField fx:id="removeByIdField" prefHeight="26.0" prefWidth="64.0"/>
             </HBox>
             <HBox prefHeight="29.0" prefWidth="200.0">
-                <Button fx:id="removeAtButton" mnemonicParsing="false" onAction="#remove_at" prefHeight="29.0" prefWidth="163.0" text="Удалить по индексу" />
-                <TextField fx:id="removeAtField" prefHeight="26.0" prefWidth="64.0" />
+                <Button fx:id="removeAtButton" mnemonicParsing="false" onAction="#remove_at" prefHeight="29.0"
+                        prefWidth="163.0" text="Удалить по индексу"/>
+                <TextField fx:id="removeAtField" prefHeight="26.0" prefWidth="64.0"/>
             </HBox>
             <HBox prefHeight="29.0" prefWidth="200.0">
-                <Button fx:id="executeScriptButton" mnemonicParsing="false" onAction="#execute_script" prefHeight="29.0" prefWidth="163.0" text="Выполнить скрипт" />
-                <TextField fx:id="scriptField" prefHeight="26.0" prefWidth="64.0" />
+                <Button fx:id="executeScriptButton" mnemonicParsing="false" onAction="#execute_script" prefHeight="29.0"
+                        prefWidth="163.0" text="Выполнить скрипт"/>
+                <TextField fx:id="scriptField" prefHeight="26.0" prefWidth="64.0"/>
             </HBox>
             <HBox prefHeight="29.0" prefWidth="200.0">
-                <Button fx:id="filterLessThanViewButton" mnemonicParsing="false" onAction="#filter_less_than_view" prefHeight="29.0" prefWidth="163.0" text="Фильтр по View" />
-                <TextField fx:id="viewField" prefHeight="26.0" prefWidth="64.0" />
+                <Button fx:id="filterLessThanViewButton" mnemonicParsing="false" onAction="#filter_less_than_view"
+                        prefHeight="29.0" prefWidth="163.0" text="Фильтр по View"/>
+                <TextField fx:id="viewField" prefHeight="26.0" prefWidth="64.0"/>
             </HBox>
-            <Button fx:id="exitButton" defaultButton="true" layoutX="20.0" layoutY="278.0" mnemonicParsing="false" onAction="#exit" prefHeight="29.0" prefWidth="226.0" text="Выход" />
+            <Button fx:id="exitButton" defaultButton="true" layoutX="20.0" layoutY="278.0" mnemonicParsing="false"
+                    onAction="#exit" prefHeight="29.0" prefWidth="226.0" text="Выход"/>
         </VBox>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
-            <TabPane prefHeight="551.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <TabPane prefHeight="551.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0"
+                     AnchorPane.rightAnchor="0.0">
                 <Tab fx:id="listOfFlats" text="Список квартир">
                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                        <TableView fx:id="table" minWidth="862" onMouseClicked="#tableClick" prefHeight="526.0" prefWidth="862.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="28.0">
-                            <columns>
-                                <TableColumn fx:id="id" prefWidth="30" text="id" />
-                                <TableColumn fx:id="name" prefWidth="70" text="name" />
-                                <TableColumn fx:id="coordX" prefWidth="30" text="X" />
-                                <TableColumn fx:id="coordY" prefWidth="30" text="Y" />
-                                <TableColumn fx:id="creationDate" prefWidth="70" text="date" />
-                                <TableColumn fx:id="area" prefWidth="40" text="area" />
-                                <TableColumn fx:id="numberOfRooms" prefWidth="58.4000244140625" text="№ rooms" />
-                                <TableColumn fx:id="livingSpace" prefWidth="57.60003662109375" text="liv.space" />
-                                <TableColumn fx:id="view" prefWidth="59.9998779296875" text="view" />
-                                <TableColumn fx:id="transport" prefWidth="75.2000732421875" text="transport" />
-                                <TableColumn fx:id="house_name" prefWidth="90" text="house name" />
-                                <TableColumn fx:id="house_year" prefWidth="90" text="house year" />
-                                <TableColumn fx:id="numberOfFlatsOnFloor" prefWidth="87.2000732421875" text="flats on floor" />
-                                <TableColumn fx:id="user" prefWidth="67.19998779296873" text="user" />
-                            </columns>
-                        </TableView>
+                        <ScrollPane prefHeight="524.0" prefWidth="866.0">
+                            <TableView fx:id="table" minWidth="862" onMouseClicked="#tableClick" prefHeight="526.0"
+                                       prefWidth="862.0">
+                                <columns>
+                                    <TableColumn fx:id="id" prefWidth="30" text="id"/>
+                                    <TableColumn fx:id="name" prefWidth="70" text="name"/>
+                                    <TableColumn fx:id="coordX" prefWidth="60.0" text="X"/>
+                                    <TableColumn fx:id="coordY" prefWidth="60.0" text="Y"/>
+                                    <TableColumn fx:id="creationDate" prefWidth="70" text="date"/>
+                                    <TableColumn fx:id="area" prefWidth="40" text="area"/>
+                                    <TableColumn fx:id="numberOfRooms" prefWidth="100.0" text="№ rooms"/>
+                                    <TableColumn fx:id="livingSpace" prefWidth="100.0" text="liv.space"/>
+                                    <TableColumn fx:id="view" prefWidth="70.0" text="view"/>
+                                    <TableColumn fx:id="transport" text="transport"/>
+                                    <TableColumn fx:id="house" prefWidth="75.0" text="house">
+                                        <columns>
+                                            <TableColumn fx:id="house_name" prefWidth="90" text="name"/>
+                                            <TableColumn fx:id="house_year" prefWidth="90" text="year"/>
+                                            <TableColumn fx:id="numberOfFlatsOnFloor" prefWidth="110.0"
+                                                         text="flats on floor"/>
+                                        </columns>
+                                    </TableColumn>
+                                    <TableColumn fx:id="user" prefWidth="70.0" text="user"/>
+                                </columns>
+                            </TableView>
+                        </ScrollPane>
                     </AnchorPane>
                 </Tab>
                 <Tab fx:id="visualizationTab" text="Визуализация">
                     <StackPane prefHeight="150.0" prefWidth="200.0">
                         <GridPane gridLinesVisible="true" opacity="0.22">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0" prefWidth="332.20000648498535" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.20001220703125" minWidth="10.0"
+                                                   prefWidth="332.20000648498535"/>
 
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
 
 
                             </rowConstraints>
                         </GridPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                            <Line endX="451.9999694824219" endY="4.95910626341356E-6" opacity="0.69" startX="451.9999694824219" startY="525.6000366210938" AnchorPane.leftAnchor="451.4999694824219" AnchorPane.topAnchor="-0.49999505281448364" />
-                            <Line endX="890.4000244140625" endY="274.4000244140625" opacity="0.69" startX="-9.15527380129788E-6" startY="274.4000549316406" AnchorPane.leftAnchor="-0.7071159482002258" AnchorPane.topAnchor="273.69293212890625" />
+                            <Line endX="451.9999694824219" endY="4.95910626341356E-6" opacity="0.69"
+                                  startX="451.9999694824219" startY="525.6000366210938"
+                                  AnchorPane.leftAnchor="451.4999694824219"
+                                  AnchorPane.topAnchor="-0.49999505281448364"/>
+                            <Line endX="890.4000244140625" endY="274.4000244140625" opacity="0.69"
+                                  startX="-9.15527380129788E-6" startY="274.4000549316406"
+                                  AnchorPane.leftAnchor="-0.7071159482002258"
+                                  AnchorPane.topAnchor="273.69293212890625"/>
                         </AnchorPane>
-                        <Pane fx:id="canvas" prefHeight="200.0" prefWidth="200.0" />
-                        <ToggleButton fx:id="visualizeButton" mnemonicParsing="false" onAction="#visualizeAll" prefHeight="30.0" prefWidth="88.0" text="Показать">
-                     <StackPane.margin>
-                        <Insets left="-770.0" top="-470.0" />
-                     </StackPane.margin>
-                  </ToggleButton>
+                        <Pane fx:id="canvas" prefHeight="200.0" prefWidth="200.0"/>
+                        <ToggleButton fx:id="visualizeButton" mnemonicParsing="false" onAction="#visualizeAll"
+                                      prefHeight="30.0" prefWidth="88.0" text="Показать">
+                            <StackPane.margin>
+                                <Insets left="-770.0" top="-470.0"/>
+                            </StackPane.margin>
+                        </ToggleButton>
                     </StackPane>
                 </Tab>
             </TabPane>
         </AnchorPane>
     </SplitPane>
-    <HBox id="HBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="22.0" minWidth="-Infinity" prefHeight="94.0" prefWidth="1124.0" spacing="5.0" VBox.vgrow="NEVER">
+    <HBox id="HBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="22.0"
+          minWidth="-Infinity" prefHeight="94.0" prefWidth="1124.0" spacing="5.0" VBox.vgrow="NEVER">
         <padding>
-            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
         </padding>
-        <Label fx:id="username" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="34.0" text="guest" textFill="#484848" HBox.hgrow="ALWAYS">
+        <Label fx:id="username" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
+               prefHeight="18.0" prefWidth="34.0" text="guest" textFill="#484848" HBox.hgrow="ALWAYS">
             <font>
-                <Font size="11.0" />
+                <Font size="11.0"/>
             </font>
         </Label>
-        <Label fx:id="lostConnLabel" prefHeight="18.0" prefWidth="672.0" text="Соединение с сервером потеряно. Коллекция может отображаться некорректно." textFill="RED" visible="false">
+        <Label fx:id="lostConnLabel" prefHeight="18.0" prefWidth="672.0"
+               text="Соединение с сервером потеряно. Коллекция может отображаться некорректно." textFill="RED"
+               visible="false">
             <HBox.margin>
-                <Insets left="450.0" right="100.0" />
+                <Insets left="450.0" right="100.0"/>
             </HBox.margin>
             <font>
-                <Font name="System Bold" size="12.0" />
+                <Font name="System Bold" size="12.0"/>
             </font>
         </Label>
     </HBox>

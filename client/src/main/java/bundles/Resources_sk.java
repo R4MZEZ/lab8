@@ -56,7 +56,12 @@ public class Resources_sk extends ListResourceBundle {
             {"indexErr","Chyba! Index musí byť nezáporné celé číslo.\n Opakujte príkaz."},
             {"scriptErr","Cesta musí byť neprázdny reťazec"},
             {"viewErr","Chyba. Zadali ste neplatnú hodnotu zobrazenia.\n"},
-            {"showButton","Dramdrum"}
+            {"showButton","Dramdrum"},
+            {"creationDate","Culbon\nbon"},
+            {"house","Dom informácie"},
+            {"id","ID"},
+            {"user","User"}
+
 
     };
 

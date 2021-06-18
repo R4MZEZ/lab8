@@ -56,7 +56,13 @@ public class Resources_sq extends ListResourceBundle {
             {"indexErr","Gabim! Indeksi duhet të jetë një numër i plotë jo negativ. \n Ju lutemi futni përsëri komandën."},
             {"scriptErr","Shtegu duhet të jetë një varg jo bosh"},
             {"viewErr","Gabim. Keni futur një vlerë të pavlefshme për \"pamje\".\n"},
-            {"showButton","Drumdram"}
+            {"showButton","Drumdram"},
+            {"creationDate","Lumdon\ndat"},
+            {"id","ID"},
+            {"user","User"},
+            {"house", "Informacioni I Shtëpisë"}
+
+
 
     };
 
